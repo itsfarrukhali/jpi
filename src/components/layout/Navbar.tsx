@@ -12,12 +12,27 @@ const navLinks = [
   { label: "Home", href: "/" },
   {
     label: "About",
-    href: "/about",
+    href: "/about-us",
     children: [
-      { label: "About JPI", href: "/about" },
-      { label: "Principal's Message", href: "/about/principals-message" },
-      { label: "History & Mission", href: "/about/history" },
-      { label: "Faculty & Staff", href: "/about/faculty" },
+      { label: "About JPI", href: "/about-us" },
+      {
+        label: "Vision, Mission & History",
+        href: "/about-us/vision-history-mission",
+      },
+      {
+        label: "Al-Haj Molvi Rayazuddin Ahmed Akbarabadi",
+        href: "/about-us/alhaj-rayazuddin",
+      },
+      {
+        label: "General Secretary's Message",
+        href: "/about-us/general-secretary",
+      },
+      {
+        label: "In Loving Memory",
+        href: "/about-us/in-memory",
+      },
+      { label: "Principal's Message", href: "/about-us/principals-message" },
+      { label: "Faculty & Staff", href: "/about-us/faculty" },
     ],
   },
   {
