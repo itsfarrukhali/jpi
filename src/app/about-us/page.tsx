@@ -99,7 +99,7 @@ export default function AboutPage() {
                 Full History
               </Link>
               <Link
-                href="/about/principals-message"
+                href="/about-us/principals-message"
                 className="px-5 py-2.5 rounded-xl border border-(--color-primary) text-(--color-primary) text-sm font-semibold hover:bg-blue-50 transition-colors"
               >
                 Principal&apos;s Message

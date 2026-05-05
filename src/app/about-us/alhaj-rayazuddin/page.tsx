@@ -17,7 +17,7 @@ export default function FounderPage() {
         title="Our Founder"
         subtitle="Al-Haj Moulvi Rayazuddin Ahmed Akbarabadi (T.I.) — 1906 to ..."
         breadcrumbs={[
-          { label: "About", href: "/about" },
+          { label: "About", href: "/about-us" },
           { label: "Our Founder" },
         ]}
         imageUrl="https://picsum.photos/1600/500?random=50"
