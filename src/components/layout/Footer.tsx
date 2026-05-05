@@ -110,15 +110,17 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2">
               {[
-                ["About JPI", "/about"],
-                ["Principal's Message", "/about/principals-message"],
-                ["History & Mission", "/about/history"],
-                ["Faculty & Staff", "/about/faculty"],
+                ["About JPI", "/about-us"],
+                [
+                  "Al-Haj Molvi Rayazuddin Ahmed Akbarabadi",
+                  "/about-us/alhaj-rayazuddin",
+                ],
+                ["General Secretary's Message", "/about-us/general-secretary"],
                 ["QEC", "/qec"],
                 ["Student Affairs", "/student-affairs"],
                 ["Facilities", "/facilities"],
                 ["News & Events", "/news"],
-                ["Contact Us", "/contact"],
+                ["Contact Us", "/contact-us"],
               ].map(([label, href]) => (
                 <li key={href}>
                   <Link
