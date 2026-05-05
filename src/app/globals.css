@@ -1,0 +1,223 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Mapping your custom colors to Tailwind utility classes */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);   /* keep if you still need a mono font, or remove */
+  --font-heading: var(--font-heading);
+  --font-urdu: var(--font-urdu);
+
+  /* shadcn sidebar colors (you can adjust later) */
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+
+  /* Chart colors (unmodified) */
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+
+  /* Core UI colors – now use your palette */
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* Your extra brand colors – now available as Tailwind utilities */
+  --color-primary-dark: var(--primary-dark);
+  --color-gold: var(--gold);
+  --color-rust: var(--rust);
+  --color-surface: var(--surface);
+  --color-primary-light: var(--primary-light);
+  --color-gold-light: var(--gold-light);
+  --color-text-muted: var(--text-muted);
+
+  /* Radius scale (unchanged) */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  /* Base surfaces */
+  --background: #FFFFFF;
+  --foreground: #0D1F3C;         /* primary-dark */
+  --card: #FFFFFF;
+  --card-foreground: #0D1F3C;
+  --popover: #FFFFFF;
+  --popover-foreground: #0D1F3C;
+
+  /* Brand */
+  --primary: #1A3F7A;
+  --primary-foreground: #FFFFFF;
+  --primary-dark: #0D1F3C;
+  --primary-light: #2a5db0;
+  --gold: #D4921A;
+  --gold-light: #f0a820;
+  --rust: #C8521A;
+
+  /* Neutral / Muted */
+  --secondary: #F5F7FA;          /* surface */
+  --secondary-foreground: #1A3F7A;
+  --muted: #F5F7FA;
+  --muted-foreground: #6B7280;   /* text-muted */
+  --accent: #1A3F7A;
+  --accent-foreground: #FFFFFF;
+  --destructive: #C8521A;        /* rust as destructive */
+  --destructive-foreground: #FFFFFF;
+
+  /* Borders & inputs */
+  --border: #E5E7EB;
+  --input: #E5E7EB;
+  --ring: #1A3F7A;
+
+  /* Radius */
+  --radius: 0.45rem;
+
+  /* Surface (explicit) */
+  --surface: #F5F7FA;
+  --text-muted: #6B7280;
+
+  /* Sidebar defaults (light) – you can tweak these later */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #0D1F3C;
+  --sidebar-primary: #1A3F7A;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F5F7FA;
+  --sidebar-accent-foreground: #0D1F3C;
+  --sidebar-border: #E5E7EB;
+  --sidebar-ring: #1A3F7A;
+
+  /* Charts (keep existing or adjust) */
+  --chart-1: oklch(0.809 0.105 251.813);
+  --chart-2: oklch(0.623 0.214 259.815);
+  --chart-3: oklch(0.546 0.245 262.881);
+  --chart-4: oklch(0.488 0.243 264.376);
+  --chart-5: oklch(0.424 0.199 265.638);
+}
+
+.dark {
+  /* Dark mode overrides */
+  --background: #0D1F3C;         /* primary-dark */
+  --foreground: #F5F7FA;         /* surface */
+  --card: #1A3F7A;
+  --card-foreground: #FFFFFF;
+  --popover: #1A3F7A;
+  --popover-foreground: #FFFFFF;
+  --primary: #D4921A;            /* gold */
+  --primary-foreground: #0D1F3C;
+  --primary-dark: #F5F7FA;
+  --primary-light: #2a5db0;
+  --gold: #f0a820;
+  --gold-light: #f0a820;
+  --rust: #C8521A;
+  --secondary: #1A3F7A;
+  --secondary-foreground: #FFFFFF;
+  --muted: #0D1F3C;
+  --muted-foreground: #a1a1aa;
+  --accent: #D4921A;
+  --accent-foreground: #0D1F3C;
+  --destructive: #C8521A;
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #D4921A;
+  --surface: #1A3F7A;
+  --text-muted: #a1a1aa;
+
+  /* Sidebar dark */
+  --sidebar: #0D1F3C;
+  --sidebar-foreground: #F5F7FA;
+  --sidebar-primary: #D4921A;
+  --sidebar-primary-foreground: #0D1F3C;
+  --sidebar-accent: #1A3F7A;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #D4921A;
+
+  /* Charts – keep or adjust */
+  --chart-1: oklch(0.809 0.105 251.813);
+  --chart-2: oklch(0.623 0.214 259.815);
+  --chart-3: oklch(0.546 0.245 262.881);
+  --chart-4: oklch(0.488 0.243 264.376);
+  --chart-5: oklch(0.424 0.199 265.638);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans), 'DM Sans', sans-serif;
+  }
+  html {
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading), 'Playfair Display', serif;
+  }
+}
+
+/* Your existing custom styles – keep them if you need */
+.font-urdu {
+  font-family: var(--font-urdu), 'Noto Nastaliq Urdu', serif;
+  direction: rtl;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* Optional: keep your utility classes, but now you have Tailwind equivalents */
+.text-primary { color: var(--primary); }
+.text-primary-dark { color: var(--primary-dark); }
+.text-gold { color: var(--gold); }
+.text-rust { color: var(--rust); }
+.text-text-muted { color: var(--text-muted); }
+.bg-primary { background-color: var(--primary); }
+.bg-primary-dark { background-color: var(--primary-dark); }
+.bg-gold { background-color: var(--gold); }
+.bg-surface { background-color: var(--surface); }
+.border-gold { border-color: var(--gold); }
+.border-primary { border-color: var(--primary); }
