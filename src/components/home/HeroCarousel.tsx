@@ -18,7 +18,7 @@ const slides = [
     subtitle: "Civil · Electrical · Mechanical · Computer Technology",
     tag: "DAE",
     cta: "/programs/dae",
-    image: "https://picsum.photos/1600/900?random=1",
+    image: "/carousel/dae-final.png",
   },
   {
     id: 1,
@@ -27,7 +27,7 @@ const slides = [
     subtitle: "AutoCAD · PLC · Web Development · Networking & More",
     tag: "CERT",
     cta: "/programs/certifications",
-    image: "https://picsum.photos/1600/900?random=2",
+    image: "/carousel/certifications.png",
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ const slides = [
     subtitle: "Welding · Electrician · Plumbing · IT Fundamentals",
     tag: "SHORT",
     cta: "/programs/short-courses",
-    image: "https://picsum.photos/1600/900?random=3",
+    image: "/carousel/short-courses.png",
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ const slides = [
     subtitle: "Recognizing outstanding academic and co-curricular achievement",
     tag: "JEC",
     cta: "/programs/jec",
-    image: "https://picsum.photos/1600/900?random=4",
+    image: "/carousel/jec.png",
   },
 ];
 
