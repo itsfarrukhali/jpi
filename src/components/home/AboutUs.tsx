@@ -71,7 +71,7 @@ export default function WhyJPI() {
               Educational Institutions in Karachi since partition including the
               Jinnah College and Jinnah University for Woman Nazimabad.
             </p>
-            <Link href="/about" passHref>
+            <Link href="/about-us" passHref>
               <Button
                 variant="outline"
                 size="lg"
