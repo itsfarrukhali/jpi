@@ -32,7 +32,6 @@ const navLinks = [
         href: "/about-us/in-memory",
       },
       { label: "Principal's Message", href: "/about-us/principals-message" },
-      { label: "Faculty & Staff", href: "/about-us/faculty" },
     ],
   },
   {
@@ -236,6 +235,7 @@ function NavbarContent({ pathname }: { pathname: string }) {
                 width={270}
                 height={40}
                 loading="eager"
+                className="h-auto"
               />
             </Link>
 

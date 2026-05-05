@@ -88,7 +88,7 @@ export default function HistoryPage() {
         title="Vision, Mission & History"
         subtitle="Guided by a noble purpose — spreading quality education to diversified humanity since 1961."
         breadcrumbs={[
-          { label: "About", href: "/about" },
+          { label: "About", href: "/about-us" },
           { label: "Vision, Mission & History" },
         ]}
         imageUrl="https://picsum.photos/1600/500?random=40"

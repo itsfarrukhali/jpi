@@ -58,7 +58,7 @@ export default function InMemoryPage() {
         title="In Loving Memory"
         subtitle="Remembering those who served with devotion, humility, and an unwavering commitment to education."
         breadcrumbs={[
-          { label: "About", href: "/about" },
+          { label: "About", href: "/about-us" },
           { label: "In Memory" },
         ]}
         imageUrl="https://picsum.photos/1600/500?random=54"

@@ -17,7 +17,7 @@ export default function GeneralSecretaryPage() {
         title="General Secretary's Message"
         subtitle="Mr. Wajeeh Uddin Ahmed — General Secretary, Anjuman-e-Islamia Trust Pakistan"
         breadcrumbs={[
-          { label: "About", href: "/about" },
+          { label: "About", href: "/about-us" },
           { label: "General Secretary's Message" },
         ]}
         imageUrl="https://picsum.photos/1600/500?random=52"
