@@ -1,41 +1,84 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 import {
-  MapPin,
-  Phone,
-  Mail,
-  Clock,
   Download,
   FileText,
   Send,
+  MapPin,
+  Phone,
+  Mail,
+  AlertTriangle,
+  CheckCircle2,
 } from "lucide-react";
-import { admissionContact, applicationFormFields } from "@/data/admissions";
-
-export const metadata: Metadata = {
-  title: "Apply Now",
-  description:
-    "Apply for DAE programs at Jinnah Polytechnic Institute — download the admission form or submit your inquiry online.",
-};
-
-const contactIcons: Record<string, typeof MapPin> = {
-  address: MapPin,
-  phone: Phone,
-  email: Mail,
-  officeHours: Clock,
-};
+import { admissionContact, universalFormFields } from "@/data/admissions";
 
 export default function ApplyNowPage() {
-  // Split fields for better layout
-  const personalFields = applicationFormFields.slice(0, 7); // fullName → residence
-  const programFields = applicationFormFields.slice(7, 12); // qualification → shift
-  const messageField = applicationFormFields[12]; // message
+  const [selectedProgram, setSelectedProgram] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  // Check if selected program is DAE (for male-only warning + extra fields)
+  const isDAE = selectedProgram.startsWith("dae-");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In production: send to API/email
+    setSubmitted(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  if (submitted) {
+    return (
+      <>
+        <PageHero
+          title="Application Submitted"
+          subtitle="Thank you for your interest in Jinnah Polytechnic Institute."
+          breadcrumbs={[
+            { label: "Admissions", href: "/admissions" },
+            { label: "Apply Now" },
+          ]}
+          imageUrl="https://picsum.photos/1600/500?random=64"
+        />
+        <section className="py-20 bg-white">
+          <div className="max-w-lg mx-auto px-4 text-center">
+            <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-5">
+              <CheckCircle2 size={32} className="text-green-600" />
+            </div>
+            <h2 className="text-xl font-bold text-gray-800 mb-2">
+              Inquiry Received!
+            </h2>
+            <p className="text-sm text-gray-600 leading-relaxed mb-8">
+              Thank you for submitting your inquiry. Our Admission Department
+              will review your information and get back to you within 2–3
+              working days.
+            </p>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <Link
+                href="/admissions/how-to-apply"
+                className="px-5 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium hover:bg-gray-50 transition-colors"
+              >
+                How to Apply
+              </Link>
+              <Link
+                href="/programs"
+                className="px-5 py-2.5 border border-amber-600 text-amber-700 text-sm font-medium hover:bg-amber-50 transition-colors"
+              >
+                Browse Programs →
+              </Link>
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
 
   return (
     <>
       <PageHero
-        title="Apply Now — DAE Programs"
-        subtitle="Start your journey toward a rewarding technical career at Jinnah Polytechnic Institute."
+        title="Apply Now"
+        subtitle="Submit your inquiry for any program at Jinnah Polytechnic Institute."
         breadcrumbs={[
           { label: "Admissions", href: "/admissions" },
           { label: "Apply Now" },
@@ -44,174 +87,242 @@ export default function ApplyNowPage() {
       />
 
       <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-          {/* Download Form */}
-          <div className="bg-gray-50 border border-gray-200 p-8 text-center">
-            <Download size={28} className="mx-auto text-amber-600 mb-3" />
-            <h2 className="text-lg font-bold text-gray-800 mb-2">
-              Download Admission Form
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          {/* Download Option */}
+          <div className="bg-gray-50 border border-gray-200 p-6 text-center">
+            <Download size={24} className="mx-auto text-amber-600 mb-2" />
+            <h2 className="text-base font-bold text-gray-800 mb-1">
+              Prefer to Apply Offline?
             </h2>
-            <p className="text-xs text-gray-500 mb-5 max-w-md mx-auto">
-              Download the DAE admission form, print it, fill it out carefully,
-              and submit it to the Admission Department with all required
-              documents.
+            <p className="text-xs text-gray-500 mb-4">
+              Download the admission form and submit it in person at our campus.
             </p>
             <a
               href="#"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-amber-600 text-amber-700 text-sm font-medium hover:bg-amber-50 transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 border border-amber-600 text-amber-700 text-xs font-medium hover:bg-amber-50 transition-colors"
               download
             >
-              <FileText size={14} />
-              Download Admission Form (PDF)
+              <FileText size={12} />
+              Download Form (PDF)
             </a>
-            <p className="text-xs text-gray-400 mt-3">
-              Or collect from the Admission Department counter
-            </p>
           </div>
 
-          {/* Important Note for DAE */}
-          <div className="bg-amber-50 border border-amber-100 p-5 text-center">
-            <p className="text-xs text-gray-700 leading-relaxed">
-              <strong>Note:</strong> DAE programs are eligible for{" "}
-              <strong>male students only</strong>. Maximum age for Morning
-              Program is 35 years, and for Evening Program is 45 years at the
-              time of admission.
-            </p>
-          </div>
-
-          {/* Online Inquiry Form */}
+          {/* Inquiry Form */}
           <div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">
-              Submit Your Inquiry
+            <h2 className="text-lg font-bold text-gray-800 mb-1">
+              Online Inquiry Form
             </h2>
             <p className="text-xs text-gray-500 mb-8">
-              Fill out the form below and our Admission Department will get back
-              to you.
+              Fill in your details and select the program you&apos;re interested
+              in. Our team will contact you with further information.
             </p>
 
-            <form className="bg-gray-50 border border-gray-200 p-6 sm:p-8 space-y-5">
-              {/* Personal Information */}
-              <div>
-                <h3 className="text-sm font-semibold text-gray-700 mb-3 pb-1.5 border-b border-gray-200">
-                  Personal Information
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {personalFields.map((field) => (
-                    <div
-                      key={field.name}
-                      className={
-                        field.type === "textarea" ? "sm:col-span-2" : ""
-                      }
+            <form
+              onSubmit={handleSubmit}
+              className="bg-gray-50 border border-gray-200 p-6 sm:p-8 space-y-5"
+            >
+              {/* Personal Details */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {universalFormFields.slice(0, 5).map((field) => (
+                  <div key={field.name}>
+                    <label
+                      htmlFor={field.name}
+                      className="block text-xs font-medium text-gray-700 mb-1.5"
                     >
-                      <label
-                        htmlFor={field.name}
-                        className="block text-xs font-medium text-gray-700 mb-1.5"
-                      >
-                        {field.label}
-                        {field.required && (
-                          <span className="text-red-400 ml-0.5">*</span>
-                        )}
-                      </label>
-                      {field.type === "select" ? (
-                        <select
-                          id={field.name}
-                          name={field.name}
-                          required={field.required}
-                          className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
-                        >
-                          {field.options?.map((opt) => (
-                            <option key={opt.value} value={opt.value}>
-                              {opt.label}
-                            </option>
-                          ))}
-                        </select>
-                      ) : field.type === "textarea" ? (
-                        <textarea
-                          id={field.name}
-                          name={field.name}
-                          rows={field.rows || 3}
-                          placeholder={field.placeholder}
-                          required={field.required}
-                          className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none"
-                        />
-                      ) : (
-                        <input
-                          type={field.type}
-                          id={field.name}
-                          name={field.name}
-                          placeholder={field.placeholder}
-                          required={field.required}
-                          className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
-                        />
+                      {field.label}
+                      {field.required && (
+                        <span className="text-red-400 ml-0.5">*</span>
                       )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Program Information */}
-              <div>
-                <h3 className="text-sm font-semibold text-gray-700 mb-3 pb-1.5 border-b border-gray-200">
-                  Program Information
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                  {programFields.map((field) => (
-                    <div key={field.name}>
-                      <label
-                        htmlFor={field.name}
-                        className="block text-xs font-medium text-gray-700 mb-1.5"
+                    </label>
+                    {field.type === "select" ? (
+                      <select
+                        id={field.name}
+                        name={field.name}
+                        required={field.required}
+                        className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
                       >
-                        {field.label}
-                        {field.required && (
-                          <span className="text-red-400 ml-0.5">*</span>
-                        )}
-                      </label>
-                      {field.type === "select" ? (
-                        <select
-                          id={field.name}
-                          name={field.name}
-                          required={field.required}
-                          className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
-                        >
-                          {field.options?.map((opt) => (
-                            <option key={opt.value} value={opt.value}>
-                              {opt.label}
-                            </option>
-                          ))}
-                        </select>
-                      ) : (
-                        <input
-                          type={field.type}
-                          id={field.name}
-                          name={field.name}
-                          placeholder={field.placeholder}
-                          required={field.required}
-                          className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
+                        {field.options?.map((opt) => (
+                          <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        type={field.type}
+                        id={field.name}
+                        name={field.name}
+                        placeholder={field.placeholder}
+                        required={field.required}
+                        className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
+                      />
+                    )}
+                  </div>
+                ))}
 
-              {/* Additional Message */}
-              {messageField && (
+                {/* Qualification + Marks Row */}
                 <div>
                   <label
-                    htmlFor={messageField.name}
+                    htmlFor="qualification"
                     className="block text-xs font-medium text-gray-700 mb-1.5"
                   >
-                    {messageField.label}
+                    Highest Qualification{" "}
+                    <span className="text-red-400">*</span>
                   </label>
-                  <textarea
-                    id={messageField.name}
-                    name={messageField.name}
-                    rows={messageField.rows || 3}
-                    placeholder={messageField.placeholder}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none"
+                  <select
+                    id="qualification"
+                    name="qualification"
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
+                  >
+                    {universalFormFields[5].options?.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label
+                    htmlFor="lastMarks"
+                    className="block text-xs font-medium text-gray-700 mb-1.5"
+                  >
+                    Last Exam Marks (%)
+                  </label>
+                  <input
+                    type="text"
+                    id="lastMarks"
+                    name="lastMarks"
+                    placeholder="Enter percentage (optional)"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
                   />
                 </div>
+              </div>
+
+              {/* Interested Program — Flat Dropdown */}
+              <div>
+                <label
+                  htmlFor="interestedProgram"
+                  className="block text-xs font-medium text-gray-700 mb-1.5"
+                >
+                  Interested Program <span className="text-red-400">*</span>
+                </label>
+                <select
+                  id="interestedProgram"
+                  name="interestedProgram"
+                  required
+                  value={selectedProgram}
+                  onChange={(e) => setSelectedProgram(e.target.value)}
+                  className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
+                >
+                  {universalFormFields[7].options?.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* DAE Warning — Male Only */}
+              {isDAE && (
+                <div className="bg-amber-50 border border-amber-200 p-4 flex items-start gap-3">
+                  <AlertTriangle
+                    size={16}
+                    className="text-amber-600 shrink-0 mt-0.5"
+                  />
+                  <div>
+                    <p className="text-xs font-medium text-amber-800 mb-0.5">
+                      DAE Programs — Male Students Only
+                    </p>
+                    <p className="text-xs text-amber-700">
+                      Maximum age: Morning 35 years | Evening 45 years. Matric
+                      Science with Physics, Chemistry &amp; Mathematics
+                      required.
+                    </p>
+                  </div>
+                </div>
               )}
+
+              {/* DAE Extra Fields: Technology + Shift */}
+              {isDAE && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      htmlFor="technology"
+                      className="block text-xs font-medium text-gray-700 mb-1.5"
+                    >
+                      Preferred Technology
+                    </label>
+                    <select
+                      id="technology"
+                      name="technology"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
+                    >
+                      {universalFormFields[8].options?.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="shift"
+                      className="block text-xs font-medium text-gray-700 mb-1.5"
+                    >
+                      Preferred Shift
+                    </label>
+                    <select
+                      id="shift"
+                      name="shift"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
+                    >
+                      {universalFormFields[9].options?.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
+
+              {/* City */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label
+                    htmlFor="city"
+                    className="block text-xs font-medium text-gray-700 mb-1.5"
+                  >
+                    City <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    placeholder="Your city"
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Message */}
+              <div>
+                <label
+                  htmlFor="message"
+                  className="block text-xs font-medium text-gray-700 mb-1.5"
+                >
+                  Additional Message (Optional)
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={3}
+                  placeholder="Any questions or additional information..."
+                  className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none"
+                />
+              </div>
 
               {/* Submit */}
               <div className="pt-2">
@@ -224,70 +335,45 @@ export default function ApplyNowPage() {
                 </button>
                 <p className="text-xs text-gray-400 mt-3">
                   This is an inquiry form only. Final admission is subject to
-                  form submission, document verification, and merit.
+                  document verification and meeting eligibility criteria.
                 </p>
               </div>
             </form>
           </div>
 
-          {/* Contact Information */}
+          {/* Contact Info */}
           <div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">
-              Visit or Contact Us
+            <h2 className="text-lg font-bold text-gray-800 mb-4">
+              Or Contact Us Directly
             </h2>
-            <p className="text-xs text-gray-500 mb-6">
-              Get in touch with the Admission Department for any queries
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {Object.entries(admissionContact).map(([key, value]) => {
-                const Icon = contactIcons[key] || MapPin;
-                return (
-                  <div
-                    key={key}
-                    className="bg-gray-50 border border-gray-200 p-4 flex items-start gap-3"
-                  >
-                    <Icon
-                      size={16}
-                      className="text-amber-600 shrink-0 mt-0.5"
-                    />
-                    <div>
-                      <div className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        {key.replace(/([A-Z])/g, " $1").trim()}
-                      </div>
-                      <div className="text-sm text-gray-800 mt-0.5">
-                        {value}
-                      </div>
-                    </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="bg-gray-50 border border-gray-200 p-3 flex items-center gap-3">
+                <Phone size={14} className="text-amber-600 shrink-0" />
+                <div>
+                  <div className="text-xs text-gray-500">Phone</div>
+                  <div className="text-sm text-gray-800">
+                    {admissionContact.phone}
                   </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Important Reminder */}
-          <div className="bg-amber-50 border border-amber-100 p-6 text-center">
-            <p className="text-xs text-gray-700 leading-relaxed">
-              <strong>Reminder:</strong> No cash payments are accepted at JPI.
-              All fees must be deposited through the authorized bank challan
-              issued by the Admission Department after final selection.
-            </p>
-          </div>
-
-          {/* Navigation */}
-          <div className="text-center pt-8 border-t border-gray-200">
-            <div className="flex flex-wrap gap-3 justify-center">
-              <Link
-                href="/admissions/how-to-apply"
-                className="px-5 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium hover:bg-gray-50 transition-colors"
-              >
-                How to Apply
-              </Link>
-              <Link
-                href="/admissions/fee-structure"
-                className="px-5 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium hover:bg-gray-50 transition-colors"
-              >
-                Fee Structure
-              </Link>
+                </div>
+              </div>
+              <div className="bg-gray-50 border border-gray-200 p-3 flex items-center gap-3">
+                <Mail size={14} className="text-amber-600 shrink-0" />
+                <div>
+                  <div className="text-xs text-gray-500">Email</div>
+                  <div className="text-sm text-gray-800">
+                    {admissionContact.email}
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 border border-gray-200 p-3 flex items-center gap-3 sm:col-span-2">
+                <MapPin size={14} className="text-amber-600 shrink-0" />
+                <div>
+                  <div className="text-xs text-gray-500">Address</div>
+                  <div className="text-sm text-gray-800">
+                    {admissionContact.address}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

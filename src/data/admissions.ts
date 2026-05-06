@@ -78,6 +78,19 @@ export interface FormField {
   rows?: number;
 }
 
+// ─── DAE Technologies List ───────────────────────────
+
+export const daeTechnologies: string[] = [
+  "Civil Technology",
+  "Electrical Technology",
+  "Mechanical Technology",
+  "Electronics Technology",
+  "Software Technology",
+  "Computer Information Technology",
+  "Refrigeration & Air Conditioning Technology",
+  "Chemical Technology",
+];
+
 // ─── Eligibility Criteria ────────────────────────────
 
 export const eligibilityCriteria: EligibilityCriteria[] = [
@@ -370,7 +383,7 @@ export const selectionProcedure: SelectionStep[] = [
 
 export const admissionContact = {
   address: "ST-1, Nazimabad-5, Karachi 74600",
-  phone: "+92 21 3661 XXXX",
+  phone: "+92-21-99260294-5",
   email: "admissions@jpi.edu.pk",
   officeHours: "Monday – Friday, 9:00 AM – 4:00 PM",
 };
@@ -397,23 +410,112 @@ export const importantNotes: string[] = [
   "Candidates who do not meet the minimum eligibility criteria as prescribed by SBTE/STEVTA will not be considered.",
 ];
 
-// ─── DAE Technologies List ───────────────────────────
+// ─── Program Options List ────────────────────────────
 
-export const daeTechnologies: string[] = [
-  "Civil Technology",
-  "Electrical Technology",
-  "Mechanical Technology",
-  "Electronics Technology",
-  "Software Technology",
-  "Computer Information Technology (CIT)",
-  "Refrigeration & Air Conditioning Technology",
-  "Chemical Technology",
+export const allProgramOptions = [
+  { value: "", label: "Select a program" },
+  {
+    group: "DAE Programs (3 Years)",
+    options: [
+      {
+        value: "dae-civil",
+        label: "Diploma of Associate Engineering — Civil Technology",
+      },
+      {
+        value: "dae-electrical",
+        label: "Diploma of Associate Engineering — Electrical Technology",
+      },
+      {
+        value: "dae-mechanical",
+        label: "Diploma of Associate Engineering — Mechanical Technology",
+      },
+      {
+        value: "dae-electronics",
+        label: "Diploma of Associate Engineering — Electronics Technology",
+      },
+      {
+        value: "dae-software",
+        label: "Diploma of Associate Engineering — Software Technology",
+      },
+      {
+        value: "dae-cit",
+        label:
+          "Diploma of Associate Engineering — Computer Information Technology",
+      },
+      {
+        value: "dae-refrigeration",
+        label:
+          "Diploma of Associate Engineering — Refrigeration & Air Conditioning Technology",
+      },
+      {
+        value: "dae-chemical",
+        label: "Diploma of Associate Engineering — Chemical Technology",
+      },
+    ],
+  },
+  {
+    group: "Jinnah Health Care Technology",
+    options: [
+      {
+        value: "cert-physiotherapy",
+        label: "Diploma in Physiotherapy Technicians (2 Years)",
+      },
+      { value: "cert-nursing", label: "Nursing Assistant (1 Year)" },
+      {
+        value: "cert-lab-technician",
+        label: "Laboratory Technicians (1 Year)",
+      },
+      { value: "cert-phlebotomy", label: "Phlebotomy (6 Months)" },
+    ],
+  },
+  {
+    group: "Short Courses",
+    options: [
+      { value: "sc-ai", label: "Diploma in Artificial Intelligence (1 Year)" },
+      { value: "sc-welding", label: "Welding & Fabrication (3 Months)" },
+      {
+        value: "sc-electrician",
+        label: "Domestic & Industrial Electrician (3 Months)",
+      },
+      { value: "sc-plumbing", label: "Plumbing & Sanitation (3 Months)" },
+      {
+        value: "sc-it",
+        label: "IT Fundamentals & Office Automation (2 Months)",
+      },
+    ],
+  },
+  {
+    group: "Jinnah Excellence Certificates (JEC)",
+    options: [
+      {
+        value: "jec-autocad",
+        label:
+          "Professional AutoCAD 2D & 3D — Mechanical / Civil Drawing Course (2 Months)",
+      },
+    ],
+  },
 ];
+
+// Helper function to get program options as flat list for form select
+export const getFlatProgramOptions = (): { value: string; label: string }[] => {
+  const flatOptions: { value: string; label: string }[] = [
+    { value: "", label: "Select a program" },
+  ];
+
+  for (const group of allProgramOptions.slice(1)) {
+    if (group.options) {
+      for (const option of group.options) {
+        flatOptions.push(option);
+      }
+    }
+  }
+
+  return flatOptions;
+};
 
 // ─── Application Form Fields ─────────────────────────
 
-export const applicationFormFields: FormField[] = [
-  // Personal Information
+export const universalFormFields: FormField[] = [
   {
     name: "fullName",
     label: "Full Name",
@@ -443,27 +545,11 @@ export const applicationFormFields: FormField[] = [
     required: true,
   },
   {
-    name: "cnic",
-    label: "CNIC / B-Form Number",
-    type: "text",
-    placeholder: "XXXXX-XXXXXXX-X",
-    required: true,
-  },
-  {
     name: "dob",
     label: "Date of Birth",
     type: "date",
     required: true,
   },
-  {
-    name: "residence",
-    label: "Residential Address",
-    type: "textarea",
-    placeholder: "Enter your complete address",
-    required: true,
-    rows: 2,
-  },
-  // Program Information
   {
     name: "qualification",
     label: "Highest Qualification",
@@ -471,36 +557,34 @@ export const applicationFormFields: FormField[] = [
     required: true,
     options: [
       { value: "", label: "Select qualification" },
+      { value: "below-matric", label: "Below Matric" },
       { value: "matric-science", label: "Matric Science" },
       { value: "matric-technical", label: "Matric Technical" },
       { value: "matric-computer", label: "Matric Computer Science" },
       { value: "intermediate", label: "Intermediate" },
+      { value: "graduate", label: "Graduate" },
       { value: "other", label: "Other" },
     ],
   },
   {
-    name: "matricMarks",
-    label: "Matric / Last Exam Marks (%)",
+    name: "lastMarks",
+    label: "Last Exam Marks (%)",
     type: "text",
-    placeholder: "Enter percentage",
-    required: true,
+    placeholder: "Enter percentage (optional)",
+    required: false,
   },
   {
-    name: "program",
-    label: "Program Applying For",
+    name: "interestedProgram",
+    label: "Interested Program",
     type: "select",
     required: true,
-    options: [
-      { value: "", label: "Select program" },
-      { value: "dae-1st-year", label: "DAE 1st Year" },
-      { value: "dae-2nd-year", label: "DAE Direct 2nd Year" },
-    ],
+    options: getFlatProgramOptions(),
   },
   {
     name: "technology",
-    label: "Preferred Technology",
+    label: "Preferred Technology (DAE Only)",
     type: "select",
-    required: true,
+    required: false,
     options: [
       { value: "", label: "Select technology" },
       ...daeTechnologies.map((tech) => ({
@@ -511,21 +595,27 @@ export const applicationFormFields: FormField[] = [
   },
   {
     name: "shift",
-    label: "Preferred Shift",
+    label: "Preferred Shift (DAE Only)",
     type: "select",
-    required: true,
+    required: false,
     options: [
       { value: "", label: "Select shift" },
       { value: "morning", label: "Morning" },
       { value: "evening", label: "Evening" },
     ],
   },
-  // Additional
+  {
+    name: "city",
+    label: "City",
+    type: "text",
+    placeholder: "Your city",
+    required: true,
+  },
   {
     name: "message",
     label: "Additional Message (Optional)",
     type: "textarea",
-    placeholder: "Any additional information or questions...",
+    placeholder: "Any questions or additional information...",
     rows: 3,
   },
 ];
