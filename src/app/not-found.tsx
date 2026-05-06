@@ -30,7 +30,7 @@ export default function NotFound() {
               Go To Home
             </Link>
             <Link
-              href="/admissions/apply"
+              href="/admissions"
               className="inline-flex items-center gap-2 rounded-xl border border-primary/25 bg-white px-5 py-2.5 text-sm font-semibold text-(--color-primary-dark) transition-colors hover:bg-(--color-surface)"
             >
               <ArrowLeft size={16} />

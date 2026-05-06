@@ -1,18 +1,82 @@
+/**
+ * PROGRAMS DATA FILE
+ *
+ * This file contains all programs offered by the institute:
+ * - DAE programs (3-year diplomas)
+ * - Certificate courses
+ * - Short courses
+ * - Special programs
+ *
+ * Each program has:
+ * - Name and description
+ * - Duration and number of seats
+ * - Subject list by year
+ * - Career options after graduation
+ *
+ * EDIT THIS FILE TO CHANGE:
+ * ✅ Program details
+ * ✅ Course subjects
+ * ✅ Career options
+ * ✅ Program eligibility
+ *
+ * READ FIRST: SIMPLE_GUIDE.md
+ */
+
+/**
+ * Academic program information type definition
+ *
+ * IMPORTANT FIELDS:
+ * - id: Unique identifier (e.g., "dae-civil", "cert-welding"). Must be unique!
+ * - tag: Program category ("DAE", "CERT", "SHORT", "JEC") for UI display
+ * - category: Technical category ("dae", "certifications", "short-courses", "jec") for routing
+ * - subjects: Array of curriculum by year. Each year has items array with subject names
+ * - careers: Possible job positions graduates can pursue
+ */
 export type Program = {
-  id: string;
-  name: string;
-  shortName: string;
-  duration: string;
-  seats: number;
-  eligibility: string;
-  description: string;
-  icon: string;
+  id: string; // Unique identifier: "dae-civil"
+  name: string; // Full program name
+  shortName: string; // Short name for display
+  duration: string; // e.g., "3 Years (6 Semesters)"
+  seats: number; // Total seats available
+  eligibility: string; // Eligibility requirement
+  description: string; // 1-2 sentence overview
+  icon: string; // Lucide icon name
   tag: "DAE" | "CERT" | "SHORT" | "JEC";
   category: "dae" | "certifications" | "short-courses" | "jec";
   subjects: { year: string; items: string[] }[];
   careers: string[];
 };
 
+/**
+ * HOW TO ORGANIZE DATA:
+ *
+ * This file is organized into sections by program type:
+ * 1. daePrograms - All DAE programs (3 year diplomas)
+ * 2. certificationPrograms - Certificate courses
+ * 3. shortCourses - Short-term skill courses
+ * 4. jecPrograms - Special JEC programs
+ *
+ * Then all programs are combined in final export
+ */
+
+/**
+ * ALL DAE PROGRAMS
+ *
+ * DAE (Diploma of Associate Engineering) - 3 year, 6 semester programs
+ *
+ * HOW TO ADD DAE PROGRAM:
+ * 1. Create new Program object with unique id (e.g., "dae-chemical")
+ * 2. Tag must be "DAE", category must be "dae"
+ * 3. Include curriculum for all 3 years
+ * 4. List realistic career paths
+ * 5. Add to daePrograms array
+ *
+ * HOW TO EDIT CURRICULUM:
+ * 1. Find program by id
+ * 2. Update subjects array
+ * 3. Keep years labeled "1st Year", "2nd Year", "3rd Year"
+ * 4. Each year must have items array with subject names
+ */
 const daePrograms: Program[] = [
   {
     id: "dae-civil",

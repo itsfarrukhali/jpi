@@ -1,3 +1,33 @@
+/**
+ * DEPARTMENTS DATA FILE
+ *
+ * This file contains information about all departments:
+ * - Department name and description
+ * - Head of Department name and message
+ * - Courses offered
+ * - Labs and equipment
+ * - Photos and images
+ *
+ * EDIT THIS FILE TO CHANGE:
+ * ✅ Department descriptions
+ * ✅ HOD name and message
+ * ✅ Course lists
+ * ✅ Lab information
+ *
+ * READ FIRST: SIMPLE_GUIDE.md
+ */
+
+/**
+ * Department information type definition
+ *
+ * ⚠️ IMPORTANT FIELDS:
+ * - slug: URL-safe identifier (e.g., "civil"). NEVER CHANGE EXISTING SLUGS!
+ * - name: Short name (e.g., "Civil Technology")
+ * - fullName: Complete name (e.g., "Department of Civil Technology")
+ * - hodPhoto: Should use /public/tech/imagename.png (local files preferred)
+ * - color: Hex color code for department branding (e.g., "#C8521A")
+ * - icon: Lucide icon name (see https://lucide.dev)
+ */
 export type Department = {
   slug: "civil" | "electrical" | "mechanical" | "software";
   name: string;
@@ -15,11 +45,24 @@ export type Department = {
   galleryImages: string[];
 };
 
-// Source of truth for "Our Departments" section and department detail pages.
-// Editing tips:
-// 1) Add a new object in this array to add a new department card.
-// 2) Keep slug unique and URL-safe because it is used in routes/links.
-// 3) Prefer local image paths from /public/tech for image, hodPhoto, galleryImages.
+/**
+ * ALL DEPARTMENTS
+ *
+ * Source of truth for "Our Departments" section and department detail pages.
+ *
+ * EDITING TIPS:
+ * 1) Add a new object to add a new department card.
+ * 2) Keep slug unique and URL-safe because it is used in routes/links.
+ * 3) Prefer local image paths from /public/tech for image, hodPhoto, galleryImages.
+ * 4) Keep courses, labs, and other arrays properly formatted.
+ *
+ * HOW TO ADD DEPARTMENT:
+ * 1. Create new object with unique slug
+ * 2. Fill all required fields
+ * 3. Use local image paths
+ * 4. Add to departments array
+ * 5. Ensure slug matches type definition above
+ */
 export const departments: Department[] = [
   {
     slug: "civil",

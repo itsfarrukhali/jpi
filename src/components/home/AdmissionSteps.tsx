@@ -88,7 +88,7 @@ export default function AdmissionSteps() {
 
         <div className="mt-12 text-center">
           <Link
-            href="/admissions/apply"
+            href="/admissions/apply-now"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-(--color-gold) text-white font-semibold hover:bg-(--color-gold-light) transition-colors shadow-md"
           >
             Start Your Application →

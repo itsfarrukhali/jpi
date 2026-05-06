@@ -34,7 +34,7 @@ export default function ShortCoursesPage() {
               <ProgramCard
                 key={program.id}
                 program={program}
-                href="/admissions/apply"
+                href="/admissions/apply-now"
               />
             ))}
           </div>
@@ -65,7 +65,7 @@ export default function ShortCoursesPage() {
           </div>
           <div className="mt-10 text-center">
             <Link
-              href="/admissions/apply"
+              href="/admissions/apply-now"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-(--color-gold) text-white font-semibold hover:bg-(--color-gold-light) transition-colors shadow-md"
             >
               Register for a Course →

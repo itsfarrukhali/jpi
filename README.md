@@ -1,8 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# JPI (Jinnah Polytechnic Institute) Website
 
-## Getting Started
+A modern, fully-documented Next.js website for Jinnah Polytechnic Institute with simplified content management for non-technical users.
 
-First, run the development server:
+**Repository**: [itsfarrukhali/jpi](https://github.com/itsfarrukhali/jpi)
+
+---
+
+## 🎯 Quick Start
+
+### For Non-Technical Users (Content Editors)
+
+**Start here**: Read [START_HERE.md](START_HERE.md) (2 minutes)
+
+Then follow [SIMPLE_GUIDE.md](SIMPLE_GUIDE.md) for step-by-step instructions on how to:
+
+- ✅ Change news on home page
+- ✅ Update admission fees
+- ✅ Modify department information
+- ✅ Add new programs
+- ✅ Update important dates
+- ✅ Change contact information
+- ✅ Reorder home page sections
+
+**No coding knowledge required!**
+
+### For Developers
+
+1. Run the development server:
 
 ```bash
 npm run dev
@@ -14,126 +38,213 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Edit files and the page auto-updates
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project uses [Next.js](https://nextjs.org) with [TypeScript](https://www.typescriptlang.org/), [React](https://react.dev/), and [Tailwind CSS](https://tailwindcss.com/).
 
-## Landing Page Documentation
+---
 
-The home page is assembled in this file:
+## 📚 Documentation
 
-- `src/app/page.tsx`
+### For Non-Technical Users (Content Editors)
 
-Current component order on the landing page:
+All documentation is **simplified and easy to follow**:
 
-1. `HeroCarousel` - Main hero banner and primary message
-2. `AboutUs` - Institute introduction and trust context
-3. `AccreditationStrip` - NAVTTC, STEVTA, and SBTE recognition logos
-4. `ProgramsOverview` - Program cards and quick access links
-5. `WhyJPI` - Core strengths and value proposition
-6. `AdmissionSteps` - Student application flow
-7. `DepartmentsGrid` - Academic departments section
-8. `NewsSection` - Latest news and events preview
-9. `LatestUpdates` - Academic alerts (date sheets, results, notices)
-10. `CTABanner` - Final conversion block
+| Document                                                 | Purpose                          | Read Time |
+| -------------------------------------------------------- | -------------------------------- | --------- |
+| [START_HERE.md](START_HERE.md)                           | Quick introduction & overview    | 2 min     |
+| [SIMPLE_GUIDE.md](SIMPLE_GUIDE.md)                       | Main guide with 7 tasks          | 5 min     |
+| [QUICK_START.md](QUICK_START.md)                         | Quick reference for common tasks | 3 min     |
+| [FOR_NON_TECHNICAL_USERS.md](FOR_NON_TECHNICAL_USERS.md) | Complete overview                | 2 min     |
+| [DOCUMENTATION_STRUCTURE.md](DOCUMENTATION_STRUCTURE.md) | Visual guide to all docs         | 3 min     |
 
-Home component locations:
+**👉 Start with [START_HERE.md](START_HERE.md)**
 
-- `src/components/home/HeroCarousel.tsx`
-- `src/components/home/AboutUs.tsx`
-- `src/components/home/AccreditationStrip.tsx`
-- `src/components/home/ProgramsOverview.tsx`
-- `src/components/home/WhyJPI.tsx`
-- `src/components/home/AdmissionSteps.tsx`
-- `src/components/home/DepartmentsGrid.tsx`
-- `src/components/home/NewsSection.tsx`
-- `src/components/home/LatestUpdates.tsx`
-- `src/components/home/CTABanner.tsx`
+### For Developers
 
-### Editing Guide
+| Document                                         | Purpose                         |
+| ------------------------------------------------ | ------------------------------- |
+| [DATA_GUIDE.md](DATA_GUIDE.md)                   | Data files & database structure |
+| [PAGE_GUIDE.md](PAGE_GUIDE.md)                   | Page organization & routing     |
+| [COMPONENTS_GUIDE.md](COMPONENTS_GUIDE.md)       | Component structure & patterns  |
+| [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md) | Master index & reference        |
 
-- To reorder landing sections: update JSX order in `src/app/page.tsx`.
-- To update affiliation logos and labels: edit `recognitions` in `src/components/home/AccreditationStrip.tsx`.
-- To update exam/results announcements: edit `updates` in `src/components/home/LatestUpdates.tsx`.
-- To improve homepage SEO: update `metadata` in `src/app/page.tsx`.
+---
 
-### Content Guide: Programs, Carousel, Departments, News & Events
+## 🎯 What Can Be Changed
 
-Use this section to update real production data in the main landing page blocks.
+### Easy (No Technical Knowledge)
 
-#### 1) Our Programs
+- ✅ News articles (add, edit, publish)
+- ✅ Admission fees & dates
+- ✅ Department information & HOD messages
+- ✅ Program descriptions & courses
+- ✅ Contact information
+- ✅ Reorder home page sections
 
-- File: `src/components/home/ProgramsOverview.tsx`
-- Data source in file: `programs` array
-- Update these fields per card:
-  - `image`: local path in `/public/programs/...`
-  - `name`: card title
-  - `desc`: short description (1 to 2 lines)
-  - `href`: valid internal route (for example `/programs/dae`)
-- To add a new program card: append a new object in `programs`.
+### Medium (Basic Understanding)
 
-#### 2) Hero Carousel
+- ✅ Add new departments
+- ✅ Add new programs
+- ✅ Update course lists
+- ✅ Change home page component order
 
-- File: `src/components/home/HeroCarousel.tsx`
-- Data source in file: `slides` array
-- Update these fields per slide:
-  - `badge`, `title`, `subtitle`, `tag`
-  - `cta`: internal route for Learn More button
-  - `image`: recommended local image path from `/public/...`
-- Rules:
-  - Keep each `id` unique.
-  - Keep `tag` aligned with `tagColors` map or add new color key.
+### Not Supported (Requires Developer)
 
-#### 3) Our Departments
+- ❌ Change colors/design
+- ❌ Add new features
+- ❌ Modify page layout structure
+- ❌ Change navigation menus
+- ❌ Database/backend changes
 
-- Card section file: `src/components/home/DepartmentsGrid.tsx`
-- Actual data source: `src/data/departments.ts`
-- Update department object fields:
-  - `slug`, `name`, `fullName`, `description`
-  - `hod`, `hodPhoto`, `hodMessage`
-  - `image`, `courses`, `labs`, `galleryImages`
-- Rules:
-  - Keep `slug` unique and URL-safe.
-  - Prefer local files in `/public/tech` instead of random image URLs.
+---
 
-#### 4) News & Events
+## 📁 Content Files (What to Edit)
 
-- Section file: `src/components/home/NewsSection.tsx`
-- Actual data source: `src/data/news.ts`
-- Update each item fields:
-  - `id`, `title`, `excerpt`, `content`
-  - `date` in `YYYY-MM-DD`
-  - `category` as one of: `news`, `event`, `announcement`
-  - `image`, `slug`
-- Important:
-  - Home page shows the first 3 items only.
-  - Keep latest items at the top of `newsItems` array.
-  - Keep `id` and `slug` unique.
+All content is stored in **`src/data/`** directory:
 
-### SEO Implemented for Home Page
+```
+src/data/
+├── admissions.ts    # Fees, eligibility, dates, documents
+├── departments.ts   # Department info, HOD details, courses
+├── programs.ts      # Program details, curriculum, careers
+└── news.ts         # News items, events, announcements
+```
 
-The home page metadata currently includes:
+**That's all you need to edit!** No code knowledge required.
 
-- title and description
-- keywords
-- canonical URL
-- robots indexing rules
-- Open Graph metadata for social sharing
+### How to Edit
+
+1. Open one of the `src/data/*.ts` files
+2. Change the text inside quotation marks
+3. Don't worry about code structure
+4. Save (Ctrl+S)
+5. Changes appear on website automatically
+
+---
+
+## 🏗️ Project Structure
+
+### Pages (in `src/app/`)
+
+- `page.tsx` - Home page
+- `admissions/page.tsx` - Admissions overview
+- `admissions/fee-structure/page.tsx` - Fee details
+- `admissions/how-to-apply/page.tsx` - Application process
+- `admissions/merit/page.tsx` - Merit information
+- `admissions/apply-now/page.tsx` - Application form
+- `programs/dae/page.tsx` - DAE programs
+- `programs/certifications/page.tsx` - Certificates
+- `programs/short-courses/page.tsx` - Short courses
+- `programs/jec/page.tsx` - JEC programs
+- `about-us/page.tsx` - About page & departments
+- Various department detail pages
+
+### Components (in `src/components/`)
+
+- `home/` - Home page sections (Hero, News, Departments, etc.)
+- `layout/` - Header, Footer, Navigation
+- `shared/` - Reusable components (Cards, Breadcrumb, etc.)
+- `ui/` - UI primitives (Button, etc.)
+
+### Data (in `src/data/`)
+
+- `admissions.ts` - Admission data
+- `departments.ts` - Department data
+- `programs.ts` - Program data
+- `news.ts` - News items
+
+---
+
+## 🔧 Technical Stack
+
+- **Framework**: [Next.js 15+](https://nextjs.org) with App Router
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **UI**: [React 19+](https://react.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Fonts**: Optimized with Next.js font optimization
+
+---
+
+## 📝 Home Page Component Order
+
+The home page (`src/app/page.tsx`) displays components in this order:
+
+1. `HeroCarousel` - Main banner
+2. `AboutUs` - Institute introduction
+3. `AccreditationStrip` - Recognition logos
+4. `ProgramsOverview` - Program cards
+5. `WhyJPI` - Strengths
+6. `AdmissionSteps` - Application flow
+7. `DepartmentsGrid` - Departments
+8. `NewsSection` - Latest news (first 3 items only)
+9. `LatestUpdates` - Announcements
+10. `CTABanner` - Call to action
+
+To reorder: Edit component order in `src/app/page.tsx`
+
+---
+
+## 🔍 SEO
+
+All pages include:
+
+- Meta titles and descriptions
+- Keywords
+- Canonical URLs
+- Robots directives
+- Open Graph metadata (social sharing)
 - Twitter card metadata
 
-## Learn More
+SEO is optimized for search engines and social sharing.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 💾 Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Deploy on [Vercel](https://vercel.com) (recommended):
 
-## Deploy on Vercel
+1. Push code to GitHub
+2. Connect repository to Vercel
+3. Vercel auto-deploys on every push
+4. Website updates automatically
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Changes are live within 1-2 minutes.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## ✅ What's Included
+
+✅ **Simplified documentation** for non-technical users
+✅ **7 step-by-step guides** for common tasks
+✅ **Complete data files** with all content
+✅ **Responsive design** (mobile, tablet, desktop)
+✅ **SEO optimization**
+✅ **Performance optimized**
+✅ **Accessibility features**
+✅ **Clean, maintainable code**
+
+---
+
+## 📞 Support
+
+**For non-technical users**: See [SIMPLE_GUIDE.md](SIMPLE_GUIDE.md) troubleshooting section
+
+**For developers**: Refer to [DATA_GUIDE.md](DATA_GUIDE.md), [PAGE_GUIDE.md](PAGE_GUIDE.md), [COMPONENTS_GUIDE.md](COMPONENTS_GUIDE.md)
+
+---
+
+## 📄 License
+
+This project is maintained for Jinnah Polytechnic Institute.
+
+---
+
+## 🎉 Ready to Get Started?
+
+👉 **[Read START_HERE.md](START_HERE.md)** (takes 2 minutes)
+
+Then go to [SIMPLE_GUIDE.md](SIMPLE_GUIDE.md) for full instructions!

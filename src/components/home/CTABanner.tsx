@@ -16,7 +16,7 @@ export default function CTABanner() {
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
-            href="/admissions/apply"
+            href="/admissions/apply-now"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-(--color-primary) text-white font-semibold hover:bg-(--color-primary-dark) transition-colors shadow-lg"
           >
             Apply Now →

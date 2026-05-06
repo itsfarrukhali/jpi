@@ -176,7 +176,7 @@ export default function HeroCarousel() {
                 className="flex flex-wrap gap-3"
               >
                 <Link
-                  href="/admissions/apply"
+                  href="/admissions/apply-now"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-(--color-gold) text-white font-semibold text-sm hover:bg-(--color-gold-light) transition-colors shadow-lg"
                 >
                   Apply Now →

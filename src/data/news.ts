@@ -1,17 +1,78 @@
+/**
+ * NEWS & EVENTS DATA FILE
+ *
+ * This file contains all news, events, and announcements:
+ * - News articles about the institute
+ * - Upcoming events
+ * - Important announcements
+ * - Industrial visits and activities
+ *
+ * IMPORTANT:
+ * ⚠️ The HOME PAGE shows only the FIRST 3 items
+ * ⚠️ Put newest items at the TOP to display on home page
+ * ⚠️ Don't delete old items - keep them at the bottom
+ *
+ * EDIT THIS FILE TO CHANGE:
+ * ✅ News on home page
+ * ✅ Event announcements
+ * ✅ Important notices
+ *
+ * READ FIRST: SIMPLE_GUIDE.md
+ */
+
+/**
+ * News item information type definition
+ *
+ * IMPORTANT RULES:
+ * - id: MUST be globally unique (e.g., "news-1", "event-5", "ann-2")
+ * - slug: URL-safe identifier in kebab-case, MUST be unique
+ * - date: MUST be in "YYYY-MM-DD" ISO format (e.g., "2025-05-06")
+ * - category: One of "news", "event", "announcement" (no typos!)
+ *
+ * HOW id AND slug ARE USED:
+ * - id: React key in loops, data tracking
+ * - slug: URL routing (news-page/slug-name)
+ * - Changing either breaks links/keys - don't do it!
+ */
 export type NewsItem = {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  date: string;
+  id: string; // Unique ID: "news-1", "event-5"
+  title: string; // Headline
+  excerpt: string; // Short summary (1-2 sentences) - shows on home
+  content: string; // Full article text
+  date: string; // "YYYY-MM-DD" format (ISO standard)
   category: "news" | "event" | "announcement";
-  image: string;
-  slug: string;
+  image: string; // Image URL or local path
+  slug: string; // URL slug: "my-news-title" (kebab-case)
 };
 
-// Source of truth for "News & Events" content.
-// Home page shows the first 3 items from this array, so keep newest entries at the top.
-// Use unique id and slug values to avoid key/link collisions.
+/**
+ * ALL NEWS ITEMS
+ *
+ * ⚠️ CRITICAL: Home page shows ONLY items 0, 1, and 2 (first 3)
+ * Therefore: Always put newest items at the TOP of this array
+ *
+ * HOW TO PUBLISH NEWS ON HOME PAGE:
+ * 1. Add new NewsItem object with all fields filled
+ * 2. Place it at the TOP of the array (before all others)
+ * 3. It automatically appears on home page within minutes
+ * 4. Use ANY unique id and slug (e.g., "news-latest" or "ann-2025-05-06")
+ * 5. Date must be in "YYYY-MM-DD" format
+ * 6. category must be: "news", "event", or "announcement"
+ *
+ * HOW TO HIDE OLD NEWS FROM HOME:
+ * Simply move it down in the array. Only first 3 display on home.
+ * Moved items still visible on full news page.
+ *
+ * HOW TO EDIT EXISTING NEWS:
+ * 1. Find by id or slug
+ * 2. Update content, excerpt, or date
+ * 3. NEVER change id or slug (breaks references)
+ * 4. Keep date format: "YYYY-MM-DD"
+ *
+ * DATE FORMAT EXAMPLES:
+ * ✅ Correct: "2025-05-06", "2025-03-15", "2025-12-25"
+ * ❌ Wrong: "May 6, 2025", "06-05-2025", "2025/05/06"
+ */
 export const newsItems: NewsItem[] = [
   {
     id: "news-1",

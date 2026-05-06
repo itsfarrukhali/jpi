@@ -53,7 +53,7 @@ export default function DepartmentsGrid() {
           className="mt-12 flex justify-center"
         >
           <Link
-            href="/admissions/apply"
+            href="/admissions/apply-now"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gold text-white font-semibold hover:bg-gold-light transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
           >
             View All Departments

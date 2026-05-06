@@ -48,10 +48,10 @@ const navLinks = [
     label: "Admissions",
     href: "/admissions",
     children: [
-      { label: "How to Apply", href: "/admissions" },
-      { label: "Fee Structure", href: "/admissions/fee-structure" },
+      { label: "How to Apply", href: "/admissions/how-to-apply" },
       { label: "Merit Criteria", href: "/admissions/merit" },
-      { label: "Online Application", href: "/admissions/apply" },
+      { label: "Fee Structure", href: "/admissions/fee-structure" },
+      { label: "Online Application", href: "/admissions/apply-now" },
     ],
   },
   {
@@ -313,7 +313,7 @@ function NavbarContent({ pathname }: { pathname: string }) {
             {/* CTA + Mobile Toggle */}
             <div className="flex items-center gap-3">
               <Link
-                href="/admissions/apply"
+                href="/admissions/apply-now"
                 className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-(--color-gold) text-white text-sm font-semibold hover:bg-(--color-gold-light) transition-colors shadow-sm"
               >
                 Apply Now →
@@ -393,7 +393,7 @@ function NavbarContent({ pathname }: { pathname: string }) {
                 )}
                 <div className="pt-3 border-t border-gray-100">
                   <Link
-                    href="/admissions/apply"
+                    href="/admissions/apply-now"
                     className="block w-full text-center px-4 py-2.5 rounded-lg bg-(--color-gold) text-white font-semibold text-sm"
                   >
                     Apply Now →

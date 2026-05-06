@@ -45,7 +45,7 @@ export default function DAEPage() {
               <ProgramCard
                 key={program.id}
                 program={program}
-                href="/admissions/apply"
+                href="/admissions/apply-now"
               />
             ))}
           </div>
@@ -123,7 +123,7 @@ export default function DAEPage() {
 
           <div className="mt-12 text-center">
             <Link
-              href="/admissions/apply"
+              href="/admissions/apply-now"
               className="inline-flex items-center gap-2 px-6 py-3 border border-amber-600 text-amber-700 text-sm font-medium hover:bg-amber-50 transition-colors"
             >
               Apply for DAE →
