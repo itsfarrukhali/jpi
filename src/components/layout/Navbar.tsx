@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, Mail, ChevronDown, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { departments } from "@/data/departments";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -54,15 +55,14 @@ const navLinks = [
       { label: "Online Application", href: "/admissions/apply-now" },
     ],
   },
+  // Departments menu is generated from data/departments.ts so it stays in sync
   {
     label: "Departments",
-    href: "/departments/civil",
-    children: [
-      { label: "Civil Technology", href: "/departments/civil" },
-      { label: "Electrical Technology", href: "/departments/electrical" },
-      { label: "Mechanical Technology", href: "/departments/mechanical" },
-      { label: "Computer Technology", href: "/departments/computer" },
-    ],
+    href: "/departments",
+    children: departments.map((d) => ({
+      label: d.name,
+      href: `/departments/${d.slug}`,
+    })),
   },
   {
     label: "More",

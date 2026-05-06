@@ -1,117 +1,354 @@
-/**
- * DEPARTMENTS DATA FILE
- *
- * This file contains information about all departments:
- * - Department name and description
- * - Head of Department name and message
- * - Courses offered
- * - Labs and equipment
- * - Photos and images
- *
- * EDIT THIS FILE TO CHANGE:
- * ✅ Department descriptions
- * ✅ HOD name and message
- * ✅ Course lists
- * ✅ Lab information
- *
- * READ FIRST: SIMPLE_GUIDE.md
- */
+// ─── Types ───────────────────────────────────────────
 
-/**
- * Department information type definition
- *
- * ⚠️ IMPORTANT FIELDS:
- * - slug: URL-safe identifier (e.g., "civil"). NEVER CHANGE EXISTING SLUGS!
- * - name: Short name (e.g., "Civil Technology")
- * - fullName: Complete name (e.g., "Department of Civil Technology")
- * - hodPhoto: Should use /public/tech/imagename.png (local files preferred)
- * - color: Hex color code for department branding (e.g., "#C8521A")
- * - icon: Lucide icon name (see https://lucide.dev)
- */
-export type Department = {
-  slug: "civil" | "electrical" | "mechanical" | "software";
+export interface FacultyMember {
+  id: string;
+  name: string;
+  designation: string;
+  department: string;
+  photo: string;
+}
+
+export interface Department {
+  slug: string;
   name: string;
   fullName: string;
+  established: string;
   hod: string;
   hodPhoto: string;
+  hodDesignation: string;
   hodMessage: string;
   color: string;
   icon: string;
   image: string;
-  courses: string[];
-  students: number;
   description: string;
+  overview: string[];
+  courses: string[];
   labs: string[];
+  careerScope: string[];
   galleryImages: string[];
-};
+}
 
-/**
- * ALL DEPARTMENTS
- *
- * Source of truth for "Our Departments" section and department detail pages.
- *
- * EDITING TIPS:
- * 1) Add a new object to add a new department card.
- * 2) Keep slug unique and URL-safe because it is used in routes/links.
- * 3) Prefer local image paths from /public/tech for image, hodPhoto, galleryImages.
- * 4) Keep courses, labs, and other arrays properly formatted.
- *
- * HOW TO ADD DEPARTMENT:
- * 1. Create new object with unique slug
- * 2. Fill all required fields
- * 3. Use local image paths
- * 4. Add to departments array
- * 5. Ensure slug matches type definition above
- */
-export const departments: Department[] = [
+// ─── Faculty Members ─────────────────────────────────
+
+export const facultyMembers: FacultyMember[] = [
+  // Electrical Technology
   {
-    slug: "civil",
-    name: "Civil Technology",
-    fullName: "Department of Civil Technology",
-    hod: "Mr. SYed Ansar Ahmed Rizvi",
-    hodPhoto: "/tech/civil.png",
-    hodMessage:
-      "The Civil Technology Department at JPI has produced hundreds of skilled engineers who contribute to Pakistan's infrastructure. Our survey lab and construction workshop give students hands-on experience that sets them apart in the industry.",
-    color: "#C8521A",
-    icon: "building",
-    image: "/tech/civil.png",
-    courses: [
-      "Applied Mathematics",
-      "Engineering Drawing",
-      "Surveying I & II",
-      "Concrete Technology",
-      "Structural Analysis",
-      "Road Construction",
-      "Water Supply & Sanitation",
-      "Estimation & Costing",
-      "Construction Management",
-    ],
-    students: 180,
-    description:
-      "The Department of Civil Technology prepares students for careers in construction, infrastructure, and environmental engineering through a rigorous 3-year DAE program.",
-    labs: [
-      "Survey Lab — Total Stations, GPS, Theodolites",
-      "Material Testing Lab — Compression Machine, Soil Apparatus",
-      "CAD Drawing Lab — 30 Workstations, AutoCAD 2024, Civil 3D",
-      "Concrete Lab — Slump Cone, Cube Molds, Curing Tanks",
-    ],
-    galleryImages: Array.from(
-      { length: 6 },
-      (_, i) => `https://picsum.photos/600/400?random=${40 + i}`,
-    ),
+    id: "fac-01",
+    name: "Mr. Mansoor Ahmed",
+    designation: "Head of Department",
+    department: "Electrical Technology",
+    photo: "/faculty/mansoor-ahmed.jpg",
   },
+  {
+    id: "fac-02",
+    name: "Mr. Muhammad Jamaluddin",
+    designation: "Sr. Instructor",
+    department: "Electrical Technology",
+    photo: "/faculty/muhammad-jamaluddin.jpg",
+  },
+  {
+    id: "fac-03",
+    name: "Mr. Syed Muhammad Musharraf Ashraf",
+    designation: "Lab Assistant",
+    department: "Electrical Technology",
+    photo: "/faculty/musharraf-ashraf.jpg",
+  },
+  {
+    id: "fac-04",
+    name: "Mr. Faisal Usmani",
+    designation: "Lab Assistant",
+    department: "Electrical Technology",
+    photo: "/faculty/faisal-usmani.jpg",
+  },
+  {
+    id: "fac-05",
+    name: "Mr. Bilal Ahmed",
+    designation: "Naib Qasid",
+    department: "Electrical Technology",
+    photo: "/faculty/bilal-ahmed.jpg",
+  },
+
+  // Electronics Technology
+  {
+    id: "fac-06",
+    name: "Mr. Mansoor Ahmed",
+    designation: "Head of Department",
+    department: "Electronics Technology",
+    photo: "/faculty/mansoor-ahmed.jpg",
+  },
+  {
+    id: "fac-07",
+    name: "Engr. Imran Samad Khan",
+    designation: "Associate H.O.D",
+    department: "Electronics Technology",
+    photo: "/faculty/imran-samad.jpg",
+  },
+  {
+    id: "fac-08",
+    name: "Mr. Shoaib Ahmed",
+    designation: "Instructor",
+    department: "Electronics Technology",
+    photo: "/faculty/shoaib-ahmed.jpg",
+  },
+  {
+    id: "fac-09",
+    name: "Engr. Ateeqa Sarwar",
+    designation: "Instructor",
+    department: "Electronics Technology",
+    photo: "/faculty/ateeqa-sarwar.jpg",
+  },
+  {
+    id: "fac-10",
+    name: "Mr. Danish",
+    designation: "Lab Assistant",
+    department: "Electronics Technology",
+    photo: "/faculty/danish.jpg",
+  },
+  {
+    id: "fac-11",
+    name: "Mr. Naeem",
+    designation: "Store Keeper",
+    department: "Electronics Technology",
+    photo: "/faculty/naeem.jpg",
+  },
+  {
+    id: "fac-12",
+    name: "Mr. Hammad Ur Rehman",
+    designation: "Naib Qasid",
+    department: "Electronics Technology",
+    photo: "/faculty/hammad.jpg",
+  },
+
+  // Mechanical Technology
+  {
+    id: "fac-13",
+    name: "Engr. Mehdi Hassan",
+    designation: "Head of Department",
+    department: "Mechanical Technology",
+    photo: "/faculty/mehdi-hassan.jpg",
+  },
+  {
+    id: "fac-14",
+    name: "Mr. Munawar Ali",
+    designation: "Senior Instructor",
+    department: "Mechanical Technology",
+    photo: "/faculty/munawar-ali.jpg",
+  },
+  {
+    id: "fac-15",
+    name: "Mr. Syed Ali Haider Zaidi",
+    designation: "Senior Instructor",
+    department: "Mechanical Technology",
+    photo: "/faculty/ali-haider.jpg",
+  },
+  {
+    id: "fac-16",
+    name: "Mr. Khalid Aziz",
+    designation: "Trade Instructor",
+    department: "Mechanical Technology",
+    photo: "/faculty/khalid-aziz.jpg",
+  },
+  {
+    id: "fac-17",
+    name: "Mr. Muhammad Akram",
+    designation: "Lab Assistant",
+    department: "Mechanical Technology",
+    photo: "/faculty/muhammad-akram.jpg",
+  },
+  {
+    id: "fac-18",
+    name: "Mr. Adil Ahmed",
+    designation: "Lab Assistant",
+    department: "Mechanical Technology",
+    photo: "/faculty/adil-ahmed.jpg",
+  },
+  {
+    id: "fac-19",
+    name: "Mr. Muzaffar Khan",
+    designation: "Naib Qasid",
+    department: "Mechanical Technology",
+    photo: "/faculty/muzaffar-khan.jpg",
+  },
+
+  // Computer Information Technology
+  {
+    id: "fac-20",
+    name: "Mr. Saifullah Ali Khan",
+    designation: "Associate H.O.D",
+    department: "CIT",
+    photo: "/faculty/saifullah-ali.jpg",
+  },
+  {
+    id: "fac-21",
+    name: "Mr. Idrees Khan",
+    designation: "Sr. Instructor",
+    department: "CIT",
+    photo: "/faculty/idrees-khan.jpg",
+  },
+  {
+    id: "fac-22",
+    name: "Ms. Komal Mairaj",
+    designation: "Instructor",
+    department: "CIT",
+    photo: "/faculty/komal-mairaj.jpg",
+  },
+  {
+    id: "fac-23",
+    name: "Mr. Rehan Qureshi",
+    designation: "Instructor",
+    department: "CIT",
+    photo: "/faculty/rehan-qureshi.jpg",
+  },
+  {
+    id: "fac-24",
+    name: "Mr. Moiz Iqbal",
+    designation: "Lab Assistant",
+    department: "CIT",
+    photo: "/faculty/moiz-iqbal.jpg",
+  },
+
+  // Software Technology
+  {
+    id: "fac-25",
+    name: "Mr. Saifullah Ali Khan",
+    designation: "Associate H.O.D",
+    department: "Software Technology",
+    photo: "/faculty/saifullah-ali.jpg",
+  },
+  {
+    id: "fac-26",
+    name: "Mr. Idrees Khan",
+    designation: "Sr. Instructor",
+    department: "Software Technology",
+    photo: "/faculty/idrees-khan.jpg",
+  },
+  {
+    id: "fac-27",
+    name: "Ms. Komal Mairaj",
+    designation: "Instructor",
+    department: "Software Technology",
+    photo: "/faculty/komal-mairaj.jpg",
+  },
+  {
+    id: "fac-28",
+    name: "Mr. Anique Ali",
+    designation: "Lab Assistant",
+    department: "Software Technology",
+    photo: "/faculty/anique-ali.jpg",
+  },
+
+  // Civil Technology
+  {
+    id: "fac-29",
+    name: "Mr. Syed Ansar Ahmed Rizvi",
+    designation: "Head of Department",
+    department: "Civil Technology",
+    photo: "/faculty/ansar-rizvi.jpg",
+  },
+  {
+    id: "fac-30",
+    name: "Engr. Sami Uddin Qureshi",
+    designation: "Academic Coordinator / Sr. Instructor",
+    department: "Civil Technology",
+    photo: "/faculty/sami-qureshi.jpg",
+  },
+  {
+    id: "fac-31",
+    name: "Mr. Shehzad Tariq",
+    designation: "Instructor",
+    department: "Civil Technology",
+    photo: "/faculty/shehzad-tariq.jpg",
+  },
+  {
+    id: "fac-32",
+    name: "Mr. Hamza Rana",
+    designation: "Trade Instructor",
+    department: "Civil Technology",
+    photo: "/faculty/hamza-rana.jpg",
+  },
+
+  // Refrigeration & Air Conditioning
+  {
+    id: "fac-33",
+    name: "Engr. Muhammad Akhtar Zafar",
+    designation: "Head of Department",
+    department: "RAC",
+    photo: "/faculty/akhtar-zafar.jpg",
+  },
+  {
+    id: "fac-34",
+    name: "Mr. Nadeem Akhter",
+    designation: "Associate HOD",
+    department: "RAC",
+    photo: "/faculty/nadeem-akhter.jpg",
+  },
+  {
+    id: "fac-35",
+    name: "Engr. Ameer Ahmed",
+    designation: "Senior Instructor",
+    department: "RAC",
+    photo: "/faculty/ameer-ahmed.jpg",
+  },
+  {
+    id: "fac-36",
+    name: "Mr. Muhammad Affan",
+    designation: "Trade Instructor",
+    department: "RAC",
+    photo: "/faculty/muhammad-affan.jpg",
+  },
+
+  // Chemical Technology
+  {
+    id: "fac-37",
+    name: "Mr. Mansoor Ahmed",
+    designation: "Head of Department",
+    department: "Chemical Technology",
+    photo: "/faculty/mansoor-ahmed.jpg",
+  },
+  {
+    id: "fac-38",
+    name: "Mr. Syed Muhammad Muzammil Kamal",
+    designation: "Instructor",
+    department: "Chemical Technology",
+    photo: "/faculty/muzammil-kamal.jpg",
+  },
+  {
+    id: "fac-39",
+    name: "Mr. Syed Muhammad Musharraf Ashraf",
+    designation: "Lab Assistant",
+    department: "Chemical Technology",
+    photo: "/faculty/musharraf-ashraf.jpg",
+  },
+];
+
+// ─── Departments ─────────────────────────────────────
+
+export const departments: Department[] = [
   {
     slug: "electrical",
     name: "Electrical Technology",
     fullName: "Department of Electrical Technology",
+    established: "1961",
     hod: "Mr. Mansoor Ahmed",
-    hodPhoto: "https://picsum.photos/200/200?random=12",
+    hodPhoto: "/faculty/mansoor-ahmed.jpg",
+    hodDesignation: "Head of Department",
     hodMessage:
-      "In today's world, electrical engineers are the backbone of every industry. Our department is equipped with modern PLC labs, power electronics benches, and electrical machine test rigs that prepare students for real industrial environments.",
+      "The living standard of people in a country depends upon industrial growth. The use of Electrical Power is increasing rapidly and as such power generation and distribution units are necessary for installation. The generated power and its subsequent use in industries to produce various products and home appliances demands technically trained manpower. CPEC is a landmark and has opened a new era in the field of industry.",
     color: "#1A3F7A",
     icon: "zap",
     image: "/tech/electrical.png",
+    description:
+      "Electrical Technology was inducted in 1961. The department is fully equipped with labs including Machine, Power, Electronics & Wiring Labs as well as latest tools and machines for upgrading the technical skills of students.",
+    overview: [
+      "The scope of Electrical Technology is at all levels in the Public Sector — from municipal to federal level.",
+      "In the Private Sector, opportunities range from individual town planners to International Companies.",
+      "The department provides comprehensive training in power systems, electrical machines, and industrial electronics.",
+    ],
     courses: [
+      "Applied Mathematics",
+      "Applied Physics",
+      "Communication Skills",
+      "Engineering Drawing",
       "Basic Electricity",
       "Electronic Components",
       "AC/DC Circuits",
@@ -120,16 +357,24 @@ export const departments: Department[] = [
       "Electric Machines I & II",
       "Power Systems",
       "PLC & Industrial Automation",
+      "Electrical Installations",
       "Energy Management",
+      "Project Work",
     ],
-    students: 180,
-    description:
-      "The Department of Electrical Technology offers comprehensive training in power systems, industrial electronics, and automation.",
     labs: [
-      "PLC & Automation Lab — Siemens S7-300, Allen-Bradley PLCs, SCADA",
-      "Power Systems Lab — Transformers, 3-Phase Panels, Power Analyzers",
+      "Machine Lab — AC/DC Motors, Generators, Transformers, Control Panels",
+      "Power Lab — 3-Phase Panels, Power Analyzers, Distribution Systems",
       "Electronics Lab — Oscilloscopes, Function Generators, Soldering Stations",
-      "Electrical Machines Lab — AC/DC Motors, Generators, Control Panels",
+      "Wiring Lab — Domestic & Industrial Wiring Setups, Testing Equipment",
+    ],
+    careerScope: [
+      "Junior Electrical Engineer",
+      "Industrial Electrician",
+      "PLC Programmer",
+      "Power Plant Technician",
+      "Maintenance Engineer",
+      "Public Sector (WAPDA, K-Electric, etc.)",
+      "CPEC & Industrial Projects",
     ],
     galleryImages: Array.from(
       { length: 6 },
@@ -137,35 +382,120 @@ export const departments: Department[] = [
     ),
   },
   {
+    slug: "electronics",
+    name: "Electronics Technology",
+    fullName: "Department of Electronics Technology",
+    established: "2004",
+    hod: "Mr. Mansoor Ahmed",
+    hodPhoto: "/faculty/mansoor-ahmed.jpg",
+    hodDesignation: "Head of Department",
+    hodMessage:
+      "Electronics technology is all about the components and systems that make electronic devices work — such as Drones, Robots, Smart Phones, Home Automations, Solar Systems etc. Electronics Technology is the gateway to make a person skillful according to industrial requirements and demands.",
+    color: "#2563EB",
+    icon: "cpu",
+    image: "/tech/electronics.png",
+    description:
+      "Electronics Department was established in 2004 in Jinnah Polytechnic Institute. Since then it has been playing a vital role for Diploma of Associate Engineers. We have well equipped analog and digital labs with latest equipment that satisfy the current requirements of industries.",
+    overview: [
+      "After successful completion of D.A.E in Electronics, students serve in Government and Private Sectors; many students are also working abroad.",
+      "This three-year program develops technical skills through final year projects, exhibitions, and sports events.",
+      "JPI provides opportunities in terms of industrial visits for students.",
+    ],
+    courses: [
+      "Applied Mathematics",
+      "Applied Physics",
+      "Communication Skills",
+      "Engineering Drawing",
+      "Basic Electronics",
+      "Electronic Components",
+      "Analog Circuits",
+      "Digital Electronics",
+      "Microcontrollers",
+      "Communication Systems",
+      "Instrumentation",
+      "PCB Design",
+      "Embedded Systems",
+      "Power Electronics",
+      "Project Work",
+    ],
+    labs: [
+      "Analog Electronics Lab — Oscilloscopes, Power Supplies, Multimeters",
+      "Digital Electronics Lab — Logic Analyzers, FPGA Boards, Microcontroller Kits",
+      "PCB Design & Fabrication Lab — PCB Printer, Etching Station, Soldering",
+      "Communication Systems Lab — RF Equipment, Antenna Trainers, Modulation Kits",
+    ],
+    careerScope: [
+      "Electronics Technician",
+      "Embedded Systems Developer",
+      "Telecom Technician",
+      "Instrumentation Engineer",
+      "PCB Designer",
+      "Robotics & Drone Industry",
+      "Solar Energy Sector",
+    ],
+    galleryImages: Array.from(
+      { length: 6 },
+      (_, i) => `https://picsum.photos/600/400?random=${80 + i}`,
+    ),
+  },
+  {
     slug: "mechanical",
     name: "Mechanical Technology",
     fullName: "Department of Mechanical Technology",
+    established: "1961",
     hod: "Engr. Mehdi Hassan",
-    hodPhoto: "https://picsum.photos/200/200?random=13",
+    hodPhoto: "/faculty/mehdi-hassan.jpg",
+    hodDesignation: "Head of Department",
     hodMessage:
-      "Mechanical technology is the foundation of manufacturing. Our department combines traditional machining skills with modern CNC and CAD/CAM technologies to produce graduates ready for Pakistan's growing industrial sector.",
+      "Mechanical Technology is referred to as the 'mother of all Technologies' and plays a vital role in the development of a country. It primarily deals with Machines, Tools, and Equipment. Our department has state-of-the-art and well-furnished workshops with highly qualified trained staff.",
     color: "#D4921A",
     icon: "settings",
     image: "/tech/mechanical.png",
+    description:
+      "The department was established in 1961 alongside the formation of JPI itself. The curriculum covers Computer Integrated Manufacturing (CIM) with CAD, CAM & Robotics, operation of various machinery, tool design, and engineering drawing.",
+    overview: [
+      "Training on Lathe machines, Drill machines, Tool grinders, Shaper machine, Milling machine.",
+      "Wood Works / Carpentry Workshop, Foundry Practice, Pattern making, Advanced welding.",
+      "Tool design & making and Engineering Drawing & CAD.",
+    ],
     courses: [
+      "Applied Mathematics",
+      "Applied Physics",
+      "Communication Skills",
+      "Engineering Drawing",
       "Workshop Technology",
       "Material Science",
       "Machine Design",
       "Manufacturing Processes",
       "Thermodynamics",
       "Fluid Mechanics",
+      "Metrology",
+      "CAD/CAM Basics",
       "CNC Machining",
+      "Heat Treatment",
       "Refrigeration & AC",
+      "Industrial Management",
       "Quality Control",
+      "Project Work",
     ],
-    students: 180,
-    description:
-      "The Department of Mechanical Technology trains students in manufacturing processes, machine design, and thermal engineering.",
     labs: [
       "Machine Shop — Lathe, Milling, Drilling, Grinding Machines",
       "CNC Lab — CNC Lathe, CNC Milling, CAD/CAM Software",
       "Thermodynamics Lab — Heat Exchanger, Refrigeration Trainer, AC Unit",
       "Welding Shop — MIG, TIG, Arc Welding Equipment",
+      "Wood Works & Carpentry Workshop",
+      "Foundry & Pattern Making Shop",
+    ],
+    careerScope: [
+      "Mechanical Engineer (Jr.)",
+      "CNC Operator / Programmer",
+      "Maintenance Technician",
+      "HVAC Technician",
+      "Production Supervisor",
+      "Automobile Industries",
+      "Chemical Plants",
+      "Oil & Gas Industries",
+      "Power Plants",
     ],
     galleryImages: Array.from(
       { length: 6 },
@@ -173,39 +503,303 @@ export const departments: Department[] = [
     ),
   },
   {
-    slug: "software",
-    name: "Software Technology",
-    fullName: "Department of Software Technology",
+    slug: "cit",
+    name: "Computer Information Technology",
+    fullName: "Department of Computer Information Technology",
+    established: "2015",
     hod: "Mr. Saifullah Ali Khan",
-    hodPhoto: "https://picsum.photos/200/200?random=14",
+    hodPhoto: "/faculty/saifullah-ali.jpg",
+    hodDesignation: "Associate H.O.D",
     hodMessage:
-      "The digital revolution demands skilled technologists. Our Software Technology program equips students with real-world programming, networking, and development skills to thrive in Pakistan's rapidly growing tech economy.",
-    color: "#1A3F7A",
-    icon: "monitor",
-    image: "/tech/software.png",
-    courses: [
-      "C# Programming",
-      "Digital Logic",
-      "Data Structures",
-      "OOP with Java",
-      "Database Management",
-      "Computer Networks",
-      "Web Development",
-      "Cybersecurity",
-      "Mobile App Development",
-    ],
-    students: 180,
+      "CIT is a discipline that integrates fields of Electronics Engineering and Computer Science. It goes beyond traditional Software Engineering or Electronic Engineering by focusing on Electronic Engineering, Software Design, Networking, and Hardware-Software integration. Our mission is to prepare students to be future leaders and entrepreneurs.",
+    color: "#4F46E5",
+    icon: "network",
+    image: "/tech/cit.png",
     description:
-      "The Department of Software Technology provides cutting-edge training in software development, networking, and cybersecurity.",
+      "The department was established in 2015. Its mission is to prepare students to be future leaders and entrepreneurs, developing the fundamental concepts of computing disciplines and their insights to solve real-world problems.",
+    overview: [
+      "Hardware: From circuit design of microprocessors to the latest development of personal computers.",
+      "Software: Latest development of communication systems and networks.",
+      "Programming includes C/C++, JavaScript, HTML, and CSS. Hardware includes Circuit Designing and fabrication.",
+    ],
+    courses: [
+      "Applied Mathematics",
+      "Communication Skills",
+      "Computer Fundamentals",
+      "Programming Basics (C/C++)",
+      "Digital Electronics",
+      "IT Essentials",
+      "Computer Networks",
+      "Network Administration",
+      "Cybersecurity Fundamentals",
+      "Database Systems",
+      "Web Development (HTML, CSS, JavaScript)",
+      "Linux Administration",
+      "Cloud Computing",
+      "Advanced Networking",
+      "Ethical Hacking",
+      "IT Project Management",
+      "Project Work",
+    ],
     labs: [
-      "Programming Lab — 50 Core i7 PCs, VS Code, MySQL, Cisco Packet Tracer",
+      "Programming Lab — 50 Core i7 PCs, VS Code, Compilers, Development Tools",
       "Networking Lab — Cisco Routers & Switches, Network Racks, Firewalls",
-      "Multimedia Lab — iMacs, Adobe Creative Suite, Drawing Tablets",
+      "Hardware & Circuit Lab — Microprocessors, PCB Fabrication, Testing Equipment",
       "Server Room — Linux Servers, Cloud Lab Environment",
+    ],
+    careerScope: [
+      "Network Administrator",
+      "System Administrator",
+      "Cybersecurity Analyst",
+      "IT Support Specialist",
+      "Cloud Support Engineer",
+      "Web Developer",
+      "Database Administrator",
     ],
     galleryImages: Array.from(
       { length: 6 },
       (_, i) => `https://picsum.photos/600/400?random=${70 + i}`,
+    ),
+  },
+  {
+    slug: "software",
+    name: "Software Technology",
+    fullName: "Department of Software Technology",
+    established: "2019",
+    hod: "Mr. Saifullah Ali Khan",
+    hodPhoto: "/faculty/saifullah-ali.jpg",
+    hodDesignation: "Associate H.O.D",
+    hodMessage:
+      "Our mission is to prepare technically strong Software Technologists who can contribute effectively towards the nation, society, and the world through effective problem-solving skills, application of engineering knowledge, leadership, and a healthy lifelong learning attitude.",
+    color: "#7C3AED",
+    icon: "monitor",
+    image: "/tech/software.png",
+    description:
+      "The department was established in 2019. It has a sophisticated lab equipped with state-of-the-art technology running a wide range of software including Windows and Linux. The core courses focus on fundamentals of software engineering followed by a broader range of specialization courses.",
+    overview: [
+      "Website Designing & Web Development.",
+      "Desktop Programming & Database Management Systems.",
+      "Requirements Analysis, Software Architecture & Quality Assurance.",
+      "Throughout the diploma, students are exposed to theory, techniques, tools, and practicalities of Software Engineering.",
+    ],
+    courses: [
+      "Applied Mathematics",
+      "Communication Skills",
+      "Programming Fundamentals",
+      "Digital Logic Design",
+      "Computer Architecture",
+      "Object Oriented Programming (Java)",
+      "Data Structures & Algorithms",
+      "Database Management Systems",
+      "Web Technologies (HTML, CSS, JS)",
+      "Operating Systems",
+      "Software Engineering Basics",
+      "Advanced Web Development",
+      "Mobile Application Development",
+      "Software Project Management",
+      "Information Security",
+      "Professional Practices",
+      "Project Work",
+    ],
+    labs: [
+      "Software Development Lab — High-spec PCs, Windows & Linux OS, VS Code, Eclipse",
+      "Web & Mobile Lab — Latest frameworks, Emulators, Testing Tools",
+      "Database Lab — MySQL, SQL Server, Oracle, MongoDB",
+    ],
+    careerScope: [
+      "Software Developer",
+      "Web Developer",
+      "Mobile App Developer",
+      "Database Administrator",
+      "IT Support Engineer",
+      "Software Quality Assurance",
+      "Freelance Developer",
+    ],
+    galleryImages: Array.from(
+      { length: 6 },
+      (_, i) => `https://picsum.photos/600/400?random=${90 + i}`,
+    ),
+  },
+  {
+    slug: "civil",
+    name: "Civil Technology",
+    fullName: "Department of Civil Technology",
+    established: "1961",
+    hod: "Mr. Syed Ansar Ahmed Rizvi",
+    hodPhoto: "/faculty/ansar-rizvi.jpg",
+    hodDesignation: "Head of Department",
+    hodMessage:
+      "Civil Technology is a discipline involved with the Planning, Designing, Construction, and Maintenance of the Physical and naturally built environment. It is noted as one of the oldest technologies globally. It emphasizes Concepts and Principles in the structural environment and technological process, embracing Practical Skills and the applications of Scientific Principles.",
+    color: "#C8521A",
+    icon: "building",
+    image: "/tech/civil.png",
+    description:
+      "Civil Technology is a discipline involved with Planning, Designing, Construction, and Maintenance of the physical and naturally built environment. Its work encompasses Water Works, Sewers, Dams, Rail, Roads, Bridges, Tunnels, Irrigation, River Navigation, Traffic Control, Mass Transits, Airports, Industrial Plants, Buildings, Skyscrapers, Docks & Harbors, and Steel Structures.",
+    overview: [
+      "Sub-disciplines include structural technology, geological technology, water resources technology, material technology, Surveying, and Construction technology.",
+      "The scope extends to all levels in the Public Sector (municipal to federal) and Private Sector (individual Town Planner to International Companies).",
+      "CPEC is a landmark that has opened a new era in the field of the Construction Industry.",
+    ],
+    courses: [
+      "Applied Mathematics",
+      "Applied Physics",
+      "Communication Skills",
+      "Engineering Drawing",
+      "Building Materials",
+      "Surveying I & II",
+      "Structural Analysis",
+      "Concrete Technology",
+      "Soil Mechanics",
+      "Hydraulics",
+      "Estimation & Costing",
+      "Steel Structures",
+      "Road Construction",
+      "Water Supply & Sanitation",
+      "Construction Management",
+      "Professional Ethics",
+      "Project Work",
+    ],
+    labs: [
+      "Survey Lab — Total Stations, GPS, Theodolites, Leveling Instruments",
+      "Material Testing Lab — Compression Machine, Soil Testing Apparatus",
+      "CAD Drawing Lab — 30 Workstations, AutoCAD 2024, Civil 3D",
+      "Concrete Lab — Slump Cone, Cube Molds, Curing Tanks",
+    ],
+    careerScope: [
+      "Junior Civil Engineer",
+      "Site Supervisor",
+      "Surveyor",
+      "CAD Draughtsman",
+      "Construction Inspector",
+      "Public Sector (NHA, WAPDA, etc.)",
+      "CPEC Construction Projects",
+      "Private Construction Companies",
+    ],
+    galleryImages: Array.from(
+      { length: 6 },
+      (_, i) => `https://picsum.photos/600/400?random=${40 + i}`,
+    ),
+  },
+  {
+    slug: "rac",
+    name: "Refrigeration & AC Technology",
+    fullName: "Department of Refrigeration & Air Conditioning Technology",
+    established: "2005",
+    hod: "Engr. Muhammad Akhtar Zafar",
+    hodPhoto: "/faculty/akhtar-zafar.jpg",
+    hodDesignation: "Head of Department",
+    hodMessage:
+      "The RAC department was established in 2005 in Jinnah Polytechnic Institute. It deals with cooling and heating of the environment. The three-year diploma course is designed to give students advanced practical knowledge in the field. Students learn to install, maintain, repair, and overhaul industrial, commercial, and residential refrigeration and air conditioning systems and their component parts.",
+    color: "#0891B2",
+    icon: "thermometer",
+    image: "/tech/rac.png",
+    description:
+      "The Department of Refrigeration & Air Conditioning Technology trains students in the installation, maintenance, repair, and overhaul of industrial, commercial, and residential HVAC systems. The program aims to increase student employability as a servicing expert.",
+    overview: [
+      "Curriculum includes Refrigeration & Air Conditioning, Engineering Drawing, Piping & Pipe Design, Duct Design.",
+      "Also covers low pressure boilers, Cooling Towers, Water Chillers, etc.",
+      "The department successfully achieves the aim of self-employment as well as job placement.",
+    ],
+    courses: [
+      "Applied Mathematics",
+      "Applied Physics",
+      "Communication Skills",
+      "Engineering Drawing",
+      "Basic Thermodynamics",
+      "Workshop Practice",
+      "Refrigeration Principles",
+      "Air Conditioning Systems",
+      "Heat Transfer",
+      "Fluid Mechanics",
+      "Electrical Controls",
+      "HVAC Design Basics",
+      "Piping & Duct Design",
+      "Advanced HVAC Systems",
+      "Cold Storage Design",
+      "Building Automation",
+      "Energy Management",
+      "Maintenance & Troubleshooting",
+      "Project Work",
+    ],
+    labs: [
+      "Refrigeration Lab — Refrigerators, Freezers, Cold Storage Units",
+      "Air Conditioning Lab — Split ACs, Central AC Systems, Chillers",
+      "HVAC Workshop — Piping, Ducting, Brazing Equipment",
+      "Controls Lab — Thermostats, Sensors, Building Automation Systems",
+    ],
+    careerScope: [
+      "HVAC Technician",
+      "Refrigeration Engineer",
+      "Building Services Engineer",
+      "Cold Storage Supervisor",
+      "Maintenance Engineer",
+      "Self-Employment (Own Business)",
+      "Facility Management Companies",
+    ],
+    galleryImages: Array.from(
+      { length: 6 },
+      (_, i) => `https://picsum.photos/600/400?random=${100 + i}`,
+    ),
+  },
+  {
+    slug: "chemical",
+    name: "Chemical Technology",
+    fullName: "Department of Chemical Technology",
+    established: "2020",
+    hod: "Mr. Mansoor Ahmed",
+    hodPhoto: "/faculty/mansoor-ahmed.jpg",
+    hodDesignation: "Head of Department",
+    hodMessage:
+      "Chemical Technology is a broad discipline vital to almost all manufacturing sectors. Our graduates are prepared for diverse roles including Process Control, Quality Assurance, Production Management, Research & Development, and Technical Sales. Career choices are immense, particularly as the chemical process industries in Pakistan are expanding.",
+    color: "#059669",
+    icon: "flask-conical",
+    image: "/tech/chemical.png",
+    description:
+      "The Diploma of Associate Engineering (D.A.E.) in Chemical Technology is a three-year program designed to equip students for a dynamic and indispensable field. Chemical Technology is vital to almost all manufacturing sectors.",
+    overview: [
+      "Opportunities in Pharmaceuticals, Petrochemicals, Food Processing, Fertilizer & Cement.",
+      "Paints, Rubber, Plastics, and Environmental Engineering sectors.",
+      "Curriculum covers Chemical Engineering, Process Applications, and Instrumental Techniques of Analysis.",
+    ],
+    courses: [
+      "Applied Mathematics",
+      "Applied Physics",
+      "Communication Skills",
+      "Engineering Drawing",
+      "General Chemistry",
+      "Organic Chemistry",
+      "Physical Chemistry",
+      "Chemical Process Principles",
+      "Unit Operations",
+      "Instrumental Analysis",
+      "Chemical Engineering Thermodynamics",
+      "Process Control",
+      "Industrial Chemistry",
+      "Environmental Chemistry",
+      "Quality Control",
+      "Safety & Hazard Management",
+      "Project Work",
+    ],
+    labs: [
+      "Chemistry Lab — Glassware, Reagents, Fume Hoods, Analytical Balances",
+      "Instrumental Analysis Lab — Spectrophotometers, pH Meters, Chromatography",
+      "Process Lab — Distillation Columns, Reactors, Heat Exchangers",
+      "Quality Control Lab — Testing Equipment, Standards & Reference Materials",
+    ],
+    careerScope: [
+      "Process Control Technician",
+      "Quality Assurance Analyst",
+      "Production Supervisor",
+      "Research & Development Assistant",
+      "Technical Sales",
+      "Pharmaceutical Industry",
+      "Petrochemical Industry",
+      "Food Processing Industry",
+      "Fertilizer & Cement Plants",
+    ],
+    galleryImages: Array.from(
+      { length: 6 },
+      (_, i) => `https://picsum.photos/600/400?random=${110 + i}`,
     ),
   },
 ];

@@ -8,6 +8,7 @@ import {
   PenLine,
   Clock,
   AlertTriangle,
+  Landmark,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -32,7 +33,7 @@ const quickLinks = [
   {
     label: "Fee Structure",
     href: "/admissions/fee-structure",
-    icon: IndianRupee,
+    icon: Landmark,
     desc: "Complete fee details & policies",
   },
   {

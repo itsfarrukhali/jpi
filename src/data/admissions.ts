@@ -407,15 +407,16 @@ export const daeTechnologies: string[] = [
   "Software Technology",
   "Computer Information Technology (CIT)",
   "Refrigeration & Air Conditioning Technology",
-  "Bio-Medical Technology",
+  "Chemical Technology",
 ];
 
 // ─── Application Form Fields ─────────────────────────
 
 export const applicationFormFields: FormField[] = [
+  // Personal Information
   {
     name: "fullName",
-    label: "Full Name (as per Matric Certificate)",
+    label: "Full Name",
     type: "text",
     placeholder: "Enter your full name",
     required: true,
@@ -460,8 +461,9 @@ export const applicationFormFields: FormField[] = [
     type: "textarea",
     placeholder: "Enter your complete address",
     required: true,
-    rows: 3,
+    rows: 2,
   },
+  // Program Information
   {
     name: "qualification",
     label: "Highest Qualification",
@@ -472,12 +474,13 @@ export const applicationFormFields: FormField[] = [
       { value: "matric-science", label: "Matric Science" },
       { value: "matric-technical", label: "Matric Technical" },
       { value: "matric-computer", label: "Matric Computer Science" },
+      { value: "intermediate", label: "Intermediate" },
       { value: "other", label: "Other" },
     ],
   },
   {
     name: "matricMarks",
-    label: "Matriculation Marks (%)",
+    label: "Matric / Last Exam Marks (%)",
     type: "text",
     placeholder: "Enter percentage",
     required: true,
@@ -490,6 +493,7 @@ export const applicationFormFields: FormField[] = [
     options: [
       { value: "", label: "Select program" },
       { value: "dae-1st-year", label: "DAE 1st Year" },
+      { value: "dae-2nd-year", label: "DAE Direct 2nd Year" },
     ],
   },
   {
@@ -516,11 +520,12 @@ export const applicationFormFields: FormField[] = [
       { value: "evening", label: "Evening" },
     ],
   },
+  // Additional
   {
     name: "message",
     label: "Additional Message (Optional)",
     type: "textarea",
-    placeholder: "Any additional information...",
+    placeholder: "Any additional information or questions...",
     rows: 3,
   },
 ];

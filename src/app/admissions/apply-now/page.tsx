@@ -26,10 +26,15 @@ const contactIcons: Record<string, typeof MapPin> = {
 };
 
 export default function ApplyNowPage() {
+  // Split fields for better layout
+  const personalFields = applicationFormFields.slice(0, 7); // fullName → residence
+  const programFields = applicationFormFields.slice(7, 12); // qualification → shift
+  const messageField = applicationFormFields[12]; // message
+
   return (
     <>
       <PageHero
-        title="Apply Now"
+        title="Apply Now — DAE Programs"
         subtitle="Start your journey toward a rewarding technical career at Jinnah Polytechnic Institute."
         breadcrumbs={[
           { label: "Admissions", href: "/admissions" },
@@ -64,6 +69,16 @@ export default function ApplyNowPage() {
             </p>
           </div>
 
+          {/* Important Note for DAE */}
+          <div className="bg-amber-50 border border-amber-100 p-5 text-center">
+            <p className="text-xs text-gray-700 leading-relaxed">
+              <strong>Note:</strong> DAE programs are eligible for{" "}
+              <strong>male students only</strong>. Maximum age for Morning
+              Program is 35 years, and for Evening Program is 45 years at the
+              time of admission.
+            </p>
+          </div>
+
           {/* Online Inquiry Form */}
           <div>
             <h2 className="text-xl font-bold text-gray-800 mb-2">
@@ -75,102 +90,128 @@ export default function ApplyNowPage() {
             </p>
 
             <form className="bg-gray-50 border border-gray-200 p-6 sm:p-8 space-y-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {applicationFormFields.slice(0, 6).map((field) => (
-                  <div
-                    key={field.name}
-                    className={field.type === "textarea" ? "sm:col-span-2" : ""}
-                  >
-                    <label
-                      htmlFor={field.name}
-                      className="block text-xs font-medium text-gray-700 mb-1.5"
+              {/* Personal Information */}
+              <div>
+                <h3 className="text-sm font-semibold text-gray-700 mb-3 pb-1.5 border-b border-gray-200">
+                  Personal Information
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {personalFields.map((field) => (
+                    <div
+                      key={field.name}
+                      className={
+                        field.type === "textarea" ? "sm:col-span-2" : ""
+                      }
                     >
-                      {field.label}
-                      {field.required && (
-                        <span className="text-red-400 ml-0.5">*</span>
-                      )}
-                    </label>
-                    {field.type === "select" ? (
-                      <select
-                        id={field.name}
-                        name={field.name}
-                        required={field.required}
-                        className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
+                      <label
+                        htmlFor={field.name}
+                        className="block text-xs font-medium text-gray-700 mb-1.5"
                       >
-                        {field.options?.map((opt) => (
-                          <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
-                    ) : field.type === "textarea" ? (
-                      <textarea
-                        id={field.name}
-                        name={field.name}
-                        rows={field.rows || 3}
-                        placeholder={field.placeholder}
-                        required={field.required}
-                        className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none"
-                      />
-                    ) : (
-                      <input
-                        type={field.type}
-                        id={field.name}
-                        name={field.name}
-                        placeholder={field.placeholder}
-                        required={field.required}
-                        className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
-                      />
-                    )}
-                  </div>
-                ))}
+                        {field.label}
+                        {field.required && (
+                          <span className="text-red-400 ml-0.5">*</span>
+                        )}
+                      </label>
+                      {field.type === "select" ? (
+                        <select
+                          id={field.name}
+                          name={field.name}
+                          required={field.required}
+                          className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
+                        >
+                          {field.options?.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                              {opt.label}
+                            </option>
+                          ))}
+                        </select>
+                      ) : field.type === "textarea" ? (
+                        <textarea
+                          id={field.name}
+                          name={field.name}
+                          rows={field.rows || 3}
+                          placeholder={field.placeholder}
+                          required={field.required}
+                          className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none"
+                        />
+                      ) : (
+                        <input
+                          type={field.type}
+                          id={field.name}
+                          name={field.name}
+                          placeholder={field.placeholder}
+                          required={field.required}
+                          className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              {/* Program & Technology Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                {applicationFormFields.slice(9, 12).map((field) => (
-                  <div key={field.name}>
-                    <label
-                      htmlFor={field.name}
-                      className="block text-xs font-medium text-gray-700 mb-1.5"
-                    >
-                      {field.label}
-                      {field.required && (
-                        <span className="text-red-400 ml-0.5">*</span>
+              {/* Program Information */}
+              <div>
+                <h3 className="text-sm font-semibold text-gray-700 mb-3 pb-1.5 border-b border-gray-200">
+                  Program Information
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                  {programFields.map((field) => (
+                    <div key={field.name}>
+                      <label
+                        htmlFor={field.name}
+                        className="block text-xs font-medium text-gray-700 mb-1.5"
+                      >
+                        {field.label}
+                        {field.required && (
+                          <span className="text-red-400 ml-0.5">*</span>
+                        )}
+                      </label>
+                      {field.type === "select" ? (
+                        <select
+                          id={field.name}
+                          name={field.name}
+                          required={field.required}
+                          className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
+                        >
+                          {field.options?.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                              {opt.label}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          type={field.type}
+                          id={field.name}
+                          name={field.name}
+                          placeholder={field.placeholder}
+                          required={field.required}
+                          className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
+                        />
                       )}
-                    </label>
-                    <select
-                      id={field.name}
-                      name={field.name}
-                      required={field.required}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
-                    >
-                      {field.options?.map((opt) => (
-                        <option key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                ))}
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Additional Message */}
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-xs font-medium text-gray-700 mb-1.5"
-                >
-                  Additional Message (Optional)
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={3}
-                  placeholder="Any additional information..."
-                  className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none"
-                />
-              </div>
+              {messageField && (
+                <div>
+                  <label
+                    htmlFor={messageField.name}
+                    className="block text-xs font-medium text-gray-700 mb-1.5"
+                  >
+                    {messageField.label}
+                  </label>
+                  <textarea
+                    id={messageField.name}
+                    name={messageField.name}
+                    rows={messageField.rows || 3}
+                    placeholder={messageField.placeholder}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none"
+                  />
+                </div>
+              )}
 
               {/* Submit */}
               <div className="pt-2">
