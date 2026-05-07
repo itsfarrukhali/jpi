@@ -42,6 +42,7 @@ export type NewsItem = {
   date: string; // "YYYY-MM-DD" format (ISO standard)
   category: "news" | "event" | "announcement";
   image: string; // Image URL or local path
+  pdfUrl?: string;
   slug: string; // URL slug: "my-news-title" (kebab-case)
 };
 
@@ -84,6 +85,7 @@ export const newsItems: NewsItem[] = [
     date: "2025-03-01",
     category: "announcement",
     image: "https://picsum.photos/800/500?random=10",
+    pdfUrl: "/pdfs/admissions-open-2025-26.pdf",
     slug: "admissions-open-2025-26",
   },
   {

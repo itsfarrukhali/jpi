@@ -385,7 +385,7 @@ export const admissionContact = {
   address: "ST-1, Nazimabad-5, Karachi 74600",
   phone: "+92-21-99260294-5",
   email: "info@jpikhi.edu.pk",
-  officeHours: "Monday – Friday, 9:00 AM – 5:00 PM",
+  officeHours: "Monday – Saturday Friday, 9:00 AM – 5:00 PM",
 };
 
 // ─── Payment Notes ───────────────────────────────────

@@ -276,7 +276,7 @@ export default function AboutPage() {
             Karachi&apos;s most established educational hubs
           </p>
           <Link
-            href="/contact-us"
+            href="/contact-us-us"
             className="inline-block px-6 py-3 rounded-xl bg-white text-(--color-primary) text-sm font-semibold hover:bg-gray-100 transition-colors"
           >
             Get Directions

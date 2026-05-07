@@ -105,7 +105,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">
+            <h3 className="font-semibold text-(--color-gold) mb-4 text-sm uppercase tracking-wider">
               Quick Links
             </h3>
             <ul className="space-y-2">
@@ -120,7 +120,7 @@ export default function Footer() {
                 ["Student Affairs", "/student-affairs"],
                 ["Facilities", "/facilities"],
                 ["News & Events", "/news"],
-                ["Contact Us", "/contact-us"],
+                ["Contact Us", "/contact-us-us"],
               ].map(([label, href]) => (
                 <li key={href}>
                   <Link
@@ -137,7 +137,7 @@ export default function Footer() {
 
           {/* Programs */}
           <div>
-            <h3 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">
+            <h3 className="font-semibold text-(--color-gold) mb-4 text-sm uppercase tracking-wider">
               Programs
             </h3>
             <ul className="space-y-2">
@@ -165,7 +165,7 @@ export default function Footer() {
 
           {/* Contact + Newsletter */}
           <div>
-            <h3 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">
+            <h3 className="font-semibold text-(--color-gold) mb-4 text-sm uppercase tracking-wider">
               Contact Info
             </h3>
             <ul className="space-y-3 mb-6">
@@ -200,10 +200,10 @@ export default function Footer() {
                 <span className="text-gray-500 text-xs block mb-0.5">
                   Office Hours
                 </span>
-                Mon–Fri: 90:00 AM – 04:00 PM
+                Mon–Sat: 90:00 AM – 05:00 PM
               </li>
             </ul>
-            <h3 className="font-semibold text-white mb-3 text-sm uppercase tracking-wider">
+            <h3 className="font-semibold text-(--color-gold) mb-3 text-sm uppercase tracking-wider">
               Newsletter
             </h3>
             {subscribed ? (
@@ -217,7 +217,7 @@ export default function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email"
-                  className="flex-1 px-3 py-2 rounded-lg bg-white/10 text-white text-sm placeholder-gray-500 border border-white/20 focus:outline-none focus:border-(--color-gold)"
+                  className="flex-1 px-3 py-2 rounded-lg bg-white/10 text-white text-sm placeholder-gray-500 border border-x-amber-400/ focus:outline-none focus:border-(--color-gold) "
                 />
                 <Button
                   type="submit"
@@ -236,7 +236,7 @@ export default function Footer() {
           </p>
           <p>
             Under <span className="text-gray-400">Anjuman-e-Islamia Trust</span>{" "}
-            · Affiliated with <span className="text-gray-400">SBTE Sindh</span>
+            · Affiliated with <span className="text-gray-400">SBTE</span>
           </p>
         </div>
       </div>

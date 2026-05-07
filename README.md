@@ -94,6 +94,13 @@ src/data/
 - `admissions/how-to-apply/page.tsx` - Application process
 - `admissions/merit/page.tsx` - Merit information
 - `admissions/apply-now/page.tsx` - Application form
+- `academic-policies/page.tsx` - Academic policies, grade system, attendance, and JIMSET details
+- `careers/page.tsx` - Open positions, benefits, and application form
+- `contact-us/page.tsx` - Contact details, map, and inquiry form
+- `facilities/page.tsx` - Campus facilities and amenities
+- `news/page.tsx` - News, events, announcements, and gallery
+- `qec/page.tsx` - Quality Enhancement Cell and SEA Cell information
+- `student-affairs/page.tsx` - Discipline, regulations, and support services
 - `programs/dae/page.tsx` - DAE programs
 - `programs/certifications/page.tsx` - Certificates
 - `programs/short-courses/page.tsx` - Short courses
@@ -212,6 +219,7 @@ The following is a concise timeline of the work completed so far (dates taken fr
 - 2026-05-06 — Navigation and content fixes: updated breadcrumb links, added Principal's Message page, corrected Navbar and Footer links (commits: 0bd0452, 3c6402d)
 - 2026-05-06 — Admissions pages: Merit, Apply Now improvements (forms and submission feedback), and detailed admissions information (commits: 3029e0f, 922ba97)
 - 2026-05-06 — Program refactor and curriculum updates: renamed and reorganized programs (e.g., Biomedical → Chemical Technology), added Physiotherapy and Nursing Assistant, enhanced course details across various certifications and short courses (commit: 94ec8d2)
+- 2026-05-07 — Added the institutional information pages, news hub, contact/careers flows, SEO routes, robots/sitemap metadata, and new app icons for sharing and PWA support
 
 Each listed milestone links to the relevant commits in the repository history; for more detail, run `git log --pretty=format:"%ad | %h | %s" --date=short` locally.
 
@@ -222,6 +230,8 @@ Each listed milestone links to the relevant commits in the repository history; f
 - Reusable components in `src/components/` for home sections, layout (Navbar, Footer), and shared UI (ProgramCard, DepartmentCard, PageHero).
 - SEO and social metadata implemented per page for better discoverability.
 - Simple content editing workflow for non-technical users: modify `src/data` files and save.
+- Expanded institutional pages for academic policies, QEC, student affairs, facilities, careers, contact, and news.
+- Added `robots.ts`, `sitemap.ts`, Open Graph metadata, and favicon/app icon assets for search and sharing.
 
 ## **How We Achieved the Goals**
 

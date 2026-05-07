@@ -74,9 +74,11 @@ const navLinks = [
     children: [
       { label: "QEC", href: "/qec" },
       { label: "Student Affairs", href: "/student-affairs" },
+      { label: "Academic Policies", href: "/academic-policies" },
       { label: "Facilities", href: "/facilities" },
       { label: "News & Events", href: "/news" },
-      { label: "Contact Us", href: "/contact" },
+      { label: "Careers", href: "/careers" },
+      { label: "Contact Us", href: "/contact-us" },
     ],
   },
 ];

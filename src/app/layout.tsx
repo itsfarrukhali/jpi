@@ -39,13 +39,48 @@ export const metadata: Metadata = {
     "polytechnic college Karachi",
     "engineering diploma",
     "SBTE affiliated",
+    "polytechnic Karachi",
+    "technical education Karachi",
+    "diploma engineering Karachi",
+    "short courses Karachi",
+    "certifications Karachi",
+    "technical training Karachi",
   ],
+  authors: [{ name: "Jinnah Polytechnic Institute" }],
+  creator: "Jinnah Polytechnic Institute",
   openGraph: {
+    url: "https://jpikhi.edu.pk",
+    siteName: "Jinnah Polytechnic Institute",
     title: "Jinnah Polytechnic Institute — Knowledge · Skills · Attitude",
     description:
       "Premier technical education in Karachi since 1961. DAE, Certifications & Short Courses.",
     type: "website",
     locale: "en_PK",
+    images: [
+      {
+        url: "/og-image.jpg", // 1200x630px image bana apni
+        width: 1200,
+        height: 630,
+        alt: "Jinnah Polytechnic Institute Karachi",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jinnah Polytechnic Institute Karachi",
+    description:
+      "Jinnah Polytechnic Institute (JPI) Karachi — a premier technical institution established in 1961 under Anjuman-e-Islamia Trust offering DAE, certifications, and short courses in Civil, Electrical, Mechanical & Computer Technology.",
+    images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
