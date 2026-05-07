@@ -116,10 +116,10 @@ export default function AdmissionsPage() {
           </h2>
           <p className="text-sm text-gray-600 leading-relaxed">
             Jinnah Polytechnic Institute offers 3-year Diploma of Associate
-            Engineering (DAE) programs in 8 technologies, affiliated with the
-            Sindh Board of Technical Education (SBTE). Admissions are open
-            annually for both Morning and Evening shifts. The institute operates
-            on a <strong>no-profit, no-loss basis</strong>, ensuring quality
+            Engineer (DAE) programs in 8 technologies, affiliated with the Sindh
+            Board of Technical Education (SBTE). Admissions are open annually
+            for both Morning and Evening shifts. The institute operates on a{" "}
+            <strong>no-profit, no-loss basis</strong>, ensuring quality
             technical education remains accessible and affordable.
           </p>
           <div className="mt-8">

@@ -107,14 +107,23 @@ export default function FeeStructurePage() {
               <ShieldCheck size={18} className="text-amber-600" />
               Fee Refund Policy
             </h2>
-            <p className="text-xs text-gray-500 mb-6">
+            <p className="text-xs text-gray-500">
               In case of cancellation of admission
+            </p>
+            <p className="text-xs text-gray-700 mb-6">
+              <strong>Note:</strong> Admission Fee is non-refundable. Refund
+              will be processed as per the above policy, and may take up to 30
+              working days from the date of cancellation request.
             </p>
             <div className="overflow-x-auto border border-gray-200">
               <table className="w-full text-sm">
                 <thead className="bg-gray-100">
                   <tr>
-                    {["Refund %", "Description", "Timeline"].map((h) => (
+                    {[
+                      "Refund % Age of Tuition Fee",
+                      "Description",
+                      "Timeline",
+                    ].map((h) => (
                       <th
                         key={h}
                         className="px-5 py-2.5 text-left font-medium text-xs text-gray-700"

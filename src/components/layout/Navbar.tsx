@@ -40,6 +40,10 @@ const navLinks = [
     href: "/programs/dae",
     children: [
       { label: "DAE Programs", href: "/programs/dae" },
+      {
+        label: "Diploma Certifications",
+        href: "/programs/diploma-certifications",
+      },
       { label: "Certifications", href: "/programs/certifications" },
       { label: "Short Courses", href: "/programs/short-courses" },
       { label: "Jinnah Excellence Certificates", href: "/programs/jec" },

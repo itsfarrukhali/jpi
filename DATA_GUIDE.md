@@ -219,7 +219,7 @@ const daePrograms: Program[] = [
   // ... existing programs ...
   {
     id: "dae-chemical",
-    name: "Diploma of Associate Engineering — Chemical Technology",
+    name: "Diploma of Associate Engineer — Chemical Technology",
     shortName: "DAE Chemical Technology",
     duration: "3 Years (6 Semesters)",
     seats: 60,

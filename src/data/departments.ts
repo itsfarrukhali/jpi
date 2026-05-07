@@ -514,7 +514,7 @@ export const departments: Department[] = [
       "CIT is a discipline that integrates fields of Electronics Engineering and Computer Science. It goes beyond traditional Software Engineering or Electronic Engineering by focusing on Electronic Engineering, Software Design, Networking, and Hardware-Software integration. Our mission is to prepare students to be future leaders and entrepreneurs.",
     color: "#4F46E5",
     icon: "network",
-    image: "/tech/cit.png",
+    image: "/tech/cit.png ",
     description:
       "The department was established in 2015. Its mission is to prepare students to be future leaders and entrepreneurs, developing the fundamental concepts of computing disciplines and their insights to solve real-world problems.",
     overview: [
@@ -755,7 +755,7 @@ export const departments: Department[] = [
     icon: "flask-conical",
     image: "/tech/chemical.png",
     description:
-      "The Diploma of Associate Engineering (D.A.E.) in Chemical Technology is a three-year program designed to equip students for a dynamic and indispensable field. Chemical Technology is vital to almost all manufacturing sectors.",
+      "The Diploma of Associate Engineer (D.A.E.) in Chemical Technology is a three-year program designed to equip students for a dynamic and indispensable field. Chemical Technology is vital to almost all manufacturing sectors.",
     overview: [
       "Opportunities in Pharmaceuticals, Petrochemicals, Food Processing, Fertilizer & Cement.",
       "Paints, Rubber, Plastics, and Environmental Engineering sectors.",

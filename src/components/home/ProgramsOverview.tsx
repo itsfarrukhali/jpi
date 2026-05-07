@@ -13,25 +13,25 @@ const programs = [
   {
     image: "/programs/dae.jpg",
     name: "DAE Programs",
-    desc: "3-year Diploma of Associate Engineering in Civil, Electrical, Mechanical & Computer Technology.",
+    desc: "3-year Diploma of Associate Engineer in Civil, Electrical, Mechanical, Computer Technology & More.",
     href: "/programs/dae",
   },
   {
     image: "/programs/certifications.jpg",
     name: "Certifications",
-    desc: "Industry-recognized courses in AutoCAD, PLC, Web Development, Networking and more.",
+    desc: "Industry-recognized courses in Nursing, Lab Technician, AI, Physiotherapy Technician & More.",
     href: "/programs/certifications",
   },
   {
     image: "/programs/short-course.jpg",
     name: "Short Courses",
-    desc: "Hands-on training in Welding, Electrician, Plumbing, and IT fundamentals.",
+    desc: "Hands-on training in Phlebotomy, Electrician, Plumbing, IT Fundamentals & More.",
     href: "/programs/short-courses",
   },
   {
     image: "/programs/2-months.jpg",
     name: "JEC Awards",
-    desc: "Recognizing academic excellence and outstanding student achievements.",
+    desc: "JPI AutoCAD 2D & 3D — Mechanical & Civil Drawing with Jinnah Excellence Certificates.",
     href: "/programs/jec",
   },
 ];

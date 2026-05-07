@@ -384,8 +384,8 @@ export const selectionProcedure: SelectionStep[] = [
 export const admissionContact = {
   address: "ST-1, Nazimabad-5, Karachi 74600",
   phone: "+92-21-99260294-5",
-  email: "admissions@jpi.edu.pk",
-  officeHours: "Monday – Friday, 9:00 AM – 4:00 PM",
+  email: "info@jpikhi.edu.pk",
+  officeHours: "Monday – Friday, 9:00 AM – 5:00 PM",
 };
 
 // ─── Payment Notes ───────────────────────────────────
@@ -396,7 +396,6 @@ export const paymentNotes: string[] = [
   "Fee in CASH is strictly prohibited in JPI.",
   "Fee may be revised as per requirement of the Institute without any prior notice.",
   "Students must pay fee within the prescribed date; late fee shall be charged as per Institute policy.",
-  "Only 2nd year and 3rd year fees are applicable on candidates who get admission in DAE Direct 2nd Year Program.",
 ];
 
 // ─── Important Notes ─────────────────────────────────
@@ -419,37 +418,37 @@ export const allProgramOptions = [
     options: [
       {
         value: "dae-civil",
-        label: "Diploma of Associate Engineering — Civil Technology",
+        label: "Diploma of Associate Engineer — Civil Technology",
       },
       {
         value: "dae-electrical",
-        label: "Diploma of Associate Engineering — Electrical Technology",
+        label: "Diploma of Associate Engineer — Electrical Technology",
       },
       {
         value: "dae-mechanical",
-        label: "Diploma of Associate Engineering — Mechanical Technology",
+        label: "Diploma of Associate Engineer — Mechanical Technology",
       },
       {
         value: "dae-electronics",
-        label: "Diploma of Associate Engineering — Electronics Technology",
+        label: "Diploma of Associate Engineer — Electronics Technology",
       },
       {
         value: "dae-software",
-        label: "Diploma of Associate Engineering — Software Technology",
+        label: "Diploma of Associate Engineer — Software Technology",
       },
       {
         value: "dae-cit",
         label:
-          "Diploma of Associate Engineering — Computer Information Technology",
+          "Diploma of Associate Engineer — Computer Information Technology",
       },
       {
         value: "dae-refrigeration",
         label:
-          "Diploma of Associate Engineering — Refrigeration & Air Conditioning Technology",
+          "Diploma of Associate Engineer — Refrigeration & Air Conditioning Technology",
       },
       {
         value: "dae-chemical",
-        label: "Diploma of Associate Engineering — Chemical Technology",
+        label: "Diploma of Associate Engineer — Chemical Technology",
       },
     ],
   },
@@ -466,22 +465,6 @@ export const allProgramOptions = [
         label: "Laboratory Technicians (1 Year)",
       },
       { value: "cert-phlebotomy", label: "Phlebotomy (6 Months)" },
-    ],
-  },
-  {
-    group: "Short Courses",
-    options: [
-      { value: "sc-ai", label: "Diploma in Artificial Intelligence (1 Year)" },
-      { value: "sc-welding", label: "Welding & Fabrication (3 Months)" },
-      {
-        value: "sc-electrician",
-        label: "Domestic & Industrial Electrician (3 Months)",
-      },
-      { value: "sc-plumbing", label: "Plumbing & Sanitation (3 Months)" },
-      {
-        value: "sc-it",
-        label: "IT Fundamentals & Office Automation (2 Months)",
-      },
     ],
   },
   {

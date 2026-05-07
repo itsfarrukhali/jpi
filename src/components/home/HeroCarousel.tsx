@@ -14,8 +14,8 @@ const slides = [
   {
     id: 0,
     badge: "3-Year Program",
-    title: "Diploma of Associate Engineering",
-    subtitle: "Civil · Electrical · Mechanical · Computer Technology",
+    title: "Diploma of Associate Engineer",
+    subtitle: "Morning & Evening Programs",
     tag: "DAE",
     cta: "/programs/dae",
     image: "/carousel/dae-final.png",
@@ -24,7 +24,7 @@ const slides = [
     id: 1,
     badge: "Professional Certifications",
     title: "Industry-Recognized Certifications",
-    subtitle: "AutoCAD · PLC · Web Development · Networking & More",
+    subtitle: "Nursing · Lab Technician · AI · Physiotherapy Technician & More",
     tag: "CERT",
     cta: "/programs/certifications",
     image: "/carousel/certifications.png",
@@ -33,7 +33,7 @@ const slides = [
     id: 2,
     badge: "3–6 Month Courses",
     title: "Short Courses for Rapid Skill Building",
-    subtitle: "Welding · Electrician · Plumbing · IT Fundamentals",
+    subtitle: "Phlebotomy · Electrician · Plumbing · IT Fundamentals & More",
     tag: "SHORT",
     cta: "/programs/short-courses",
     image: "/carousel/short-courses.png",
@@ -42,7 +42,8 @@ const slides = [
     id: 3,
     badge: "Excellence Program",
     title: "Jinnah Excellence Certificates",
-    subtitle: "Recognizing outstanding academic and co-curricular achievement",
+    subtitle:
+      "JPI AutoCAD 2D & 3D — Mechanical & Civil Drawing with Jinnah Excellence Certificates.",
     tag: "JEC",
     cta: "/programs/jec",
     image: "/carousel/jec.png",
@@ -99,7 +100,7 @@ export default function HeroCarousel() {
 
   return (
     <section
-      className="relative w-full h-svh min-h-140 overflow-hidden"
+      className="relative w-full h-[80svh] min-h-125 overflow-hidden"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -120,7 +121,7 @@ export default function HeroCarousel() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-linear-to-r from-primary-dark/85 via-primary/50 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-r from-primary-dark/85 via-primary/50 to-transparent pointer-events-none" />
         </motion.div>
       </AnimatePresence>
 
@@ -197,14 +198,14 @@ export default function HeroCarousel() {
       <Button
         onClick={prev}
         aria-label="Previous slide"
-        className="hidden md:flex absolute left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur items-center justify-center text-white transition-colors"
+        className="hidden md:flex absolute left-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur items-center justify-center text-white transition-colors pointer-events-auto"
       >
         <ChevronLeft size={20} />
       </Button>
       <Button
         onClick={next}
         aria-label="Next slide"
-        className="hidden md:flex absolute right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur items-center justify-center text-white transition-colors"
+        className="hidden md:flex absolute right-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur items-center justify-center text-white transition-colors pointer-events-auto"
       >
         <ChevronRight size={20} />
       </Button>

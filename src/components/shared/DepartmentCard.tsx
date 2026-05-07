@@ -33,11 +33,11 @@ export default function DepartmentCard({ department }: DepartmentCardProps) {
 
       {/* Card body – fills remaining space */}
       <div className="flex flex-col flex-1 p-5">
-        <h3 className="font-bold text-primary-dark text-base mb-1 group-hover:text-primary transition-colors font-serif">
+        <h3 className="font-bold text-primary-dark text-base mb-1 group-hover:text-primary transition-colors font-serif line-clamp-1">
           {department.name}
         </h3>
         <p className="text-xs text-text-muted mb-1">HOD: {department.hod}</p>
-        <p className="text-sm text-text-muted line-clamp-2 mb-3">
+        <p className="text-sm text-text-muted line-clamp-1 mb-3">
           {department.fullName}
         </p>
         {/* Spacer pushes the link to the bottom if cards have different content lengths */}

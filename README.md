@@ -8,24 +8,6 @@ A modern, fully-documented Next.js website for Jinnah Polytechnic Institute with
 
 ## 🎯 Quick Start
 
-### For Non-Technical Users (Content Editors)
-
-**Start here**: Read [START_HERE.md](START_HERE.md) (2 minutes)
-
-Then follow [SIMPLE_GUIDE.md](SIMPLE_GUIDE.md) for step-by-step instructions on how to:
-
-- ✅ Change news on home page
-- ✅ Update admission fees
-- ✅ Modify department information
-- ✅ Add new programs
-- ✅ Update important dates
-- ✅ Change contact information
-- ✅ Reorder home page sections
-
-**No coding knowledge required!**
-
-### For Developers
-
 1. Run the development server:
 
 ```bash
@@ -48,34 +30,11 @@ This project uses [Next.js](https://nextjs.org) with [TypeScript](https://www.ty
 
 ## 📚 Documentation
 
-### For Non-Technical Users (Content Editors)
-
-All documentation is **simplified and easy to follow**:
-
-| Document                                                 | Purpose                          | Read Time |
-| -------------------------------------------------------- | -------------------------------- | --------- |
-| [START_HERE.md](START_HERE.md)                           | Quick introduction & overview    | 2 min     |
-| [SIMPLE_GUIDE.md](SIMPLE_GUIDE.md)                       | Main guide with 7 tasks          | 5 min     |
-| [QUICK_START.md](QUICK_START.md)                         | Quick reference for common tasks | 3 min     |
-| [FOR_NON_TECHNICAL_USERS.md](FOR_NON_TECHNICAL_USERS.md) | Complete overview                | 2 min     |
-| [DOCUMENTATION_STRUCTURE.md](DOCUMENTATION_STRUCTURE.md) | Visual guide to all docs         | 3 min     |
-
-**👉 Start with [START_HERE.md](START_HERE.md)**
-
-### For Developers
-
-| Document                                         | Purpose                         |
-| ------------------------------------------------ | ------------------------------- |
-| [DATA_GUIDE.md](DATA_GUIDE.md)                   | Data files & database structure |
-| [PAGE_GUIDE.md](PAGE_GUIDE.md)                   | Page organization & routing     |
-| [COMPONENTS_GUIDE.md](COMPONENTS_GUIDE.md)       | Component structure & patterns  |
-| [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md) | Master index & reference        |
-
----
+| Document                       | Purpose                         |
+| ------------------------------ | ------------------------------- |
+| [DATA_GUIDE.md](DATA_GUIDE.md) | Data files & database structure |
 
 ## 🎯 What Can Be Changed
-
-### Easy (No Technical Knowledge)
 
 - ✅ News articles (add, edit, publish)
 - ✅ Admission fees & dates
@@ -218,8 +177,6 @@ Changes are live within 1-2 minutes.
 
 ## ✅ What's Included
 
-✅ **Simplified documentation** for non-technical users
-✅ **7 step-by-step guides** for common tasks
 ✅ **Complete data files** with all content
 ✅ **Responsive design** (mobile, tablet, desktop)
 ✅ **SEO optimization**
@@ -231,9 +188,7 @@ Changes are live within 1-2 minutes.
 
 ## 📞 Support
 
-**For non-technical users**: See [SIMPLE_GUIDE.md](SIMPLE_GUIDE.md) troubleshooting section
-
-**For developers**: Refer to [DATA_GUIDE.md](DATA_GUIDE.md), [PAGE_GUIDE.md](PAGE_GUIDE.md), [COMPONENTS_GUIDE.md](COMPONENTS_GUIDE.md)
+Refer to [DATA_GUIDE.md](DATA_GUIDE.md)
 
 ---
 
@@ -243,8 +198,45 @@ This project is maintained for Jinnah Polytechnic Institute.
 
 ---
 
-## 🎉 Ready to Get Started?
+## **Project Introduction**
 
-👉 **[Read START_HERE.md](START_HERE.md)** (takes 2 minutes)
+JPI (Jinnah Polytechnic Institute) is a content-driven informational website built to make institute content easy to manage for non-technical users while providing a modern, accessible, and SEO-friendly public site. The project is implemented as a Next.js application using TypeScript, React, and Tailwind CSS. Content is data-driven and stored in `src/data/*` to allow editors to update site content without touching React code.
 
-Then go to [SIMPLE_GUIDE.md](SIMPLE_GUIDE.md) for full instructions!
+## **Work Completed (Timeline)**
+
+The following is a concise timeline of the work completed so far (dates taken from git history):
+
+- 2026-05-05 — Created the landing page and initial configuration (commit: a256e7d)
+- 2026-05-05 — Added carousel images for the homepage hero (commit: b368171)
+- 2026-05-06 — Added program pages: Certifications, DAE, JEC, Short Courses, and About Us pages (commits: 6cc26b4, 3c6402d)
+- 2026-05-06 — Navigation and content fixes: updated breadcrumb links, added Principal's Message page, corrected Navbar and Footer links (commits: 0bd0452, 3c6402d)
+- 2026-05-06 — Admissions pages: Merit, Apply Now improvements (forms and submission feedback), and detailed admissions information (commits: 3029e0f, 922ba97)
+- 2026-05-06 — Program refactor and curriculum updates: renamed and reorganized programs (e.g., Biomedical → Chemical Technology), added Physiotherapy and Nursing Assistant, enhanced course details across various certifications and short courses (commit: 94ec8d2)
+
+Each listed milestone links to the relevant commits in the repository history; for more detail, run `git log --pretty=format:"%ad | %h | %s" --date=short` locally.
+
+## **What We Built (Summary)**
+
+- A responsive, accessible website with an App Router-based Next.js layout.
+- Data-driven content model: content is stored in `src/data/*.ts` (admissions, departments, programs, news).
+- Reusable components in `src/components/` for home sections, layout (Navbar, Footer), and shared UI (ProgramCard, DepartmentCard, PageHero).
+- SEO and social metadata implemented per page for better discoverability.
+- Simple content editing workflow for non-technical users: modify `src/data` files and save.
+
+## **How We Achieved the Goals**
+
+- Architecture: Next.js (App Router) + TypeScript for strong typing and predictable routing.
+- Styling: Tailwind CSS for utility-first styling and rapid layout changes.
+- Component-driven design: small, focused components in `src/components/` so sections can be reordered or reused.
+- Data-first content: editors update `src/data/*.ts` to change content without touching components.
+- Accessibility & SEO: pages include meta, canonical links, and semantic HTML for better indexing and usability.
+
+## **Key Files & Where To Edit Content**
+
+- Admissions content: [src/data/admissions.ts](src/data/admissions.ts)
+- Departments: [src/data/departments.ts](src/data/departments.ts)
+- Programs: [src/data/programs.ts](src/data/programs.ts)
+- News & updates: [src/data/news.ts](src/data/news.ts)
+- Home page layout and component order: [src/app/page.tsx](src/app/page.tsx#L1)
+- Home components: [src/components/home](src/components/home)
+- Shared components: [src/components/shared](src/components/shared)

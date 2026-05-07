@@ -62,7 +62,7 @@ export type Program = {
 /**
  * ALL DAE PROGRAMS
  *
- * DAE (Diploma of Associate Engineering) - 3 year, 6 semester programs
+ * DAE (Diploma of Associate Engineer) - 3 year, 6 semester programs
  *
  * HOW TO ADD DAE PROGRAM:
  * 1. Create new Program object with unique id (e.g., "dae-chemical")
@@ -80,11 +80,11 @@ export type Program = {
 const daePrograms: Program[] = [
   {
     id: "dae-civil",
-    name: "Diploma of Associate Engineering — Civil Technology",
+    name: "Diploma of Associate Engineer — Civil Technology",
     shortName: "DAE Civil Technology",
     duration: "3 Years (6 Semesters)",
     seats: 60,
-    eligibility: "Matriculation (Science) with minimum 45% marks",
+    eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
       "Covers structural design, surveying, construction materials, road & building construction.",
     icon: "building",
@@ -135,11 +135,11 @@ const daePrograms: Program[] = [
   },
   {
     id: "dae-electrical",
-    name: "Diploma of Associate Engineering — Electrical Technology",
+    name: "Diploma of Associate Engineer — Electrical Technology",
     shortName: "DAE Electrical Technology",
     duration: "3 Years (6 Semesters)",
     seats: 60,
-    eligibility: "Matriculation (Science) with minimum 45% marks",
+    eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
       "Covers electrical circuits, power systems, industrial electronics, and automation.",
     icon: "zap",
@@ -190,11 +190,11 @@ const daePrograms: Program[] = [
   },
   {
     id: "dae-mechanical",
-    name: "Diploma of Associate Engineering — Mechanical Technology",
+    name: "Diploma of Associate Engineer — Mechanical Technology",
     shortName: "DAE Mechanical Technology",
     duration: "3 Years (6 Semesters)",
     seats: 60,
-    eligibility: "Matriculation (Science) with minimum 45% marks",
+    eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
       "Covers machine design, manufacturing processes, thermodynamics, and CNC machining.",
     icon: "settings",
@@ -245,11 +245,11 @@ const daePrograms: Program[] = [
   },
   {
     id: "dae-electronics",
-    name: "Diploma of Associate Engineering — Electronics Technology",
+    name: "Diploma of Associate Engineer — Electronics Technology",
     shortName: "DAE Electronics Technology",
     duration: "3 Years (6 Semesters)",
     seats: 60,
-    eligibility: "Matriculation (Science) with minimum 45% marks",
+    eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
       "Covers analog & digital electronics, microcontrollers, communication systems, and embedded design.",
     icon: "cpu",
@@ -300,11 +300,11 @@ const daePrograms: Program[] = [
   },
   {
     id: "dae-software",
-    name: "Diploma of Associate Engineering — Software Technology",
+    name: "Diploma of Associate Engineer — Software Technology",
     shortName: "DAE Software Technology",
     duration: "3 Years (6 Semesters)",
     seats: 60,
-    eligibility: "Matriculation (Science/Computer) with minimum 45% marks",
+    eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
       "Covers programming fundamentals, software engineering, web & mobile app development, and database systems.",
     icon: "code",
@@ -355,11 +355,11 @@ const daePrograms: Program[] = [
   },
   {
     id: "dae-cit",
-    name: "Diploma of Associate Engineering — Computer Information Technology",
+    name: "Diploma of Associate Engineer — Computer Information Technology",
     shortName: "DAE Computer Information Technology",
     duration: "3 Years (6 Semesters)",
     seats: 60,
-    eligibility: "Matriculation (Science/Computer) with minimum 45% marks",
+    eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
       "Covers networking, cybersecurity, cloud computing, IT infrastructure, and system administration.",
     icon: "network",
@@ -410,11 +410,11 @@ const daePrograms: Program[] = [
   },
   {
     id: "dae-refrigeration",
-    name: "Diploma of Associate Engineering — Refrigeration & Air Conditioning Technology",
+    name: "Diploma of Associate Engineer — Refrigeration & Air Conditioning Technology",
     shortName: "DAE Refrigeration & AC Technology",
     duration: "3 Years (6 Semesters)",
     seats: 45,
-    eligibility: "Matriculation (Science) with minimum 45% marks",
+    eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
       "Covers HVAC systems, refrigeration cycles, thermal engineering, and building climate control.",
     icon: "thermometer",
@@ -465,11 +465,11 @@ const daePrograms: Program[] = [
   },
   {
     id: "dae-chemical",
-    name: "Diploma of Associate Engineering — Chemical Technology",
+    name: "Diploma of Associate Engineer — Chemical Technology",
     shortName: "DAE Chemical Technology",
     duration: "3 Years (6 Semesters)",
     seats: 45,
-    eligibility: "Matriculation (Science) with minimum 45% marks",
+    eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
       "Covers chemical processes, instrumentation, process control, and chemical plant operations.",
     icon: "flask",
@@ -522,6 +522,40 @@ const daePrograms: Program[] = [
 
 const certificationPrograms: Program[] = [
   {
+    id: "cert-phlebotomy",
+    name: "Phlebotomy",
+    shortName: "Phlebotomy",
+    duration: "6 Months",
+    seats: 25,
+    eligibility: "Matric Science | Age Limit: 35 Years",
+    description:
+      "Specialized training in venipuncture techniques, safety protocols, specialized testing, and quality control procedures.",
+    icon: "syringe",
+    tag: "CERT",
+    category: "certifications",
+    subjects: [
+      {
+        year: "Curriculum",
+        items: [
+          "Venipuncture Techniques",
+          "Safety Protocols",
+          "Specialized Testing",
+          "Quality Control",
+        ],
+      },
+    ],
+    careers: [
+      "Phlebotomist",
+      "Blood Collection Specialist",
+      "Laboratory Assistant",
+      "Hospital Technician",
+      "Diagnostic Center Staff",
+    ],
+  },
+];
+
+const diplomaCertifications: Program[] = [
+  {
     id: "cert-physiotherapy",
     name: "Diploma in Physiotherapy Technicians",
     shortName: "Physiotherapy Technicians",
@@ -551,6 +585,42 @@ const certificationPrograms: Program[] = [
       "Sports Therapy Assistant",
       "Hospital Physiotherapy Dept.",
       "Private Clinic Practitioner",
+    ],
+  },
+  {
+    id: "sc-ai",
+    name: "Diploma in Artificial Intelligence",
+    shortName: "Artificial Intelligence",
+    duration: "1 Year",
+    seats: 25,
+    eligibility:
+      "Matric / Intermediate | Diploma Holders, Job Seekers & Professionals",
+    description:
+      "Comprehensive AI training covering machine learning, deep learning, Python programming, and real-world AI projects.",
+    icon: "brain",
+    tag: "CERT",
+    category: "short-courses",
+    subjects: [
+      {
+        year: "Course Modules",
+        items: [
+          "Introduction to AI",
+          "Machine Learning Basics",
+          "Python Programming",
+          "Data Science Fundamentals",
+          "Deep Learning",
+          "Computer Vision & NLP",
+          "AI Projects & Case Studies",
+        ],
+      },
+    ],
+    careers: [
+      "AI/ML Engineer",
+      "Data Scientist",
+      "Python Developer",
+      "Computer Vision Engineer",
+      "NLP Specialist",
+      "AI Research Assistant",
     ],
   },
   {
@@ -618,78 +688,9 @@ const certificationPrograms: Program[] = [
       "Diagnostic Center Technician",
     ],
   },
-  {
-    id: "cert-phlebotomy",
-    name: "Phlebotomy",
-    shortName: "Phlebotomy",
-    duration: "6 Months",
-    seats: 25,
-    eligibility: "Matric Science | Age Limit: 35 Years",
-    description:
-      "Specialized training in venipuncture techniques, safety protocols, specialized testing, and quality control procedures.",
-    icon: "syringe",
-    tag: "CERT",
-    category: "certifications",
-    subjects: [
-      {
-        year: "Curriculum",
-        items: [
-          "Venipuncture Techniques",
-          "Safety Protocols",
-          "Specialized Testing",
-          "Quality Control",
-        ],
-      },
-    ],
-    careers: [
-      "Phlebotomist",
-      "Blood Collection Specialist",
-      "Laboratory Assistant",
-      "Hospital Technician",
-      "Diagnostic Center Staff",
-    ],
-  },
 ];
 
 const shortCourses: Program[] = [
-  // ─── Artificial Intelligence ───────────────────────
-  {
-    id: "sc-ai",
-    name: "Diploma in Artificial Intelligence",
-    shortName: "Artificial Intelligence",
-    duration: "1 Year",
-    seats: 25,
-    eligibility:
-      "Matric / Intermediate | Diploma Holders, Job Seekers & Professionals",
-    description:
-      "Comprehensive AI training covering machine learning, deep learning, Python programming, and real-world AI projects.",
-    icon: "brain",
-    tag: "SHORT",
-    category: "short-courses",
-    subjects: [
-      {
-        year: "Course Modules",
-        items: [
-          "Introduction to AI",
-          "Machine Learning Basics",
-          "Python Programming",
-          "Data Science Fundamentals",
-          "Deep Learning",
-          "Computer Vision & NLP",
-          "AI Projects & Case Studies",
-        ],
-      },
-    ],
-    careers: [
-      "AI/ML Engineer",
-      "Data Scientist",
-      "Python Developer",
-      "Computer Vision Engineer",
-      "NLP Specialist",
-      "AI Research Assistant",
-    ],
-  },
-
   // ─── Skilled Trades ────────────────────────────────
   {
     id: "sc-welding",
@@ -865,6 +866,13 @@ export const allPrograms: Program[] = [
   ...certificationPrograms,
   ...shortCourses,
   ...jecPrograms,
+  ...diplomaCertifications,
 ];
 
-export { daePrograms, certificationPrograms, shortCourses, jecPrograms };
+export {
+  daePrograms,
+  certificationPrograms,
+  shortCourses,
+  jecPrograms,
+  diplomaCertifications,
+};

@@ -3,34 +3,11 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import { FileText, UploadCloud, PenLine, GraduationCap } from "lucide-react";
+import { FileText, PenLine, GraduationCap } from "lucide-react";
+import { selectionProcedure } from "@/data/admissions";
 
-const steps = [
-  {
-    icon: FileText,
-    step: "01",
-    title: "Fill Online Form",
-    desc: "Complete the online application with your personal and academic details.",
-  },
-  {
-    icon: UploadCloud,
-    step: "02",
-    title: "Submit Documents",
-    desc: "Upload your Matric certificate, CNIC copy, photos, and relevant documents.",
-  },
-  {
-    icon: PenLine,
-    step: "03",
-    title: "Appear for Test",
-    desc: "Sit for the entry test at the JPI campus on the scheduled date.",
-  },
-  {
-    icon: GraduationCap,
-    step: "04",
-    title: "Get Enrolled",
-    desc: "Receive your admission letter and pay fees to confirm your seat.",
-  },
-];
+// Icons matching the three selection steps
+const stepIcons = [FileText, PenLine, GraduationCap];
 
 export default function AdmissionSteps() {
   const ref = useRef(null);
@@ -47,7 +24,7 @@ export default function AdmissionSteps() {
             How to Join JPI
           </h2>
           <p className="mt-3 text-(--color-text-muted) max-w-lg mx-auto">
-            Our simple 4-step admission process gets you enrolled quickly.
+            Our simple 3‑step admission process gets you enrolled quickly.
           </p>
         </div>
 
@@ -55,9 +32,9 @@ export default function AdmissionSteps() {
           {/* Connector line — desktop only */}
           <div className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-0.5 bg-linear-to-r from-primary/20 via-(--color-gold) to-primary/20 z-0" />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
-            {steps.map((step, i) => {
-              const Icon = step.icon;
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+            {selectionProcedure.map((phase, i) => {
+              const Icon = stepIcons[i];
               return (
                 <motion.div
                   key={i}
@@ -75,10 +52,10 @@ export default function AdmissionSteps() {
                     </div>
                   </div>
                   <h3 className="font-bold text-(--color-primary-dark) text-base mb-2 font-serif">
-                    {step.title}
+                    {phase.step}
                   </h3>
                   <p className="text-sm text-(--color-text-muted) max-w-45">
-                    {step.desc}
+                    {phase.description}
                   </p>
                 </motion.div>
               );

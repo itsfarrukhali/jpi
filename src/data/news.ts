@@ -80,7 +80,7 @@ export const newsItems: NewsItem[] = [
     excerpt:
       "JPI announces admissions for DAE programs in Civil, Electrical, Mechanical, and Computer Technology. Limited seats available.",
     content:
-      "Jinnah Polytechnic Institute is pleased to announce that admissions for the academic session 2025-26 are now open. Students who have passed Matriculation (Science) with minimum 45% marks are eligible to apply for the 3-year Diploma of Associate Engineering programs.",
+      "Jinnah Polytechnic Institute is pleased to announce that admissions for the academic session 2025-26 are now open. Students who have passed Matriculation (Science) with minimum 45% marks are eligible to apply for the 3-year Diploma of Associate Engineer programs.",
     date: "2025-03-01",
     category: "announcement",
     image: "https://picsum.photos/800/500?random=10",

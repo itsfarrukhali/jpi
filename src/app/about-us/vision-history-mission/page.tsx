@@ -105,9 +105,9 @@ export default function HistoryPage() {
               <Eye size={36} className="mb-5 text-(--color-gold)" />
               <h2 className="text-2xl font-bold mb-4 font-serif">Our Vision</h2>
               <p className="text-white/90 leading-relaxed text-sm">
-                To spread quality education to diversified humanity in an
-                economical way and produce versatile professionals to serve
-                nationally and internationally.
+                To deliver quality education that is accessible and affordable
+                for all, fostering versatile professionals who excel in serving
+                society across national and international platforms.
               </p>
             </div>
 
@@ -119,12 +119,12 @@ export default function HistoryPage() {
                 Our Mission
               </h2>
               <p className="text-white/90 leading-relaxed text-sm">
-                To maintain the leading position in the field of technical
-                education by imparting quality education via latest technical
-                norms, under the mentorship of highly qualified and skilled
-                faculty in a conducive environment, so that well-equipped,
-                trained human resource with the right mix may serve the nation
-                and fulfill the market demand.
+                To Maintain The Leading Position In The Field Of Technical
+                Education By Imparting Quality Education Via Latest Technical
+                Norms, Under The Mentorship Of Highly Qualified & Skilled
+                Faculty In Conducive Environment, So That Well Equipped, Trained
+                & Human Resource With Right Mix May Serve The Nation And Fulfill
+                The Market Demand.
               </p>
             </div>
           </div>
@@ -137,15 +137,55 @@ export default function HistoryPage() {
             <h2 className="text-3xl font-bold text-(--color-primary-dark) font-serif mb-4">
               Aims & Objectives
             </h2>
-            <p className="text-sm text-(--color-text-muted) max-w-3xl mx-auto leading-relaxed">
-              Our mission is to help build an educated and prosperous Pakistan
-              in the 21st century and to provide a quality education system,
-              becoming a leading academic institution with national and
-              international recognition for standards of teaching and learning.
-              We are committed to serving the intellectual, cultural, social,
-              environmental, and economic needs of the country — causing human
-              development through educational programs and outreach efforts.
-            </p>
+
+            <div className="text-sm text-(--color-text-muted) max-w-3xl mx-auto space-y-4 text-left">
+              <p>
+                Our mission is to help build an educated and prosperous Pakistan
+                in the 21st century. We aim to provide a quality education
+                system that becomes a leading academic institution with national
+                and international recognition, setting high standards of
+                teaching and learning.
+              </p>
+
+              <p>
+                Our objective is to enhance higher education in Pakistan by
+                producing quality students in the fields of learning and
+                professional knowledge. We are committed to becoming one of the
+                country&apos;s leading educational centers while serving
+                Pakistan&apos;s intellectual, cultural, social, environmental,
+                and economic needs. This will lead to human development through
+                our educational programs and sincere efforts.
+              </p>
+
+              <p>
+                The institute hopes to achieve exemplary education based on an
+                integrated core curriculum and technology-aided teaching and
+                learning processes. We will make every effort to develop a
+                cultural climate that brings positive change among Pakistani
+                youth, encouraging healthy competition and societal betterment,
+                with an emphasis on leadership and collegiality. We will also
+                develop the technology, infrastructure, and information
+                resources needed to support our programs and services.
+              </p>
+
+              <p>
+                Our ultimate aim is to prepare technologists who possess the
+                character and skills our nation urgently needs — professionals
+                who are readily employable upon graduation and ready to serve
+                the country. Pakistan&apos;s most pressing need is
+                self-reliance, and an institution like ours can respond not only
+                by adopting technology from elsewhere but also by developing its
+                own.
+              </p>
+
+              <p>
+                In that pursuit, we endeavor to train a community of individuals
+                who are application‑focused, capable of independent and
+                analytical thinking, and equipped with strong interpersonal and
+                management skills — rational human beings ready to make a
+                difference.
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">

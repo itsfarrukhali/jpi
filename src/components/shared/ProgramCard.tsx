@@ -42,7 +42,7 @@ export default function ProgramCard({ program, href }: ProgramCardProps) {
           </div>
           <div className="flex items-center gap-2 text-xs text-(--color-text-muted)">
             <Users size={12} className="text-(--color-gold) shrink-0" />
-            <span>{program.seats} seats</span>
+            <span>Limited seats</span>
           </div>
           <div className="flex items-center gap-2 text-xs text-(--color-text-muted)">
             <CheckCircle size={12} className="text-(--color-gold) shrink-0" />

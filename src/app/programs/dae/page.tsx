@@ -9,7 +9,7 @@ import { ChevronDown, BookOpen, Clock, Award } from "lucide-react";
 export const metadata: Metadata = {
   title: "DAE Programs",
   description:
-    "3-year Diploma of Associate Engineering programs at Jinnah Polytechnic Institute — Civil, Electrical, Mechanical, Electronics, Software, CIT, Refrigeration & AC, and Chemical. SBTE Sindh affiliated.",
+    "3-year Diploma of Associate Engineer programs at Jinnah Polytechnic Institute — Civil, Electrical, Mechanical, Electronics, Software, CIT, Refrigeration & AC, and Chemical. Affiliated with SBTE.",
 };
 
 export default function DAEPage() {
@@ -17,7 +17,7 @@ export default function DAEPage() {
     <>
       <PageHero
         title="DAE Programs"
-        subtitle="3-Year Diploma of Associate Engineering — SBTE Sindh Affiliated"
+        subtitle="3-Year Diploma of Associate Engineer — Affiliated with SBTE"
         breadcrumbs={[{ label: "Programs" }, { label: "DAE" }]}
         imageUrl="https://picsum.photos/1600/500?random=50"
       />
@@ -26,11 +26,11 @@ export default function DAEPage() {
       <section className="py-14 bg-gray-50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-600 leading-relaxed text-sm">
-            The Diploma of Associate Engineering (DAE) is a 3-year (6 semesters)
-            technical qualification recognized across Pakistan. Graduates can
-            work as Junior Engineers, Technicians, and Supervisors — or pursue
-            B.Tech / BE degrees for further advancement. All programs are
-            affiliated with <strong>SBTE Sindh</strong>.
+            The Diploma of Associate Engineer (DAE) is a 3-year technical
+            qualification recognized across Pakistan. Graduates can work as
+            Junior Engineers, Technicians, and Supervisors — or pursue B.Tech /
+            BE degrees for further advancement. All programs are affiliated with{" "}
+            <strong>SBTE</strong>.
           </p>
         </div>
       </section>
@@ -53,7 +53,7 @@ export default function DAEPage() {
 
           {/* Detailed Curriculum from courses.ts */}
           <h2 className="text-xl font-bold text-gray-800 mb-2 pb-2 border-b border-gray-200">
-            Detailed Curriculum — SBTE Syllabus
+            Curriculum
           </h2>
           <p className="text-xs text-gray-500 mb-8">
             Complete course breakdown with contact hours, credit hours, and
