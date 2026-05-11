@@ -1,21 +1,56 @@
 "use client";
 
 import Link from "next/link";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
-import { useState } from "react";
+import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2 } from "lucide-react";
+import { useState, useTransition } from "react";
 import Image from "next/image";
-import { Button } from "../ui/button";
+import { toast } from "sonner";
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail("");
+    setError(null);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const email = formData.get("email") as string;
+
+    if (!email) {
+      setError("Please enter a valid email address.");
+      return;
     }
+
+    startTransition(async () => {
+      try {
+        const res = await fetch("/api/newsletter", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+
+        const result = await res.json();
+
+        if (result.success) {
+          setSubscribed(true);
+          form.reset();
+          toast.success("Thank you for subscribing to our newsletter!", {
+            icon: <CheckCircle2 size={18} className="text-green-400" />,
+            style: {
+              background: "var(--color-primary-dark)",
+              color: "#fff",
+              border: "1px solid var(--color-gold)",
+            },
+          });
+        } else {
+          setError(result.error ?? "Something went wrong. Please try again.");
+        }
+      } catch {
+        setError("Network error. Please check your connection.");
+      }
+    });
   };
 
   return (
@@ -211,20 +246,26 @@ export default function Footer() {
                 ✓ Thank you for subscribing!
               </p>
             ) : (
-              <form onSubmit={handleSubscribe} className="flex gap-2">
+              <form onSubmit={handleSubmit} className="flex gap-2">
                 <input
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
                   placeholder="Your email"
-                  className="flex-1 px-3 py-2 rounded-lg bg-white/10 text-white text-sm placeholder-gray-500 border border-x-amber-400/ focus:outline-none focus:border-(--color-gold) "
+                  required
+                  className="flex-1 px-3 py-2 text-rounded-lg bg-white/10 text-black text-sm placeholder-gray-500 border border-white/10 focus:outline-none focus:border-amber-400"
                 />
-                <Button
+                <button
                   type="submit"
-                  className="p-2 rounded-lg bg-(--color-gold) hover:bg-(--color-gold-light) transition-colors"
+                  disabled={isPending}
+                  className="p-2 rounded-lg bg-amber-500 hover:bg-amber-600 transition-colors disabled:opacity-70"
                 >
-                  <Send size={14} />
-                </Button>
+                  {isPending ? (
+                    <Loader2 size={14} className="animate-spin" />
+                  ) : (
+                    <Send size={14} />
+                  )}
+                </button>
+                {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
               </form>
             )}
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import PageHero from "@/components/shared/PageHero";
 import {
   Phone,
@@ -10,16 +10,50 @@ import {
   Send,
   CheckCircle2,
   ExternalLink,
+  Loader2,
 } from "lucide-react";
 import Link from "next/link";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setError(null);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    // FormData converts to plain object for easier handling in API route
+    const data = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      phone: (formData.get("phone") as string) || undefined,
+      subject: formData.get("subject") as string,
+      message: formData.get("message") as string,
+    };
+
+    startTransition(async () => {
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+
+        if (result.success) {
+          setSent(true);
+          form.reset();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          setError(result.error ?? "Something went wrong. Please try again.");
+        }
+      } catch {
+        setError("Network error. Please check your connection and try again.");
+      }
+    });
   };
 
   if (sent) {
@@ -291,13 +325,24 @@ export default function ContactPage() {
                       className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none"
                     />
                   </div>
+                  {error && (
+                    <div className="text-sm text-red-600 bg-red-50 border border-red-100 p-3">
+                      {error}
+                    </div>
+                  )}
+
                   <div>
                     <button
                       type="submit"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
+                      disabled={isPending}
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white text-sm font-medium hover:bg-gray-700 transition-colors disabled:opacity-70"
                     >
-                      <Send size={14} />
-                      Send Message
+                      {isPending ? (
+                        <Loader2 size={14} className="animate-spin" />
+                      ) : (
+                        <Send size={14} />
+                      )}
+                      {isPending ? "Sending..." : "Send Message"}
                     </button>
                   </div>
                 </form>

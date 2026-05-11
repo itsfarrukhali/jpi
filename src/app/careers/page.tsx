@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 import {
@@ -16,7 +16,10 @@ import {
   Shield,
   ArrowRight,
   ChevronDown,
+  Loader2,
 } from "lucide-react";
+import { toast } from "sonner";
+import { currentOpenings } from "@/data/careers";
 
 const whyJoinJPI = [
   {
@@ -51,91 +54,6 @@ const whyJoinJPI = [
   },
 ];
 
-const currentOpenings = [
-  {
-    id: "job-01",
-    title: "Senior Instructor — Mechanical Technology",
-    department: "Department of Mechanical Technology",
-    type: "Full-Time",
-    qualification:
-      "B.E / B.Tech (Mechanical) with 3+ years teaching experience",
-    description:
-      "We are looking for an experienced Mechanical Technology instructor to teach DAE students and manage workshop sessions.",
-    responsibilities: [
-      "Deliver lectures and practical sessions as per SBTE curriculum",
-      "Supervise CNC, welding, and machine shop labs",
-      "Prepare lesson plans and assessment materials",
-      "Mentor students for final year projects",
-      "Participate in departmental and QEC meetings",
-    ],
-  },
-  {
-    id: "job-02",
-    title: "Instructor — Computer Information Technology",
-    department: "Department of CIT",
-    type: "Full-Time",
-    qualification: "BS / MS (Computer Science / IT) with 2+ years experience",
-    description:
-      "Join our CIT department to teach networking, programming, and cybersecurity to DAE students.",
-    responsibilities: [
-      "Teach programming, networking, and cybersecurity courses",
-      "Manage computer labs and network infrastructure",
-      "Guide students in hackathons and IT competitions",
-      "Develop course materials and assessments",
-      "Stay updated with industry trends and technologies",
-    ],
-  },
-  {
-    id: "job-03",
-    title: "Lab Assistant — Electrical Technology",
-    department: "Department of Electrical Technology",
-    type: "Full-Time",
-    qualification: "DAE (Electrical) with 1+ year lab experience",
-    description:
-      "Support the Electrical Technology department in managing labs and assisting students during practical sessions.",
-    responsibilities: [
-      "Prepare and maintain electrical lab equipment",
-      "Assist instructors during practical sessions",
-      "Ensure lab safety protocols are followed",
-      "Maintain inventory of components and tools",
-      "Help students with project work",
-    ],
-  },
-  {
-    id: "job-04",
-    title: "Admission Officer",
-    department: "Admission Department",
-    type: "Full-Time",
-    qualification:
-      "Bachelors degree with 2+ years in student admissions or counseling",
-    description:
-      "Manage student admissions, guide prospective students, and handle admission-related inquiries.",
-    responsibilities: [
-      "Process admission applications and verify documents",
-      "Counsel prospective students and parents about programs",
-      "Maintain student records and admission data",
-      "Coordinate with SBTE for registration matters",
-      "Organize admission drives and open house events",
-    ],
-  },
-  {
-    id: "job-05",
-    title: "Visiting Faculty — English & Communication",
-    department: "General Studies",
-    type: "Part-Time / Visiting",
-    qualification: "MA English / Linguistics with teaching experience",
-    description:
-      "Teach Communication Skills and English to DAE students across all technology departments.",
-    responsibilities: [
-      "Deliver Communication Skills lectures as per curriculum",
-      "Improve students' spoken and written English",
-      "Conduct presentations and group discussion sessions",
-      "Evaluate assignments and examinations",
-      "Provide feedback for student improvement",
-    ],
-  },
-];
-
 const benefits = [
   "Competitive salary package based on qualification and experience",
   "Annual increments and performance-based bonuses",
@@ -150,11 +68,47 @@ const benefits = [
 export default function CareersPage() {
   const [submitted, setSubmitted] = useState(false);
   const [openJob, setOpenJob] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setError(null);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // All fields are already in formData.
+    // The file input (name="cv") will be included automatically.
+
+    startTransition(async () => {
+      try {
+        const res = await fetch("/api/careers", {
+          method: "POST",
+          body: formData, // multipart/form-data automatically set by browser
+        });
+
+        const result = await res.json();
+
+        if (result.success) {
+          setSubmitted(true);
+          form.reset();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          toast.success("Application submitted successfully!", {
+            icon: <CheckCircle2 size={18} className="text-green-400" />,
+            style: {
+              background: "var(--color-primary-dark)",
+              color: "#fff",
+              border: "1px solid var(--color-gold)",
+            },
+          });
+        } else {
+          setError(result.error ?? "Something went wrong. Please try again.");
+        }
+      } catch {
+        setError("Network error. Please check your connection.");
+      }
+    });
   };
 
   if (submitted) {
@@ -485,6 +439,23 @@ export default function CareersPage() {
                 </div>
               </div>
 
+              {/* CV Upload */}
+              <div>
+                <label
+                  htmlFor="cv"
+                  className="block text-xs font-medium text-gray-700 mb-1.5"
+                >
+                  Attach CV (PDF only, max 5 MB)
+                </label>
+                <input
+                  type="file"
+                  id="cv"
+                  name="cv"
+                  accept=".pdf,application/pdf"
+                  className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border file:border-gray-300 file:bg-white file:text-xs file:font-medium file:text-gray-700 hover:file:bg-gray-50"
+                />
+              </div>
+
               <div>
                 <label
                   htmlFor="coverLetter"
@@ -500,16 +471,21 @@ export default function CareersPage() {
                   className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none"
                 />
               </div>
+              {error && (
+                <div className="text-sm text-red-600 bg-red-50 border border-red-100 p-3">
+                  {error}
+                </div>
+              )}
 
               <div className="bg-amber-50 border border-amber-100 p-4 text-center">
                 <p className="text-xs text-gray-700 leading-relaxed">
                   <strong>Note:</strong> Please email your CV and supporting
                   documents to{" "}
                   <a
-                    href="mailto:careers@jpikhi.edu.pk"
+                    href="mailto:info@jpikhi.edu.pk"
                     className="text-amber-700 hover:underline"
                   >
-                    careers@jpikhi.edu.pk
+                    info@jpikhi.edu.pk
                   </a>{" "}
                   with the position title in the subject line. You may also
                   visit the campus to submit your application in person.
@@ -519,10 +495,15 @@ export default function CareersPage() {
               <div>
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
+                  disabled={isPending}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white text-sm font-medium hover:bg-gray-700 transition-colors disabled:opacity-70"
                 >
-                  <Send size={14} />
-                  Submit Application
+                  {isPending ? (
+                    <Loader2 size={14} className="animate-spin" />
+                  ) : (
+                    <Send size={14} />
+                  )}
+                  {isPending ? "Sending..." : "Submit Application"}
                 </button>
               </div>
             </form>

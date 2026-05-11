@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 import {
@@ -12,21 +12,69 @@ import {
   Mail,
   AlertTriangle,
   CheckCircle2,
+  Loader2,
 } from "lucide-react";
 import { admissionContact, universalFormFields } from "@/data/admissions";
+import { toast } from "sonner";
 
 export default function ApplyNowPage() {
   const [selectedProgram, setSelectedProgram] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   // Check if selected program is DAE (for male-only warning + extra fields)
   const isDAE = selectedProgram.startsWith("dae-");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // In production: send to API/email
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setError(null);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // Map form fields to API shape – no `as` just safe extraction
+    const payload = {
+      studentName: String(formData.get("fullName") ?? ""),
+      fatherName: String(formData.get("fatherName") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      phone: String(formData.get("phone") ?? ""),
+      program: String(formData.get("interestedProgram") ?? ""),
+      technology: isDAE ? String(formData.get("technology") ?? "") : undefined,
+      shift: isDAE ? String(formData.get("shift") ?? "") : undefined,
+      message: String(formData.get("message") ?? "") || undefined,
+    };
+
+    startTransition(async () => {
+      try {
+        const res = await fetch("/api/admissions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await res.json();
+
+        if (result.success) {
+          setSubmitted(true);
+          form.reset();
+          setSelectedProgram("");
+          toast.success("Admission inquiry submitted successfully!", {
+            icon: <CheckCircle2 size={18} className="text-green-400" />,
+            style: {
+              background: "var(--color-primary-dark)",
+              color: "#fff",
+              border: "1px solid var(--color-gold)",
+            },
+          });
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          setError(result.error ?? "Something went wrong. Please try again.");
+        }
+      } catch {
+        setError("Network error. Please check your connection.");
+      }
+    });
   };
 
   if (submitted) {
@@ -323,15 +371,25 @@ export default function ApplyNowPage() {
                   className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none resize-none"
                 />
               </div>
+              {error && (
+                <div className="text-sm text-red-600 bg-red-50 border border-red-100 p-3">
+                  {error}
+                </div>
+              )}
 
               {/* Submit */}
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
+                  disabled={isPending}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white text-sm font-medium hover:bg-gray-700 transition-colors disabled:opacity-70"
                 >
-                  <Send size={14} />
-                  Submit Inquiry
+                  {isPending ? (
+                    <Loader2 size={14} className="animate-spin" />
+                  ) : (
+                    <Send size={14} />
+                  )}
+                  {isPending ? "Sending..." : "Submit Inquiry"}
                 </button>
                 <p className="text-xs text-gray-400 mt-3">
                   This is an inquiry form only. Final admission is subject to
