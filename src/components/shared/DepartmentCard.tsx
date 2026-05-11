@@ -19,6 +19,7 @@ export default function DepartmentCard({ department }: DepartmentCardProps) {
           src={department.image}
           alt={department.name}
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           className="object-contain group-hover:scale-105 transition-transform duration-500"
         />
         {/* Overlay gradient */}
