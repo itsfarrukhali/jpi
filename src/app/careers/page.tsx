@@ -76,10 +76,22 @@ export default function CareersPage() {
     setError(null);
 
     const form = e.currentTarget;
-    const formData = new FormData(form);
+    // Client-side validation: ensure CV (if provided) is PDF and <= 5MB
+    const fileInput = form.querySelector<HTMLInputElement>('input[name="cv"]');
+    const file = fileInput?.files?.[0];
+    if (file) {
+      const MAX = 5 * 1024 * 1024; // 5MB
+      if (file.type !== "application/pdf") {
+        setError("CV must be a PDF file.");
+        return;
+      }
+      if (file.size > MAX) {
+        setError("CV must be under 5 MB.");
+        return;
+      }
+    }
 
-    // All fields are already in formData.
-    // The file input (name="cv") will be included automatically.
+    const formData = new FormData(form);
 
     startTransition(async () => {
       try {

@@ -5,6 +5,8 @@ import { EmailHeading } from "../components/heading";
 import { InfoTable } from "../components/info-table";
 import type { CareersApplicationData } from "../types";
 
+type CareersEmailProps = CareersApplicationData & { attachmentName?: string };
+
 export const CareersApplicationEmail = ({
   applicantName,
   email,
@@ -13,7 +15,8 @@ export const CareersApplicationEmail = ({
   qualification,
   experience,
   coverLetter,
-}: CareersApplicationData) => (
+  attachmentName,
+}: CareersEmailProps) => (
   <EmailLayout preview={`New job application from ${applicantName}`}>
     <EmailHeading>New Job Application</EmailHeading>
     <InfoTable
@@ -24,6 +27,9 @@ export const CareersApplicationEmail = ({
         ["Position", position],
         ["Qualification", qualification],
         ["Experience", experience],
+        ...(attachmentName
+          ? [["Attachment", attachmentName] as [string, string]]
+          : ([] as [string, string][])),
       ]}
     />
     {coverLetter && (

@@ -6,6 +6,7 @@ import { CareersApplicationEmail } from "@/lib/emails/templates/careers";
 import { ContactInstituteEmail } from "@/lib/emails/templates/contact";
 import { ContactUserEmail } from "@/lib/emails/templates/contact-confirmation";
 import { NewsletterWelcomeEmail } from "@/lib/emails/templates/newsletter";
+import { AttachmentNotificationEmail } from "@/lib/emails/templates/attachment-notification";
 import type {
   AdmissionInquiryData,
   CareersApplicationData,
@@ -19,11 +20,15 @@ export type EmailAttachment = {
   contentType?: string;
 };
 
+export type EmailResult =
+  | { success: true; id?: string }
+  | { success: false; error: string };
+
 export async function sendToInstitute(
   subject: string,
   react: React.ReactElement,
   attachments?: EmailAttachment[],
-) {
+): Promise<EmailResult> {
   const { data, error } = await resend.emails.send({
     from: EMAIL_FROM,
     to: [EMAIL_TO],
@@ -40,7 +45,7 @@ export async function sendToUser(
   to: string,
   subject: string,
   react: React.ReactElement,
-) {
+): Promise<EmailResult> {
   const { error } = await resend.emails.send({
     from: EMAIL_FROM,
     to: [to],
@@ -52,7 +57,9 @@ export async function sendToUser(
 }
 
 // Contact
-export async function handleContactEmail(data: ContactFormData) {
+export async function handleContactEmail(
+  data: ContactFormData,
+): Promise<EmailResult> {
   const inst = await sendToInstitute(
     `Contact: ${data.subject}`,
     ContactInstituteEmail(data),
@@ -70,7 +77,9 @@ export async function handleContactEmail(data: ContactFormData) {
 }
 
 // Admissions
-export async function handleAdmissionEmail(data: AdmissionInquiryData) {
+export async function handleAdmissionEmail(
+  data: AdmissionInquiryData,
+): Promise<EmailResult> {
   return sendToInstitute(
     `New Admission Inquiry: ${data.studentName}`,
     AdmissionInquiryEmail(data),
@@ -81,18 +90,22 @@ export async function handleAdmissionEmail(data: AdmissionInquiryData) {
 export async function handleCareerEmail(
   data: CareersApplicationData,
   attachment?: EmailAttachment,
-) {
+): Promise<EmailResult> {
   const attachments = attachment ? [attachment] : undefined;
 
+  // Pass attachment filename into the template so the email body shows it
+  const attachmentName = attachment?.filename;
   return sendToInstitute(
     `Job Application: ${data.position} — ${data.applicantName}`,
-    CareersApplicationEmail(data),
+    CareersApplicationEmail({ ...data, attachmentName }),
     attachments,
   );
 }
 
 // Newsletter
-export async function handleNewsletterSubscription(email: string) {
+export async function handleNewsletterSubscription(
+  email: string,
+): Promise<EmailResult> {
   const audienceId = process.env.RESEND_AUDIENCE_ID;
 
   if (audienceId) {
@@ -113,4 +126,63 @@ export async function handleNewsletterSubscription(email: string) {
     "Welcome to JPI Newsletter",
     NewsletterWelcomeEmail({ email }),
   );
+}
+
+/**
+ * Send email with attachments to user
+ * @param to - Recipient email address
+ * @param subject - Email subject
+ * @param react - React component for email body
+ * @param attachments - Array of attachments
+ */
+export async function sendToUserWithAttachments(
+  to: string,
+  subject: string,
+  react: React.ReactElement,
+  attachments?: EmailAttachment[],
+): Promise<EmailResult> {
+  const { error } = await resend.emails.send({
+    from: EMAIL_FROM,
+    to: [to],
+    subject,
+    react,
+    attachments,
+  });
+  if (error) return { success: false, error: error.message };
+  return { success: true };
+}
+
+/**
+ * Send notification email with attachment details
+ * @param to - Recipient email address
+ * @param subject - Email subject
+ * @param message - Email message
+ * @param attachmentName - Name of the attachment
+ * @param attachmentCount - Number of attachments
+ * @param attachments - Array of attachments to include
+ */
+export async function sendAttachmentNotification(
+  to: string,
+  subject: string,
+  message: string,
+  attachmentName: string,
+  attachmentCount: number = 1,
+  attachments?: EmailAttachment[],
+): Promise<EmailResult> {
+  const { error } = await resend.emails.send({
+    from: EMAIL_FROM,
+    to: [to],
+    subject,
+    react: AttachmentNotificationEmail({
+      recipientName: to.split("@")[0],
+      subject,
+      message,
+      attachmentName,
+      attachmentCount,
+      instituteEmail: EMAIL_FROM.match(/[^<]+(?=>)/)?.[0] || EMAIL_FROM,
+    }),
+    attachments,
+  });
+  if (error) return { success: false, error: error.message };
+  return { success: true };
 }

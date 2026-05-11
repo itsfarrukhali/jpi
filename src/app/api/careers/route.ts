@@ -5,6 +5,44 @@ import { handleCareerEmail } from "@/lib/emails/send-emails";
 import type { EmailAttachment } from "@/lib/emails/send-emails";
 import type { CareersApplicationData } from "@/lib/emails/types";
 
+/**
+ * Type guard to check if a FormDataEntryValue is a File
+ */
+function isFile(value: FormDataEntryValue): value is File {
+  return (
+    value instanceof File &&
+    "size" in value &&
+    "type" in value &&
+    "arrayBuffer" in value &&
+    typeof value.arrayBuffer === "function"
+  );
+}
+
+/**
+ * Helper function to process CV file from FormData
+ */
+async function processCVAttachment(
+  cvEntry: FormDataEntryValue | null,
+): Promise<EmailAttachment | undefined> {
+  if (!cvEntry || !isFile(cvEntry) || cvEntry.size === 0) {
+    return undefined;
+  }
+
+  const CV_MAX_SIZE = 5 * 1024 * 1024; // 5MB
+  if (cvEntry.size > CV_MAX_SIZE) {
+    throw new Error(
+      `CV file must be under 5MB (current: ${(cvEntry.size / 1024 / 1024).toFixed(2)}MB)`,
+    );
+  }
+
+  const buffer = Buffer.from(await cvEntry.arrayBuffer());
+  return {
+    filename: cvEntry.name || "cv.pdf",
+    content: buffer,
+    contentType: cvEntry.type || "application/pdf",
+  };
+}
+
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
@@ -28,40 +66,26 @@ export async function POST(request: Request) {
       );
     }
 
-    // CV — optional, attach karo agar mila
+    // Process CV attachment if provided
     let attachment: EmailAttachment | undefined;
-    const cvEntry = formData.get("cv");
-
-    const isUploadFile =
-      typeof cvEntry === "object" &&
-      cvEntry !== null &&
-      "arrayBuffer" in cvEntry &&
-      "size" in cvEntry &&
-      typeof (cvEntry as { arrayBuffer?: unknown }).arrayBuffer === "function";
-
-    if (isUploadFile && (cvEntry as File).size > 0) {
-      // Size check — 5MB limit
-      if ((cvEntry as File).size > 5 * 1024 * 1024) {
-        return NextResponse.json(
-          { success: false, error: "CV file must be under 5MB" },
-          { status: 400 },
-        );
-      }
-
-      const file = cvEntry as File;
-      const buffer = Buffer.from(await file.arrayBuffer());
-      attachment = {
-        filename: file.name || "cv.pdf",
-        content: buffer,
-        contentType: file.type || "application/pdf",
-      };
+    try {
+      attachment = await processCVAttachment(formData.get("cv"));
+    } catch (fileError) {
+      const errorMessage =
+        fileError instanceof Error ? fileError.message : "Invalid CV file";
+      return NextResponse.json(
+        { success: false, error: errorMessage },
+        { status: 400 },
+      );
     }
 
     const emailResult = await handleCareerEmail(result.data, attachment);
 
     if (!emailResult.success) {
+      const errorMessage = emailResult.error;
+
       return NextResponse.json(
-        { success: false, error: emailResult.error },
+        { success: false, error: errorMessage },
         { status: 500 },
       );
     }
@@ -69,8 +93,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Careers route error:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : "Internal server error";
     return NextResponse.json(
-      { success: false, error: "Internal server error" },
+      { success: false, error: errorMessage },
       { status: 500 },
     );
   }
