@@ -13,37 +13,65 @@ import { Button } from "../ui/button";
 const slides = [
   {
     id: 0,
-    badge: "3-Year Program",
-    title: "Diploma of Associate Engineer",
-    subtitle: "Morning & Evening Programs",
+    badge: "3-Year Engineering Diploma",
+    title: "Build Your Future with DAE Programs",
+    subtitle:
+      "Civil · Electrical · Mechanical · CIT & More — SBTE Affiliated Technical Education for Career-Focused Students",
     tag: "DAE",
     cta: "/programs/dae",
     image: "/carousel/dae-final.png",
   },
+
   {
     id: 1,
-    badge: "Professional Certifications",
-    title: "Industry-Recognized Certifications",
-    subtitle: "Nursing · Lab Technician · AI · Physiotherapy Technician & More",
+    badge: "Professional Diploma Certifications",
+    title: "Start a Career in Technology",
+    subtitle:
+      "AI Certifications & More — SBTE Affiliated. Industry-Focused Diploma Programs with Practical Learning, Professional Labs & Experienced Faculty",
     tag: "CERT",
-    cta: "/programs/certifications",
+    cta: "/programs/diploma-certifications",
     image: "/carousel/certifications.png",
   },
+
   {
     id: 2,
-    badge: "3–6 Month Courses",
-    title: "Short Courses for Rapid Skill Building",
-    subtitle: "Phlebotomy · Electrician · Plumbing · IT Fundamentals & More",
-    tag: "SHORT",
+    badge: "Career-Oriented Diplomas",
+    title: "Hands-On Training for High-Demand Skills",
+    subtitle:
+      "Nursing Assistant · Lab Technician · Physiotherapy Technician & More — SBTE Affiliated Diplomas for Healthcare Careers",
+    tag: "DIPLOMA",
+    cta: "/programs/diploma-certifications",
+    image: "/carousel/diploma-certificates.png",
+  },
+
+  {
+    id: 3,
+    badge: "6-Month Professional Certification",
+    title: "Become a Certified Phlebotomy Technician",
+    subtitle:
+      "Hands-On Blood Collection & Diagnostic Lab Training — Ideal for Healthcare Career Beginners",
+    tag: "PHLEBOTOMY",
+    cta: "/programs/certifications",
+    image: "/carousel/phlebotomy.png",
+  },
+
+  {
+    id: 4,
+    badge: "3–6 Month Skill Courses",
+    title: "Learn Practical Skills & Start Earning Faster",
+    subtitle:
+      "Electrician · Plumbing · IT Fundamentals · Technical Skills & More with Practical Training",
+    tag: "SKILLS",
     cta: "/programs/short-courses",
     image: "/carousel/short-courses.png",
   },
+
   {
-    id: 3,
-    badge: "Excellence Program",
-    title: "Jinnah Excellence Certificates",
+    id: 5,
+    badge: "Jinnah Excellence Program",
+    title: "Master AutoCAD with Professional Certification",
     subtitle:
-      "JPI AutoCAD 2D & 3D — Mechanical & Civil Drawing with Jinnah Excellence Certificates.",
+      "2D & 3D Mechanical and Civil Drafting Training with Jinnah Excellence Certificates",
     tag: "JEC",
     cta: "/programs/jec",
     image: "/carousel/jec.png",
@@ -51,10 +79,12 @@ const slides = [
 ];
 
 const tagColors: Record<string, string> = {
-  DAE: "bg-[var(--color-gold)]",
+  DAE: "bg-blue-700",
   CERT: "bg-[var(--color-rust)]",
-  SHORT: "bg-emerald-600",
-  JEC: "bg-purple-600",
+  DIPLOMA: "bg-amber-600",
+  PHLEBOTOMY: "bg-red-600",
+  SKILLS: "bg-emerald-600",
+  JEC: "bg-purple-700",
 };
 
 const contentVariants = {
@@ -126,71 +156,73 @@ export default function HeroCarousel() {
       </AnimatePresence>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex items-end pb-20 md:pb-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`content-${slide.id}`}
-              variants={contentVariants}
-              custom={direction}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="max-w-2xl"
-            >
-              {/* Badge */}
-              <motion.span
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 }}
-                className={`inline-block px-3 py-1 rounded-full text-xs font-semibold text-white mb-4 ${tagColors[slide.tag]}`}
-              >
-                {slide.badge}
-              </motion.span>
-
-              {/* Heading */}
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 font-serif"
-              >
-                {slide.title}
-              </motion.h1>
-
-              {/* Subtitle */}
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="text-lg text-white/80 mb-8"
-              >
-                {slide.subtitle}
-              </motion.p>
-
-              {/* Buttons */}
+      <div className="relative z-10 flex h-full items-end">
+        <div className="w-full pb-8 md:pb-10 lg:pb-12">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <AnimatePresence mode="wait">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="flex flex-wrap gap-3"
+                key={`content-${slide.id}`}
+                variants={contentVariants}
+                custom={direction}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="max-w-2xl"
               >
-                <Link
-                  href="/admissions/apply-now"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-(--color-gold) text-white font-semibold text-sm hover:bg-(--color-gold-light) transition-colors shadow-lg"
+                {/* Badge */}
+                <motion.span
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className={`inline-block px-3 py-1 rounded-full text-xs font-semibold text-white mb-4 ${tagColors[slide.tag]}`}
                 >
-                  Apply Now →
-                </Link>
-                <Link
-                  href={slide.cta}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-white/70 text-white font-semibold text-sm hover:bg-white/10 transition-colors"
+                  {slide.badge}
+                </motion.span>
+
+                {/* Heading */}
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 font-serif"
                 >
-                  Learn More
-                </Link>
+                  {slide.title}
+                </motion.h1>
+
+                {/* Subtitle */}
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-lg text-white/80 mb-8"
+                >
+                  {slide.subtitle}
+                </motion.p>
+
+                {/* Buttons */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="flex flex-wrap gap-3"
+                >
+                  <Link
+                    href="/admissions/apply-now"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-(--color-gold) text-white font-semibold text-sm hover:bg-(--color-gold-light) transition-colors shadow-lg"
+                  >
+                    Apply Now →
+                  </Link>
+                  <Link
+                    href={slide.cta}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-white/70 text-white font-semibold text-sm hover:bg-white/10 transition-colors"
+                  >
+                    Learn More
+                  </Link>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          </AnimatePresence>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
 
