@@ -13,11 +13,13 @@ import type {
   ContactFormData,
 } from "@/lib/emails/types";
 
-// Internal helper — institute email
+/**
+ * Email attachment compatible with Resend API
+ * @see https://resend.com/docs/send-with-attachments
+ */
 export type EmailAttachment = {
   filename: string;
-  content: string | Buffer;
-  contentType?: string;
+  content: string; // Must be base64-encoded string
 };
 
 export type EmailResult =
@@ -29,15 +31,40 @@ export async function sendToInstitute(
   react: React.ReactElement,
   attachments?: EmailAttachment[],
 ): Promise<EmailResult> {
-  const { data, error } = await resend.emails.send({
-    from: EMAIL_FROM,
-    to: [EMAIL_TO],
-    subject,
-    react,
-    attachments,
-  });
-  if (error) return { success: false, error: error.message };
-  return { success: true, id: data?.id };
+  try {
+    const emailPayload: Parameters<typeof resend.emails.send>[0] = {
+      from: EMAIL_FROM,
+      to: [EMAIL_TO],
+      subject,
+      react,
+    };
+
+    // Only include attachments if they exist
+    if (attachments && attachments.length > 0) {
+      emailPayload.attachments = attachments;
+      console.log(
+        `[Careers Email] Sending with ${attachments.length} attachment(s):`,
+        attachments.map((a) => ({
+          filename: a.filename,
+          size: a.content.length,
+        })),
+      );
+    }
+
+    const { data, error } = await resend.emails.send(emailPayload);
+
+    if (error) {
+      console.error("[Careers Email] Resend error:", error);
+      return { success: false, error: error.message };
+    }
+
+    console.log("[Careers Email] Sent successfully:", data?.id);
+    return { success: true, id: data?.id };
+  } catch (err) {
+    const errorMsg = err instanceof Error ? err.message : "Unknown error";
+    console.error("[Careers Email] Exception:", errorMsg);
+    return { success: false, error: errorMsg };
+  }
 }
 
 // Internal helper — user email

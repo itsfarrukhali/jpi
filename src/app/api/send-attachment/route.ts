@@ -1,4 +1,9 @@
 // src/app/api/send-attachment/route.ts
+/**
+ * Generic email attachment endpoint
+ * Follows Resend official documentation for sending emails with attachments
+ * @see https://resend.com/docs/send-with-attachments
+ */
 import { NextResponse } from "next/server";
 import { resend, EMAIL_FROM } from "@/lib/emails/resend";
 import type { EmailAttachment } from "@/lib/emails/send-emails";
@@ -17,53 +22,35 @@ export async function POST(request: Request) {
     let to: string | undefined;
     let subject: string | undefined;
     let htmlContent: string | undefined;
-    let attachments: EmailAttachment[] | undefined;
+    let attachments: EmailAttachment[] = [];
 
+    // Handle multipart/form-data
     if (contentType.includes("multipart/form-data")) {
       const form = await request.formData();
       to = form.get("to")?.toString();
       subject = form.get("subject")?.toString();
       htmlContent = form.get("htmlContent")?.toString();
 
-      attachments = [];
-      for (const entry of form.entries()) {
-        const [key, value] = entry as [string, FormDataEntryValue];
-        if (value instanceof File) {
-          // convert File to Buffer and capture mime type
+      // Process file attachments
+      for (const [key, value] of form.entries()) {
+        if (value instanceof File && value.size > 0) {
           const buf = Buffer.from(await value.arrayBuffer());
           attachments.push({
-            filename: value.name,
-            content: buf,
-            contentType: value.type || undefined,
+            filename: value.name || `file-${key}`,
+            content: buf.toString("base64"),
           });
-        } else if (key === "attachments" && typeof value === "string") {
-          // allow JSON-encoded attachments field
-          try {
-            const parsed = JSON.parse(value) as unknown;
-            if (Array.isArray(parsed)) {
-              // coerce items to EmailAttachment if they have filename
-              for (const item of parsed) {
-                if (
-                  item &&
-                  typeof item === "object" &&
-                  "filename" in (item as File)
-                ) {
-                  const it = item as EmailAttachment;
-                  attachments.push(it);
-                }
-              }
-            }
-          } catch {
-            // ignore parse errors
-          }
+          console.log(
+            `[Send Attachment] Processing file: ${value.name} (${(buf.length / 1024).toFixed(2)}KB)`,
+          );
         }
       }
     } else {
+      // Handle JSON request
       const body: AttachmentRequest = await request.json();
       to = body.to;
       subject = body.subject;
       htmlContent = body.htmlContent;
-      attachments = body.attachments;
+      attachments = body.attachments || [];
     }
 
     // Validate required fields
@@ -77,7 +64,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validate email
+    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(to)) {
       return NextResponse.json(
@@ -86,28 +73,41 @@ export async function POST(request: Request) {
       );
     }
 
-    // Send email with attachments (attachments may be Buffers or base64 strings)
-    const { data, error } = await resend.emails.send({
+    console.log(
+      `[Send Attachment] Sending email to ${to} with ${attachments.length} attachment(s)`,
+    );
+
+    // Send email with attachments using Resend API
+    const emailPayload: Parameters<typeof resend.emails.send>[0] = {
       from: EMAIL_FROM,
       to: [to],
       subject,
       html: htmlContent,
-      attachments: attachments ?? undefined,
-    });
+    };
+
+    // Only add attachments if they exist
+    if (attachments.length > 0) {
+      emailPayload.attachments = attachments;
+    }
+
+    const { data, error } = await resend.emails.send(emailPayload);
 
     if (error) {
-      console.error("Resend error:", error);
+      console.error("[Send Attachment] Resend error:", error);
       return NextResponse.json(
         { success: false, error: error.message },
         { status: 500 },
       );
     }
 
-    return NextResponse.json({ success: true, data: { id: data?.id } });
+    console.log("[Send Attachment] Email sent successfully:", data?.id);
+    return NextResponse.json({ success: true, id: data?.id });
   } catch (error) {
-    console.error("Send attachment route error:", error);
+    console.error("[Send Attachment] Error:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : "Internal server error";
     return NextResponse.json(
-      { success: false, error: "Internal server error" },
+      { success: false, error: errorMessage },
       { status: 500 },
     );
   }

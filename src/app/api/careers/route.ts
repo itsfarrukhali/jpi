@@ -20,6 +20,8 @@ function isFile(value: FormDataEntryValue): value is File {
 
 /**
  * Helper function to process CV file from FormData
+ * Converts file to base64-encoded attachment compatible with Resend API
+ * @see https://resend.com/docs/send-with-attachments
  */
 async function processCVAttachment(
   cvEntry: FormDataEntryValue | null,
@@ -36,11 +38,18 @@ async function processCVAttachment(
   }
 
   const buffer = Buffer.from(await cvEntry.arrayBuffer());
-  return {
+  const base64Content = buffer.toString("base64");
+
+  const attachment: EmailAttachment = {
     filename: cvEntry.name || "cv.pdf",
-    content: buffer,
-    contentType: cvEntry.type || "application/pdf",
+    content: base64Content,
   };
+
+  console.log(
+    `[Careers Upload] Processing attachment: ${attachment.filename} (${(buffer.length / 1024).toFixed(2)}KB -> base64)`,
+  );
+
+  return attachment;
 }
 
 export async function POST(request: Request) {
@@ -60,19 +69,30 @@ export async function POST(request: Request) {
     const result = careersSchema.safeParse(raw);
 
     if (!result.success) {
+      console.error("[Careers API] Validation failed:", result.error.flatten());
       return NextResponse.json(
         { success: false, error: "Invalid form data" },
         { status: 400 },
       );
     }
 
+    console.log(
+      `[Careers API] Processing application from ${raw.applicantName} for ${raw.position}`,
+    );
+
     // Process CV attachment if provided
     let attachment: EmailAttachment | undefined;
     try {
       attachment = await processCVAttachment(formData.get("cv"));
+      if (attachment) {
+        console.log(`[Careers API] Attachment ready: ${attachment.filename}`);
+      } else {
+        console.log("[Careers API] No attachment provided");
+      }
     } catch (fileError) {
       const errorMessage =
         fileError instanceof Error ? fileError.message : "Invalid CV file";
+      console.error("[Careers API] File processing error:", errorMessage);
       return NextResponse.json(
         { success: false, error: errorMessage },
         { status: 400 },
@@ -82,17 +102,17 @@ export async function POST(request: Request) {
     const emailResult = await handleCareerEmail(result.data, attachment);
 
     if (!emailResult.success) {
-      const errorMessage = emailResult.error;
-
+      console.error("[Careers API] Email sending failed:", emailResult.error);
       return NextResponse.json(
-        { success: false, error: errorMessage },
+        { success: false, error: emailResult.error },
         { status: 500 },
       );
     }
 
+    console.log("[Careers API] Application submitted successfully");
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Careers route error:", error);
+    console.error("[Careers API] Unexpected error:", error);
     const errorMessage =
       error instanceof Error ? error.message : "Internal server error";
     return NextResponse.json(
