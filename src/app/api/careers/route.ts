@@ -1,5 +1,6 @@
 // src/app/api/careers/route.ts
 import { NextResponse } from "next/server";
+import { getJobTitle } from "@/data/careers";
 import { careersSchema } from "@/lib/validations/email";
 import { handleCareerEmail } from "@/lib/emails/send-emails";
 import type { EmailAttachment } from "@/lib/emails/send-emails";
@@ -43,6 +44,7 @@ async function processCVAttachment(
   const attachment: EmailAttachment = {
     filename: cvEntry.name || "cv.pdf",
     content: base64Content,
+    contentType: cvEntry.type || "application/pdf",
   };
 
   console.log(
@@ -80,6 +82,8 @@ export async function POST(request: Request) {
       `[Careers API] Processing application from ${raw.applicantName} for ${raw.position}`,
     );
 
+    const jobTitle = getJobTitle(raw.position);
+
     // Process CV attachment if provided
     let attachment: EmailAttachment | undefined;
     try {
@@ -99,7 +103,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const emailResult = await handleCareerEmail(result.data, attachment);
+    const emailResult = await handleCareerEmail(
+      { ...result.data, jobTitle },
+      attachment,
+    );
 
     if (!emailResult.success) {
       console.error("[Careers API] Email sending failed:", emailResult.error);

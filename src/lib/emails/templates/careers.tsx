@@ -12,6 +12,7 @@ export const CareersApplicationEmail = ({
   email,
   phone,
   position,
+  jobTitle,
   qualification,
   experience,
   coverLetter,
@@ -24,7 +25,7 @@ export const CareersApplicationEmail = ({
         ["Applicant", applicantName],
         ["Email", email],
         ["Phone", phone],
-        ["Position", position],
+        ["Position", jobTitle ?? position],
         ["Qualification", qualification],
         ["Experience", experience],
         ...(attachmentName

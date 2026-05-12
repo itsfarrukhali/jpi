@@ -20,6 +20,7 @@ import type {
 export type EmailAttachment = {
   filename: string;
   content: string; // Must be base64-encoded string
+  contentType?: string;
 };
 
 export type EmailResult =
@@ -47,6 +48,7 @@ export async function sendToInstitute(
         attachments.map((a) => ({
           filename: a.filename,
           size: a.content.length,
+          contentType: a.contentType || "(auto)",
         })),
       );
     }
@@ -123,8 +125,12 @@ export async function handleCareerEmail(
   // Pass attachment filename into the template so the email body shows it
   const attachmentName = attachment?.filename;
   return sendToInstitute(
-    `Job Application: ${data.position} — ${data.applicantName}`,
-    CareersApplicationEmail({ ...data, attachmentName }),
+    `Job Application: ${data.jobTitle ?? data.position} — ${data.applicantName}`,
+    CareersApplicationEmail({
+      ...data,
+      attachmentName,
+      jobTitle: data.jobTitle,
+    }),
     attachments,
   );
 }

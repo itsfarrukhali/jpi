@@ -14,6 +14,7 @@ export interface CareersApplicationData {
   email: string;
   phone: string;
   position: string;
+  jobTitle?: string;
   qualification: string;
   experience: string;
   coverLetter?: string;
