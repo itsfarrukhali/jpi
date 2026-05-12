@@ -1,24 +1,20 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 import { newsItems } from "@/data/news";
 import {
   Calendar,
-  ArrowRight,
   Megaphone,
   CalendarDays,
   ImageIcon,
   FileText,
 } from "lucide-react";
+import GalleryLightbox from "@/components/shared/GalleryLightbox";
 
-export const metadata: Metadata = {
-  title: "News & Events",
-  description:
-    "Latest news, announcements, events, and gallery from Jinnah Polytechnic Institute.",
-};
-
-// Filter by category
+// Filter lists (static, not reactive)
 const newsAndAnnouncements = newsItems.filter(
   (item) => item.category === "news" || item.category === "announcement",
 );
@@ -47,6 +43,14 @@ function formatDate(dateStr: string): string {
 }
 
 export default function NewsEventsPage() {
+  const [galleryOpen, setGalleryOpen] = useState<string[] | null>(null);
+
+  const openGallery = (images: string[] | undefined) => {
+    if (images && images.length > 0) {
+      setGalleryOpen(images);
+    }
+  };
+
   return (
     <>
       <PageHero
@@ -78,6 +82,7 @@ export default function NewsEventsPage() {
                       src={newsAndAnnouncements[0].image}
                       alt={newsAndAnnouncements[0].title}
                       fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover"
                     />
                     <div className="absolute top-3 left-3">
@@ -114,6 +119,19 @@ export default function NewsEventsPage() {
                         View Official Notice
                       </Link>
                     )}
+                    {newsAndAnnouncements[0].galleryImages &&
+                      newsAndAnnouncements[0].galleryImages.length > 0 && (
+                        <button
+                          onClick={() =>
+                            openGallery(newsAndAnnouncements[0].galleryImages)
+                          }
+                          className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
+                        >
+                          <ImageIcon size={12} />
+                          View Gallery (
+                          {newsAndAnnouncements[0].galleryImages.length} photos)
+                        </button>
+                      )}
                   </div>
                 </div>
               </div>
@@ -131,6 +149,7 @@ export default function NewsEventsPage() {
                       src={item.image}
                       alt={item.title}
                       fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover"
                     />
                     <div className="absolute top-3 left-3">
@@ -167,6 +186,15 @@ export default function NewsEventsPage() {
                         View Official Notice
                       </Link>
                     )}
+                    {item.galleryImages && item.galleryImages.length > 0 && (
+                      <button
+                        onClick={() => openGallery(item.galleryImages)}
+                        className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
+                      >
+                        <ImageIcon size={12} />
+                        View Gallery ({item.galleryImages.length} photos)
+                      </button>
+                    )}
                   </div>
                 </article>
               ))}
@@ -193,6 +221,7 @@ export default function NewsEventsPage() {
                       src={events[0].image}
                       alt={events[0].title}
                       fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
@@ -215,10 +244,17 @@ export default function NewsEventsPage() {
                     <p className="text-sm text-white/70 leading-relaxed">
                       {events[0].excerpt}
                     </p>
-                    <div className="mt-4">
-                      <span className="inline-flex items-center gap-1 text-xs text-amber-400 font-medium">
-                        Read More <ArrowRight size={12} />
-                      </span>
+                    <div className="mt-4 flex flex-wrap gap-3">
+                      {events[0].galleryImages &&
+                        events[0].galleryImages.length > 0 && (
+                          <button
+                            onClick={() => openGallery(events[0].galleryImages)}
+                            className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-400 border border-white/20 px-3 py-1.5 hover:bg-white/10 transition-colors"
+                          >
+                            <ImageIcon size={12} />
+                            View ({events[0].galleryImages.length} photos)
+                          </button>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -237,6 +273,7 @@ export default function NewsEventsPage() {
                       src={item.image}
                       alt={item.title}
                       fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover"
                     />
                     <div className="absolute top-3 left-3">
@@ -260,45 +297,17 @@ export default function NewsEventsPage() {
                     <p className="text-xs text-gray-600 leading-relaxed line-clamp-3 flex-1">
                       {item.excerpt}
                     </p>
+                    {item.galleryImages && item.galleryImages.length > 0 && (
+                      <button
+                        onClick={() => openGallery(item.galleryImages)}
+                        className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
+                      >
+                        <ImageIcon size={12} />
+                        View Gallery ({item.galleryImages.length} photos)
+                      </button>
+                    )}
                   </div>
                 </article>
-              ))}
-            </div>
-          </div>
-
-          {/* ─── Events Gallery ───────────────────────── */}
-          <div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2 pb-2 border-b border-gray-200 flex items-center gap-2">
-              <ImageIcon size={18} className="text-amber-600" />
-              Events Gallery
-            </h2>
-            <p className="text-xs text-gray-500 mb-8">
-              A visual journey through our campus events and activities
-            </p>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-              {newsItems.slice(0, 12).map((item) => (
-                <div
-                  key={`gallery-${item.id}`}
-                  className="relative aspect-square overflow-hidden border border-gray-200 group cursor-pointer"
-                >
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
-                    <div className="p-3 w-full opacity-0 group-hover:opacity-100 transition-opacity">
-                      <p className="text-white text-xs line-clamp-2 font-medium">
-                        {item.title}
-                      </p>
-                      <p className="text-white/60 text-[10px] mt-0.5">
-                        {formatDate(item.date)}
-                      </p>
-                    </div>
-                  </div>
-                </div>
               ))}
             </div>
           </div>
@@ -313,6 +322,14 @@ export default function NewsEventsPage() {
             </Link>
           </div>
         </div>
+
+        {/* Lightbox */}
+        {galleryOpen && (
+          <GalleryLightbox
+            images={galleryOpen}
+            onClose={() => setGalleryOpen(null)}
+          />
+        )}
       </section>
     </>
   );

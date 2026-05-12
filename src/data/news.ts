@@ -35,15 +35,16 @@
  * - Changing either breaks links/keys - don't do it!
  */
 export type NewsItem = {
-  id: string; // Unique ID: "news-1", "event-5"
-  title: string; // Headline
-  excerpt: string; // Short summary (1-2 sentences) - shows on home
-  content: string; // Full article text
-  date: string; // "YYYY-MM-DD" format (ISO standard)
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  date: string;
   category: "news" | "event" | "announcement";
-  image: string; // Image URL or local path
+  image: string;
   pdfUrl?: string;
-  slug: string; // URL slug: "my-news-title" (kebab-case)
+  slug: string;
+  galleryImages?: string[];
 };
 
 /**
@@ -90,15 +91,19 @@ export const newsItems: NewsItem[] = [
   },
   {
     id: "news-2",
-    title: "63rd Annual Convocation Ceremony 2024",
+    title: "Annual Convocation Ceremony 2025",
     excerpt:
-      "JPI celebrates the graduation of 250+ DAE students with a grand convocation ceremony. Chief guest awards gold medals to top achievers.",
+      "JPI celebrates the graduation of 300+ DAE students with a memorable convocation. 55 moments captured..",
     content:
-      "Jinnah Polytechnic Institute held its 63rd Annual Convocation Ceremony on March 15, 2024. Over 250 graduating students from Civil, Electrical, Electronics, Mechanical, CIT, and Refrigeration & Air Conditioning departments received their diplomas. Gold medals were awarded to top-performing students by the chief guest, Chairman of Sindh Technical Education Board.",
+      "Jinnah Polytechnic Institute held its 64th Annual Convocation Ceremony on [Date]. Over 300 graduating students from all DAE departments received their diplomas. The chief guest awarded gold medals to top achievers. A complete photo gallery is available.",
     date: "2025-03-15",
     category: "event",
-    image: "https://picsum.photos/800/500?random=20",
-    slug: "63rd-annual-convocation-ceremony-2024",
+    image: "/news-events/convo-2025/48.JPG",
+    slug: "64th-annual-convocation-2025",
+    galleryImages: Array.from(
+      { length: 55 },
+      (_, i) => `/news-events/convo-2025/${i + 1}.JPG`,
+    ),
   },
   {
     id: "news-3",
@@ -268,5 +273,21 @@ export const newsItems: NewsItem[] = [
     category: "announcement",
     image: "https://picsum.photos/800/500?random=14",
     slug: "merit-scholarships-awarded-45-students",
+  },
+  {
+    id: "news-17",
+    title: "64th Annual Convocation Ceremony 2025",
+    excerpt:
+      "JPI celebrates the graduation of 300+ DAE students with a memorable convocation. 55 moments captured.",
+    content:
+      "Jinnah Polytechnic Institute held its 64th Annual Convocation Ceremony on [Date]. Over 300 graduating students from all DAE departments received their diplomas. The chief guest awarded gold medals to top achievers. A complete photo gallery is available.",
+    date: "2025-05-01",
+    category: "event",
+    image: "/news-events/convo-2025/48.JPG",
+    slug: "64th-annual-convocation-2025",
+    galleryImages: Array.from(
+      { length: 55 },
+      (_, i) => `/news-events/convo-2025/${i + 1}.JPG`,
+    ),
   },
 ];
