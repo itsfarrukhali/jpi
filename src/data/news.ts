@@ -77,6 +77,38 @@ export type NewsItem = {
  */
 export const newsItems: NewsItem[] = [
   {
+    id: "ann-2025-01",
+    title: "Admit Card Collection – SBTE Exams (3rd Year Regular 2023–2024)",
+    excerpt:
+      "3rd Year Morning & Evening students must collect their admit cards from the Registration & Examination Counter. Bring student ID.",
+    content:
+      "All students of 3rd Year Morning & Evening (Regular Session 2023–2024) are hereby informed that the Admit Cards for SBTE Examinations have been issued.\n\n" +
+      "Students are directed to collect their admit cards from the Registration and Examination Office/Counter during office hours.\n\n" +
+      "Kindly ensure to bring your student ID card while collecting the admit card.\n\n" +
+      "Note: Entry to the examination hall will not be permitted without a valid admit card.\n\n" +
+      "For any queries, please contact the Registration Office.\n\n" +
+      "Administration\njpikhi.edu.pk",
+    date: "2026-05-14",
+    category: "announcement",
+    image: "/brand/notice-thumb.png",
+    slug: "admit-card-collection-sbte-2025",
+  },
+
+  // ─── Notice 2: Date Sheet with PDF ──────────────────
+  {
+    id: "ann-2025-02",
+    title: "SBTE Date Sheet 2025 – 3rd Year Regular",
+    excerpt:
+      "The SBTE date sheet for 3rd Year (Regular) examinations has been published. Download the PDF.",
+    content:
+      "The Sindh Board of Technical Education (SBTE) has issued the date sheet for the upcoming 3rd Year Diploma examinations. Students can view and download the complete schedule from the link below.",
+    date: "2026-05-14",
+    category: "announcement",
+    image: "/brand/notice-thumb.png",
+    pdfUrl: "/pdfs/date-sheet-3rd-year.pdf",
+    slug: "sbte-date-sheet-3rd-year",
+  },
+  {
     id: "news-1",
     title: "Admissions Open for 2025-26 Academic Session",
     excerpt:

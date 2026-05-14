@@ -4,21 +4,20 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
-import { newsItems } from "@/data/news";
+import { newsItems, type NewsItem } from "@/data/news";
 import {
   Calendar,
   Megaphone,
   CalendarDays,
   ImageIcon,
   FileText,
+  X,
 } from "lucide-react";
 import GalleryLightbox from "@/components/shared/GalleryLightbox";
 
-// Filter lists (static, not reactive)
 const newsAndAnnouncements = newsItems.filter(
   (item) => item.category === "news" || item.category === "announcement",
 );
-
 const events = newsItems.filter((item) => item.category === "event");
 
 const categoryStyles: Record<string, string> = {
@@ -44,12 +43,16 @@ function formatDate(dateStr: string): string {
 
 export default function NewsEventsPage() {
   const [galleryOpen, setGalleryOpen] = useState<string[] | null>(null);
+  const [contentItem, setContentItem] = useState<NewsItem | null>(null);
 
   const openGallery = (images: string[] | undefined) => {
-    if (images && images.length > 0) {
-      setGalleryOpen(images);
-    }
+    if (images && images.length > 0) setGalleryOpen(images);
   };
+
+  // Ensure first items exist (arrays already filtered)
+  const featuredNews =
+    newsAndAnnouncements.length > 0 ? newsAndAnnouncements[0]! : null;
+  const featuredEvent = events.length > 0 ? events[0]! : null;
 
   return (
     <>
@@ -73,14 +76,14 @@ export default function NewsEventsPage() {
               Institute
             </p>
 
-            {/* Featured / Latest News */}
-            {newsAndAnnouncements.length > 0 && (
+            {/* Featured News */}
+            {featuredNews && (
               <div className="mb-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-gray-50 border border-gray-200">
                   <div className="relative min-h-56 lg:min-h-full">
                     <Image
-                      src={newsAndAnnouncements[0].image}
-                      alt={newsAndAnnouncements[0].title}
+                      src={featuredNews.image}
+                      alt={featuredNews.title}
                       fill
                       sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover"
@@ -88,10 +91,10 @@ export default function NewsEventsPage() {
                     <div className="absolute top-3 left-3">
                       <span
                         className={`text-xs font-medium px-2.5 py-1 border capitalize ${
-                          categoryStyles[newsAndAnnouncements[0].category]
+                          categoryStyles[featuredNews.category]
                         }`}
                       >
-                        {categoryLabels[newsAndAnnouncements[0].category]}
+                        {categoryLabels[featuredNews.category]}
                       </span>
                     </div>
                   </div>
@@ -99,39 +102,47 @@ export default function NewsEventsPage() {
                     <div className="flex items-center gap-3 mb-3">
                       <span className="flex items-center gap-1 text-xs text-gray-500">
                         <Calendar size={11} />
-                        {formatDate(newsAndAnnouncements[0].date)}
+                        {formatDate(featuredNews.date)}
                       </span>
                     </div>
                     <h3 className="text-lg font-bold text-gray-800 mb-2">
-                      {newsAndAnnouncements[0].title}
+                      {featuredNews.title}
                     </h3>
                     <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                      {newsAndAnnouncements[0].excerpt}
+                      {featuredNews.excerpt}
                     </p>
-                    {newsAndAnnouncements[0].pdfUrl && (
-                      <Link
-                        href={newsAndAnnouncements[0].pdfUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors self-start"
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setContentItem(featuredNews)}
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
                       >
-                        <FileText size={12} />
-                        View Official Notice
-                      </Link>
-                    )}
-                    {newsAndAnnouncements[0].galleryImages &&
-                      newsAndAnnouncements[0].galleryImages.length > 0 && (
+                        Read More
+                      </button>
+                      {featuredNews.pdfUrl && (
+                        <Link
+                          href={featuredNews.pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
+                        >
+                          <FileText size={12} />
+                          View Notice
+                        </Link>
+                      )}
+                      {(featuredNews.galleryImages?.length ?? 0) > 0 && (
                         <button
+                          type="button"
                           onClick={() =>
-                            openGallery(newsAndAnnouncements[0].galleryImages)
+                            openGallery(featuredNews.galleryImages)
                           }
-                          className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
                         >
                           <ImageIcon size={12} />
-                          View Gallery (
-                          {newsAndAnnouncements[0].galleryImages.length} photos)
+                          Gallery ({featuredNews.galleryImages!.length})
                         </button>
                       )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -173,28 +184,36 @@ export default function NewsEventsPage() {
                     <p className="text-xs text-gray-600 leading-relaxed line-clamp-3 flex-1">
                       {item.excerpt}
                     </p>
-                    {item.pdfUrl && (
-                      <Link
-                        href={item.pdfUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium 
-                                 text-amber-700 border border-amber-200 px-3 py-1.5 
-                                 hover:bg-amber-50 transition-colors"
-                      >
-                        <FileText size={12} />
-                        View Official Notice
-                      </Link>
-                    )}
-                    {item.galleryImages && item.galleryImages.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-3">
                       <button
-                        onClick={() => openGallery(item.galleryImages)}
-                        className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
+                        type="button"
+                        onClick={() => setContentItem(item)}
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
                       >
-                        <ImageIcon size={12} />
-                        View Gallery ({item.galleryImages.length} photos)
+                        Read More
                       </button>
-                    )}
+                      {item.pdfUrl && (
+                        <Link
+                          href={item.pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
+                        >
+                          <FileText size={12} />
+                          View Notice
+                        </Link>
+                      )}
+                      {(item.galleryImages?.length ?? 0) > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => openGallery(item.galleryImages)}
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
+                        >
+                          <ImageIcon size={12} />
+                          Gallery ({item.galleryImages!.length})
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </article>
               ))}
@@ -212,14 +231,14 @@ export default function NewsEventsPage() {
               co-curricular activities
             </p>
 
-            {/* Upcoming / Latest Event */}
-            {events.length > 0 && (
+            {/* Featured Event */}
+            {featuredEvent && (
               <div className="mb-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-gray-800 text-white">
                   <div className="relative min-h-56 lg:min-h-full">
                     <Image
-                      src={events[0].image}
-                      alt={events[0].title}
+                      src={featuredEvent.image}
+                      alt={featuredEvent.title}
                       fill
                       sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover"
@@ -227,7 +246,7 @@ export default function NewsEventsPage() {
                     <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
                     <div className="absolute bottom-4 left-4">
                       <span className="text-xs font-medium px-2.5 py-1 border border-white/30 text-white capitalize">
-                        {categoryLabels[events[0].category]}
+                        {categoryLabels[featuredEvent.category]}
                       </span>
                     </div>
                   </div>
@@ -235,26 +254,35 @@ export default function NewsEventsPage() {
                     <div className="flex items-center gap-2 mb-3">
                       <Calendar size={12} className="text-amber-400" />
                       <span className="text-xs text-white/60">
-                        {formatDate(events[0].date)}
+                        {formatDate(featuredEvent.date)}
                       </span>
                     </div>
                     <h3 className="text-lg font-bold mb-2">
-                      {events[0].title}
+                      {featuredEvent.title}
                     </h3>
-                    <p className="text-sm text-white/70 leading-relaxed">
-                      {events[0].excerpt}
+                    <p className="text-sm text-white/70 leading-relaxed mb-4">
+                      {featuredEvent.excerpt}
                     </p>
-                    <div className="mt-4 flex flex-wrap gap-3">
-                      {events[0].galleryImages &&
-                        events[0].galleryImages.length > 0 && (
-                          <button
-                            onClick={() => openGallery(events[0].galleryImages)}
-                            className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-400 border border-white/20 px-3 py-1.5 hover:bg-white/10 transition-colors"
-                          >
-                            <ImageIcon size={12} />
-                            View ({events[0].galleryImages.length} photos)
-                          </button>
-                        )}
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setContentItem(featuredEvent)}
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-white border border-white/20 px-3 py-1.5 hover:bg-white/10 transition-colors"
+                      >
+                        Read More
+                      </button>
+                      {(featuredEvent.galleryImages?.length ?? 0) > 0 && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            openGallery(featuredEvent.galleryImages)
+                          }
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-400 border border-white/20 px-3 py-1.5 hover:bg-white/10 transition-colors"
+                        >
+                          <ImageIcon size={12} />
+                          Gallery ({featuredEvent.galleryImages!.length})
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -297,15 +325,25 @@ export default function NewsEventsPage() {
                     <p className="text-xs text-gray-600 leading-relaxed line-clamp-3 flex-1">
                       {item.excerpt}
                     </p>
-                    {item.galleryImages && item.galleryImages.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-3">
                       <button
-                        onClick={() => openGallery(item.galleryImages)}
-                        className="inline-flex items-center gap-1.5 mt-3 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
+                        type="button"
+                        onClick={() => setContentItem(item)}
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
                       >
-                        <ImageIcon size={12} />
-                        View Gallery ({item.galleryImages.length} photos)
+                        Read More
                       </button>
-                    )}
+                      {(item.galleryImages?.length ?? 0) > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => openGallery(item.galleryImages)}
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
+                        >
+                          <ImageIcon size={12} />
+                          Gallery ({item.galleryImages!.length})
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </article>
               ))}
@@ -323,7 +361,52 @@ export default function NewsEventsPage() {
           </div>
         </div>
 
-        {/* Lightbox */}
+        {/* ─── Content Modal ────────────────────────── */}
+        {contentItem && (
+          <div className="fixed inset-0 z-50 bg-black/60 flex items-start justify-center pt-20 px-4">
+            <div className="bg-white border border-gray-200 max-w-2xl w-full max-h-[80vh] overflow-y-auto rounded-lg shadow-xl">
+              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  {categoryLabels[contentItem.category]}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setContentItem(null)}
+                  aria-label="Close"
+                >
+                  <X size={20} className="text-gray-400 hover:text-gray-600" />
+                </button>
+              </div>
+              <div className="p-6">
+                <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
+                  <Calendar size={12} />
+                  {formatDate(contentItem.date)}
+                </div>
+                <h2 className="text-lg font-bold text-gray-800 mb-4">
+                  {contentItem.title}
+                </h2>
+                <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
+                  {contentItem.content}
+                </div>
+                {contentItem.pdfUrl && (
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <Link
+                      href={contentItem.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 border border-amber-200 px-3 py-1.5 hover:bg-amber-50 transition-colors"
+                    >
+                      <FileText size={12} />
+                      Download Official Notice (PDF)
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ─── Gallery Lightbox ────────────────────── */}
         {galleryOpen && (
           <GalleryLightbox
             images={galleryOpen}
