@@ -76,7 +76,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-3 mt-4">
               <Link
-                href="https://facebook.com"
+                href="https://www.facebook.com/jpikhi.edu.pk"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-(--color-gold) transition-colors"
@@ -89,7 +89,7 @@ export default function Footer() {
                 />
               </Link>
               <Link
-                href="https://youtube.com"
+                href="https://www.youtube.com/@jinnahpolytechnicinstitutejpi"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-(--color-gold) transition-colors"
@@ -102,7 +102,7 @@ export default function Footer() {
                 />
               </Link>
               <Link
-                href="https://instagram.com"
+                href="https://www.instagram.com/jinnahpolytechnicinstitutekhi"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-(--color-gold) transition-colors"
@@ -115,7 +115,7 @@ export default function Footer() {
                 />
               </Link>
               <Link
-                href="https://tiktok.com"
+                href="https://www.tiktok.com/@jpikhi"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-(--color-gold) transition-colors"
@@ -126,14 +126,6 @@ export default function Footer() {
                   width={14}
                   height={14}
                 />
-              </Link>
-              <Link
-                href="https://x.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-(--color-gold) transition-colors"
-              >
-                <Image src={"/social/x.svg"} alt="X" width={14} height={14} />
               </Link>
             </div>
           </div>

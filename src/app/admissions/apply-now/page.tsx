@@ -13,6 +13,8 @@ import {
   AlertTriangle,
   CheckCircle2,
   Loader2,
+  ExternalLink,
+  Globe,
 } from "lucide-react";
 import { admissionContact, universalFormFields } from "@/data/admissions";
 import { toast } from "sonner";
@@ -143,7 +145,8 @@ export default function ApplyNowPage() {
               Prefer to Apply Offline?
             </h2>
             <p className="text-xs text-gray-500 mb-4">
-              Download the admission form and submit it in person at our campus.
+              Download the admission form, fill it out, and submit it personally
+              at the campus admission office.
             </p>
             <a
               href="#"
@@ -152,6 +155,27 @@ export default function ApplyNowPage() {
             >
               <FileText size={12} />
               Download Form (PDF)
+            </a>
+          </div>
+
+          {/* Registration Portal Option */}
+          <div className="bg-gray-50 border border-gray-200 p-6 text-center">
+            <Globe size={24} className="mx-auto text-amber-600 mb-2" />
+            <h2 className="text-base font-bold text-gray-800 mb-1">
+              Apply Online Through Portal
+            </h2>
+            <p className="text-xs text-gray-500 mb-4">
+              Complete your admission application online through our secure
+              student registration portal.
+            </p>
+            <a
+              href="https://portal.jpikhi.edu.pk/registration-portal"
+              className="inline-flex items-center gap-1.5 px-4 py-2 border border-amber-600 text-amber-700 text-xs font-medium hover:bg-amber-50 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ExternalLink size={12} />
+              Apply Online
             </a>
           </div>
 

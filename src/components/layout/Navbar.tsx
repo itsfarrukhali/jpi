@@ -147,7 +147,7 @@ function NavbarContent({ pathname }: { pathname: string }) {
           </div>
           <div className="flex items-center gap-4">
             <Link
-              href="https://facebook.com"
+              href="https://www.facebook.com/jpikhi.edu.pk"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-(--color-gold) transition-colors"
@@ -161,7 +161,7 @@ function NavbarContent({ pathname }: { pathname: string }) {
               />
             </Link>
             <Link
-              href="https://youtube.com"
+              href="https://www.youtube.com/@jinnahpolytechnicinstitutejpi"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-(--color-gold) transition-colors"
@@ -175,7 +175,7 @@ function NavbarContent({ pathname }: { pathname: string }) {
               />
             </Link>
             <Link
-              href="https://instgram.com"
+              href="https://www.instagram.com/jinnahpolytechnicinstitutekhi"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-(--color-gold) transition-colors"
@@ -189,7 +189,7 @@ function NavbarContent({ pathname }: { pathname: string }) {
               />
             </Link>
             <Link
-              href="https://tiktok.com"
+              href="https://www.tiktok.com/@jpikhi"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-(--color-gold) transition-colors"
@@ -197,20 +197,6 @@ function NavbarContent({ pathname }: { pathname: string }) {
               <Image
                 src={"https://cdn.simpleicons.org/tiktok/white"}
                 alt="TikTok"
-                width={16}
-                height={16}
-                unoptimized
-              />
-            </Link>
-            <Link
-              href="https://x.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-(--color-gold) transition-colors"
-            >
-              <Image
-                src={"https://cdn.simpleicons.org/x/white"}
-                alt="X"
                 width={16}
                 height={16}
                 unoptimized
@@ -236,12 +222,12 @@ function NavbarContent({ pathname }: { pathname: string }) {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 shrink-0">
               <Image
-                src={"/brand/jpi-logo-tp.png"}
+                src="/brand/jpi-logo-tp.png"
                 alt="Jinnah Polytechnic Institute"
                 width={270}
                 height={40}
                 loading="eager"
-                className="h-auto"
+                className="h-auto w-45 sm:w-55 md:w-67.5 lg:w-75"
               />
             </Link>
 
