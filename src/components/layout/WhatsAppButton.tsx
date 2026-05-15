@@ -7,15 +7,34 @@ export default function WhatsAppButton() {
       href="https://wa.me/923001234567?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20JPI%20programs."
       target="_blank"
       rel="noopener noreferrer"
-      id="whatsapp-float-btn"
-      className="fixed bottom-4 right-2 z-50 w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
       aria-label="Chat on WhatsApp"
+      className="
+        fixed 
+        bottom-4 
+        right-4 
+        z-50 
+        flex 
+        items-center 
+        justify-center
+        w-12 
+        h-12 
+        sm:w-14 
+        sm:h-14
+        rounded-full 
+        bg-green-500 
+        hover:bg-green-600 
+        shadow-lg 
+        transition-all 
+        duration-300 
+        hover:scale-110
+      "
     >
       <Image
-        src={"/social/whatsapp.svg"}
+        src="/social/whatsapp.svg"
         alt="WhatsApp"
-        width={20}
-        height={20}
+        width={24}
+        height={24}
+        className="object-contain"
       />
     </Link>
   );
