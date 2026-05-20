@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
@@ -15,41 +16,59 @@ import {
 } from "lucide-react";
 import GalleryLightbox from "@/components/shared/GalleryLightbox";
 
+/* ----- Filter & helpers (outside component) ----- */
 const newsAndAnnouncements = newsItems.filter(
   (item) => item.category === "news" || item.category === "announcement",
 );
-const events = newsItems.filter((item) => item.category === "event");
-
+const events = newsItems.filter(
+  (item) => item.category === "event" || item.category === "seminar",
+);
 const categoryStyles: Record<string, string> = {
   news: "bg-blue-50 text-blue-700 border-blue-100",
   event: "bg-purple-50 text-purple-700 border-purple-100",
   announcement: "bg-amber-50 text-amber-700 border-amber-100",
+  seminar: "bg-teal-50 text-teal-700 border-teal-100",
 };
 
 const categoryLabels: Record<string, string> = {
   news: "News",
   event: "Event",
   announcement: "Announcement",
+  seminar: "Seminar",
 };
 
 function formatDate(dateStr: string): string {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString("en-US", {
+  return new Date(dateStr).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 }
 
-export default function NewsEventsPage() {
+/* ----- Inner client component (uses useSearchParams) ----- */
+function NewsContent() {
+  const searchParams = useSearchParams();
+  const openSlug = searchParams.get("open");
+
   const [galleryOpen, setGalleryOpen] = useState<string[] | null>(null);
   const [contentItem, setContentItem] = useState<NewsItem | null>(null);
 
-  const openGallery = (images: string[] | undefined) => {
-    if (images && images.length > 0) setGalleryOpen(images);
-  };
+  const openGallery = useCallback((images: string[] | undefined) => {
+    if (images?.length) setGalleryOpen(images);
+  }, []);
 
-  // Ensure first items exist (arrays already filtered)
+  // Auto‑open modal when ?open=slug is present
+  useEffect(() => {
+    if (openSlug) {
+      const item = newsItems.find((n) => n.slug === openSlug);
+      if (item) {
+        window.setTimeout(() => setContentItem(item), 0);
+      }
+      // Clean URL without refresh
+      window.history.replaceState(null, "", "/news");
+    }
+  }, [openSlug]);
+
   const featuredNews =
     newsAndAnnouncements.length > 0 ? newsAndAnnouncements[0]! : null;
   const featuredEvent = events.length > 0 ? events[0]! : null;
@@ -76,7 +95,6 @@ export default function NewsEventsPage() {
               Institute
             </p>
 
-            {/* Featured News */}
             {featuredNews && (
               <div className="mb-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-gray-50 border border-gray-200">
@@ -85,14 +103,12 @@ export default function NewsEventsPage() {
                       src={featuredNews.image}
                       alt={featuredNews.title}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      sizes="(max-width:1024px) 100vw, 50vw"
                       className="object-cover"
                     />
                     <div className="absolute top-3 left-3">
                       <span
-                        className={`text-xs font-medium px-2.5 py-1 border capitalize ${
-                          categoryStyles[featuredNews.category]
-                        }`}
+                        className={`text-xs font-medium px-2.5 py-1 border capitalize ${categoryStyles[featuredNews.category]}`}
                       >
                         {categoryLabels[featuredNews.category]}
                       </span>
@@ -160,14 +176,12 @@ export default function NewsEventsPage() {
                       src={item.image}
                       alt={item.title}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      sizes="(max-width:1024px) 100vw, 50vw"
                       className="object-cover"
                     />
                     <div className="absolute top-3 left-3">
                       <span
-                        className={`text-xs font-medium px-2.5 py-1 border capitalize ${
-                          categoryStyles[item.category]
-                        }`}
+                        className={`text-xs font-medium px-2.5 py-1 border capitalize ${categoryStyles[item.category]}`}
                       >
                         {categoryLabels[item.category]}
                       </span>
@@ -231,7 +245,6 @@ export default function NewsEventsPage() {
               co-curricular activities
             </p>
 
-            {/* Featured Event */}
             {featuredEvent && (
               <div className="mb-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-gray-800 text-white">
@@ -240,7 +253,7 @@ export default function NewsEventsPage() {
                       src={featuredEvent.image}
                       alt={featuredEvent.title}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      sizes="(max-width:1024px) 100vw, 50vw"
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
@@ -289,7 +302,6 @@ export default function NewsEventsPage() {
               </div>
             )}
 
-            {/* Events Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {events.slice(1).map((item) => (
                 <article
@@ -301,14 +313,12 @@ export default function NewsEventsPage() {
                       src={item.image}
                       alt={item.title}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      sizes="(max-width:1024px) 100vw, 50vw"
                       className="object-cover"
                     />
                     <div className="absolute top-3 left-3">
                       <span
-                        className={`text-xs font-medium px-2.5 py-1 border capitalize ${
-                          categoryStyles[item.category]
-                        }`}
+                        className={`text-xs font-medium px-2.5 py-1 border capitalize ${categoryStyles[item.category]}`}
                       >
                         {categoryLabels[item.category]}
                       </span>
@@ -350,7 +360,6 @@ export default function NewsEventsPage() {
             </div>
           </div>
 
-          {/* ─── CTA ─────────────────────────────────── */}
           <div className="text-center pt-8 border-t border-gray-200">
             <Link
               href="/admissions/apply-now"
@@ -361,7 +370,7 @@ export default function NewsEventsPage() {
           </div>
         </div>
 
-        {/* ─── Content Modal ────────────────────────── */}
+        {/* Content Modal */}
         {contentItem && (
           <div className="fixed inset-0 z-50 bg-black/60 flex items-start justify-center pt-20 px-4">
             <div className="bg-white border border-gray-200 max-w-2xl w-full max-h-[80vh] overflow-y-auto rounded-lg shadow-xl">
@@ -406,7 +415,6 @@ export default function NewsEventsPage() {
           </div>
         )}
 
-        {/* ─── Gallery Lightbox ────────────────────── */}
         {galleryOpen && (
           <GalleryLightbox
             images={galleryOpen}
@@ -415,5 +423,16 @@ export default function NewsEventsPage() {
         )}
       </section>
     </>
+  );
+}
+
+/* ----- Outer page component (Suspense boundary) ----- */
+export default function NewsPage() {
+  return (
+    <Suspense
+      fallback={<div className="p-20 text-center text-gray-500">Loading…</div>}
+    >
+      <NewsContent />
+    </Suspense>
   );
 }

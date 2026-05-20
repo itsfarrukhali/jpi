@@ -8,6 +8,7 @@ import WhatsAppButton from "@/components/layout/WhatsAppButton";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
+import NewsPopup from "@/components/shared/NewsPopup";
 
 const interHeading = Inter({ subsets: ["latin"], variable: "--font-heading" });
 
@@ -110,6 +111,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <Toaster />
+        <NewsPopup />
         <Footer />
         <WhatsAppButton />
         <SpeedInsights />

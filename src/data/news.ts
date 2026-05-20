@@ -40,7 +40,7 @@ export type NewsItem = {
   excerpt: string;
   content: string;
   date: string;
-  category: "news" | "event" | "announcement";
+  category: "news" | "event" | "announcement" | "seminar";
   image: string;
   pdfUrl?: string;
   slug: string;
@@ -109,17 +109,82 @@ export const newsItems: NewsItem[] = [
     slug: "sbte-date-sheet-3rd-year",
   },
   {
-    id: "news-1",
-    title: "Admissions Open for 2025-26 Academic Session",
+    id: "ann-2025-03",
+    title: "Admissions Open – Physiotherapy Technician Diploma",
     excerpt:
-      "JPI announces admissions for DAE programs in Civil, Electrical, Mechanical, and Computer Technology. Limited seats available.",
+      "Start your career in healthcare with a 2-Year Diploma in Physiotherapy Technician program at Jinnah Polytechnic Institute Karachi.",
     content:
-      "Jinnah Polytechnic Institute is pleased to announce that admissions for the academic session 2025-26 are now open. Students who have passed Matriculation (Science) with minimum 45% marks are eligible to apply for the 3-year Diploma of Associate Engineer programs.",
-    date: "2025-03-01",
+      "Admissions are open for the 2-Year Diploma in Physiotherapy Technician at Jinnah Polytechnic Institute Karachi. This program is designed to provide professional training in patient care, rehabilitation, exercise therapy, and advanced physiotherapy techniques. The course is affiliated with S.B.T.E and includes experienced faculty, practical training, and career-oriented learning. Students will gain hands-on skills required for working in hospitals and healthcare centers. Limited seats are available, and students are encouraged to apply early.",
+    date: "2025-06-01",
     category: "announcement",
-    image: "https://picsum.photos/800/500?random=10",
-    pdfUrl: "/pdfs/admissions-open-2025-26.pdf",
-    slug: "admissions-open-2025-26",
+    image: "/news-events/admissions/physio.jpg",
+    slug: "physiotherapy-technician-diploma-admissions-2025",
+    pdfUrl: "/pdfs/physio-admission-2026.pdf",
+  },
+  {
+    id: "ann-2025-04",
+    title: "Admissions Open – Nursing Assistant Program",
+    excerpt:
+      "Join the 1-Year Nursing Assistant Program and build a strong foundation in healthcare services and patient care.",
+    content:
+      "Admissions are open for the 1-Year Nursing Assistant Program at Jinnah Polytechnic Institute Karachi. This course provides practical knowledge in vital signs monitoring, patient care, medical protocols, electronic health records, and care for diverse populations. Students receive hands-on clinical training, expert guidance, and certification upon completion. The program is ideal for individuals aiming to enter the healthcare sector with strong career growth opportunities. Limited seats are available.",
+    date: "2025-06-01",
+    category: "announcement",
+    image: "/news-events/admissions/nursing.jpg",
+    slug: "nursing-assistant-program-admissions-2025",
+    pdfUrl: "/pdfs/nursing-admission-2026.pdf",
+  },
+  {
+    id: "ann-2025-05",
+    title: "Admissions Open – AutoCAD Professional Course",
+    excerpt:
+      "Learn AutoCAD 2D, 3D, Mechanical & Civil Drawing with a 2-Month professional course in Karachi.",
+    content:
+      "Admissions are open for the Professional AutoCAD Course at Jinnah Polytechnic Institute Karachi. This 2-month course covers AutoCAD 2D drafting, 3D modeling, mechanical and civil drawing, manual drafting techniques, and professional design skills. The course is suitable for beginners and students who want to build freelancing or technical design careers. Classes are held on Sundays only from 10:00 AM to 1:00 PM. Limited seats available.",
+    date: "2025-06-01",
+    category: "announcement",
+    image: "/news-events/admissions/autocad.jpg",
+    slug: "autocad-professional-course-admissions-2025",
+    pdfUrl: "/pdfs/autocad-admission-2026.pdf",
+  },
+  {
+    id: "ann-2025-06",
+    title: "Admissions Open – Artificial Intelligence Diploma",
+    excerpt:
+      "Start your tech career with a 1-Year Diploma in Artificial Intelligence with Python, Machine Learning, and real-world projects.",
+    content:
+      "Admissions are open for the 1-Year Diploma in Artificial Intelligence at Jinnah Polytechnic Institute Karachi. This program is designed to provide hands-on training in Python programming, machine learning, data science, and AI-based projects. Students will gain practical experience through real-world applications, internships, and career guidance. Scholarships up to 50% are available for eligible students. The course is suitable for Matric, Intermediate, and professionals seeking skill advancement.",
+    date: "2025-06-01",
+    category: "announcement",
+    image: "/news-events/admissions/ai.jpg",
+    slug: "artificial-intelligence-diploma-admissions-2025",
+    pdfUrl: "/pdfs/ai-admission-2026.pdf",
+  },
+  {
+    id: "ann-2025-07",
+    title: "Admissions Open – Jinnah Healthcare Technology Programs",
+    excerpt:
+      "Diploma programs in Physiotherapy, Nursing, Laboratory Technician, and Phlebotomy with practical healthcare training.",
+    content:
+      "Jinnah Polytechnic Institute Karachi is offering admissions in multiple healthcare diploma programs including Physiotherapy Technician (2 Years), Nursing Assistant (1 Year), Laboratory Technician (1 Year), and Phlebotomy (6 Months). These programs are designed with practical training, modern lab facilities, and real-world medical skills. Students from Matric Science backgrounds can apply. Limited seats available with a 50% discount offer for selected programs.",
+    date: "2025-06-01",
+    category: "announcement",
+    image: "/news-events/admissions/healthcare.jpg",
+    slug: "healthcare-diploma-programs-admissions-2025",
+    pdfUrl: "/pdfs/healthcare-admission-2026.pdf",
+  },
+  {
+    id: "ann-2025-08",
+    title: "Admissions Open – Technical Diploma Programs",
+    excerpt:
+      "Apply for multiple 2–3 year technical diplomas in Computer, Mechanical, Electrical, Civil, and Software Technology.",
+    content:
+      "Admissions are open for various technical diploma programs at Jinnah Polytechnic Institute Karachi. Programs include Computer Information Technology (CIT), Mechanical Technology, Electrical Technology, Civil Technology, Refrigeration & Air Conditioning Technology (RACT), Software Technology, Electronics Technology, and Chemical Technology. These programs are designed for Matric and Intermediate students with a focus on practical training, technical skills, and career development in engineering and IT fields.",
+    date: "2025-06-01",
+    category: "announcement",
+    image: "/news-events/admissions/diplomas.jpg",
+    slug: "technical-diploma-programs-admissions-2025",
+    pdfUrl: "/pdfs/diplomas-admission-2026.pdf",
   },
   {
     id: "news-2",
@@ -128,7 +193,7 @@ export const newsItems: NewsItem[] = [
       "JPI celebrates the graduation of 300+ DAE students with a memorable convocation. 55 moments captured..",
     content:
       "Jinnah Polytechnic Institute held its 64th Annual Convocation Ceremony on [Date]. Over 300 graduating students from all DAE departments received their diplomas. The chief guest awarded gold medals to top achievers. A complete photo gallery is available.",
-    date: "2025-03-15",
+    date: "2025-11-16",
     category: "event",
     image: "/news-events/convo-2025/48.JPG",
     slug: "64th-annual-convocation-2025",
@@ -139,75 +204,100 @@ export const newsItems: NewsItem[] = [
   },
   {
     id: "news-3",
-    title: "Industrial Visit to Engro Fertilizers Plant",
+    title: "Educational Visit to HVAC System at International Expo 2026",
     excerpt:
-      "DAE Chemical & Mechanical students visit Engro Fertilizers for hands-on industrial exposure and learning.",
+      "R.A.C.T Department students explored modern HVAC technologies during an educational visit to International Expo 2026 at Expo Center Karachi.",
     content:
-      "Students of DAE Chemical and Mechanical Technology visited the Engro Fertilizers plant in Daharki for a 2-day industrial tour. The visit included a detailed walkthrough of the ammonia and urea production units, safety protocols briefing, and a Q&A session with plant engineers. Such visits bridge the gap between classroom theory and industrial practice.",
-    date: "2025-02-20",
+      "On 14 February 2026, the R.A.C.T Department conducted an educational visit to the HVAC System showcased at International Expo 2026, held at Expo Center Karachi. The visit provided students with valuable practical insights into modern heating, ventilation, and air conditioning systems, enhancing their understanding of industry standards, emerging technologies, and real-world applications. Such exposure plays a vital role in preparing students for professional and technical excellence.",
+    date: "2026-02-14",
     category: "event",
-    image: "https://picsum.photos/800/500?random=21",
-    slug: "industrial-visit-engro-fertilizers-2025",
+    image: "/news-events/ract-visit-expo/1.jpg",
+    slug: "hvac-visit-international-expo-2026",
+    galleryImages: Array.from(
+      { length: 5 },
+      (_, i) => `/news-events/ract-visit-expo/${i + 1}.jpg`,
+    ),
   },
   {
     id: "news-4",
-    title: "Industrial Visit to Pakistan Steel Mills",
+    title:
+      "Educational Visit to F&M Pvt. Ltd. Soil & Material Testing Laboratory",
     excerpt:
-      "Electrical & Electronics Technology students explore Pakistan Steel Mills for practical understanding of industrial automation.",
+      "Civil Department students gained practical exposure to soil and construction material testing at F&M Pvt. Ltd.",
     content:
-      "Final-year students of Electrical and Electronics Technology departments visited Pakistan Steel Mills in Karachi. The students observed the steel manufacturing process, electrical substations, motor control centers, and PLC-based automation systems. The visit was coordinated by the Industry-Academia Linkage Cell of JPI.",
-    date: "2025-01-25",
+      "On 12 February 2026, the Civil Department conducted an educational visit to F&M Pvt. Ltd. (Soil & Material Testing Laboratory). The visit offered students valuable hands-on exposure to advanced soil and construction material testing procedures, enhancing their practical knowledge and bridging the gap between theory and real-world engineering practices. Such industry visits are essential in shaping skilled, confident, and future-ready professionals.",
+    date: "2026-02-12",
     category: "event",
-    image: "https://picsum.photos/800/500?random=22",
-    slug: "industrial-visit-pakistan-steel-mills-2025",
+    image: "/news-events/civil-visit-fm/1.jpg",
+    slug: "civil-visit-fm-soil-material-testing-2026",
+    galleryImages: Array.from(
+      { length: 5 },
+      (_, i) => `/news-events/civil-visit-fm/${i + 1}.jpg`,
+    ),
   },
   {
     id: "news-5",
-    title: "Independence Day Celebrations & Naat Competition",
+    title: "Educational Visit to Meezan Bank Head Office",
     excerpt:
-      "JPI celebrates Pakistan's 78th Independence Day with flag hoisting, national songs, speeches, and an inspiring Naat competition.",
+      "R.A.C.T Department students explored real-time HVAC systems during an educational visit to Meezan Bank Head Office.",
     content:
-      "Jinnah Polytechnic Institute celebrated Pakistan's 78th Independence Day with great zeal and fervor. The day began with a flag hoisting ceremony by the Principal, followed by the national anthem. Students delivered passionate speeches on the importance of freedom and the role of youth in nation-building. The highlight of the event was the annual Naat Competition, where 25 students presented beautiful naats, with the top three receiving cash prizes and certificates.",
-    date: "2025-08-14",
+      "On 11th February 2026, the R.A.C.T Department had the privilege of visiting Meezan Bank Head Office, gaining valuable insight into real-time HVAC systems within a professional corporate setting. During the visit, Engr. Akhter Zafar presented a souvenir shield to Mr. Riaz Ahmed (Head of Administration, Procurement, Branch Expansion & Insurance / GM) as a token of appreciation and gratitude. The visit served as an inspiring experience that successfully bridged academic knowledge with practical industry exposure.",
+    date: "2026-02-11",
     category: "event",
-    image: "https://picsum.photos/800/500?random=23",
-    slug: "independence-day-naat-competition-2025",
+    image: "/news-events/ract-visit-mbl/1.jpg",
+    slug: "ract-visit-meezan-bank-head-office-2026",
+    galleryImages: Array.from(
+      { length: 4 },
+      (_, i) => `/news-events/ract-visit-mbl/${i + 1}.jpg`,
+    ),
   },
   {
     id: "news-6",
-    title: "Guest Lecture: Future of Artificial Intelligence in Engineering",
+    title: "Awareness Session on APO Vision 2025 & Innovation-Led Productivity",
     excerpt:
-      "Dr. Asif Mahmood, AI researcher at NED University, delivers an inspiring guest lecture on AI applications in engineering fields.",
+      "National Productivity Organization conducted an awareness session to educate students on productivity, quality improvement, and innovation-led growth.",
     content:
-      "The Co-Curricular Activities Committee organized a guest lecture on 'The Future of Artificial Intelligence in Engineering' delivered by Dr. Asif Mahmood, a renowned AI researcher from NED University. The lecture covered AI applications in civil engineering (structural analysis), electrical engineering (smart grids), and software development (machine learning). Over 300 students attended the session, which concluded with an interactive Q&A.",
-    date: "2025-02-10",
-    category: "event",
-    image: "https://picsum.photos/800/500?random=24",
-    slug: "guest-lecture-ai-engineering-2025",
+      "An awareness session on 'APO Vision 2025, Inclusive, Innovation-led Productivity' was conducted on 23rd January 2026 at 10:00 AM by Mr. Muazam Ali, Incharge NPO Regional Office Karachi, National Productivity Organization (NPO), Ministry of Industries & Production, Government of Pakistan. The session aimed to create awareness among students about the importance of productivity enhancement, quality improvement, and innovation-driven practices for professional and industrial growth. Students gained valuable insights into modern productivity approaches and their role in national development.",
+    date: "2026-01-23",
+    category: "seminar",
+    image: "/news-events/npo-seminar/1.jpg",
+    slug: "apo-vision-2025-awareness-session-2026",
+    galleryImages: Array.from(
+      { length: 3 },
+      (_, i) => `/news-events/npo-seminar/${i + 1}.jpg`,
+    ),
   },
   {
     id: "news-7",
-    title: "Guest Lecture: Entrepreneurship & Startup Culture",
+    title: "Alhaj Riyaz Uddin Ahmed Sports Week 2026",
     excerpt:
-      "Mr. Faisal Qureshi, founder of TechVentures Pakistan, shares insights on launching tech startups with DAE students.",
+      "Jinnah Polytechnic Institute celebrated an exciting Sports Week featuring inter-technology tournaments in cricket, badminton, table tennis, and race competitions.",
     content:
-      "The Entrepreneurship Development Cell of JPI invited Mr. Faisal Qureshi, founder of TechVentures Pakistan, for a guest lecture on 'Entrepreneurship & Startup Culture in Pakistan'. He shared his journey of building a successful tech company, discussed funding opportunities for young entrepreneurs, and encouraged DAE students to think beyond traditional jobs. Three JPI alumni who run their own businesses also shared their success stories.",
-    date: "2025-01-15",
+      "Jinnah Polytechnic Institute successfully organized the Alhaj Riyaz Uddin Ahmed Sports Week 2026, bringing together students from different technologies in a series of exciting inter-technology tournaments. The event featured the Wajeeh Uddin Ahmed Inter Technology Cricket Tournament, Fasih Uddin Inter Technology Badminton Tournament, Muhammad Uzair Siddiqui Inter Technology Table Tennis Tournament, and Razi Uddin Ahmed Inter Technology Race Competition.\n\nThroughout the week, students displayed outstanding teamwork, discipline, sportsmanship, and competitive spirit during trials and final matches. The cricket tournament witnessed thrilling performances from all participating teams, with Civil, RACT, Electrical, and CIT departments qualifying for the semi-finals. After an intense final match, the Electrical Department emerged as the cricket champions.\n\nIn badminton, table tennis, and race competitions, students competed with passion and determination, making every event highly energetic and memorable. The Civil Technology Department achieved remarkable success by winning all three tournaments, while the Electrical Technology Department secured the runner-up position with strong overall performances.\n\nThe Sports Week concluded with a grand Award Ceremony that began with Tilawat-e-Quran and Naat-e-Nabvi, followed by inspiring speeches from Chancellor Wajeeh Uddin Ahmed and special guest Capt. Balban Sabir. Students and teams were honored for their dedication, hard work, and sportsmanship. With exceptional performances across multiple events, the Civil Department proudly emerged as the overall winner of Alhaj Riyaz Uddin Ahmed Sports Week 2026.\n\nThe event not only promoted healthy competition and physical fitness but also strengthened unity, confidence, and leadership among students, making Sports Week 2026 a truly unforgettable experience.",
+    date: "2026-01-10",
     category: "event",
-    image: "https://picsum.photos/800/500?random=25",
-    slug: "guest-lecture-entrepreneurship-2025",
+    image: "/news-events/sports-week/1.jpg",
+    slug: "alhaj-riyaz-uddin-ahmed-sports-week-2026",
+    galleryImages: Array.from(
+      { length: 21 },
+      (_, i) => `/news-events/sports-week/${i + 1}.jpg`,
+    ),
   },
   {
     id: "news-8",
-    title: "Inter-Departmental Sports Gala 2025",
+    title: "Open House 2025 Highlights",
     excerpt:
-      "JPI's annual sports gala features cricket, football, badminton, and athletics competitions with enthusiastic student participation.",
+      "A vibrant Open House featuring project demos, food stalls, and a free medical camp showcasing student talent and teamwork.",
     content:
-      "The Annual Inter-Departmental Sports Gala 2025 was held at the JPI Sports Complex from February 1-5. Students from all six departments competed in cricket, football, badminton, table tennis, and athletics events. The Civil Technology department won the overall championship trophy, while Electrical Technology secured the runner-up position. Individual medals were awarded to outstanding athletes in track and field events.",
-    date: "2025-02-05",
+      "Here’s a look back at our amazing Open House 2025! The event brought together students, faculty, and guests to celebrate innovation and creativity. Visitors explored brilliant project demonstrations from different departments, enjoyed a variety of food stalls, and benefited from a free medical camp arranged on campus. Every corner of the event reflected passion, skill, and teamwork, making it a memorable experience for everyone involved.",
+    date: "2025-11-04",
     category: "event",
-    image: "https://picsum.photos/800/500?random=26",
-    slug: "inter-departmental-sports-gala-2025",
+    image: "/news-events/open-house-2025/1.jpg",
+    slug: "open-house-2025-highlights",
+    galleryImages: Array.from(
+      { length: 10 },
+      (_, i) => `/news-events/open-house-2025/${i + 1}.jpg`,
+    ),
   },
   {
     id: "news-9",

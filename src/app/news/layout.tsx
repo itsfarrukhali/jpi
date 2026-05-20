@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     "Latest news, announcements, events, and gallery from Jinnah Polytechnic Institute.",
 };
 
-export default function NewsEventsLayout({
+export default function NewsLayout({
   children,
 }: {
   children: React.ReactNode;
