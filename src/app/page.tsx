@@ -8,7 +8,6 @@ import NewsSection from "@/components/home/NewsSection";
 import CTABanner from "@/components/home/CTABanner";
 import AboutUs from "@/components/home/AboutUs";
 import AccreditationStrip from "@/components/home/AccreditationStrip";
-import LatestUpdates from "@/components/home/LatestUpdates";
 
 export const metadata: Metadata = {
   title: "Jinnah Polytechnic Institute — Knowledge · Skills · Attitude",
@@ -75,7 +74,6 @@ export default function HomePage() {
 
       {/* News, notices, and final call to action */}
       <NewsSection />
-      <LatestUpdates />
       <CTABanner />
     </>
   );

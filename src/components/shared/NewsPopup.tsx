@@ -19,28 +19,24 @@ function isNew(dateStr: string): boolean {
 export default function NewsPopup() {
   const router = useRouter();
 
+  const visible = useSyncExternalStore(
+    (onStoreChange) => {
+      window.addEventListener("news-popup-dismissed", onStoreChange);
+      return () =>
+        window.removeEventListener("news-popup-dismissed", onStoreChange);
+    },
+    () => !sessionStorage.getItem("newsPopupDismissed"),
+    () => false,
+  );
+
   // Only items published within the last 45 days
   const filtered = useMemo(
     () => newsItems.filter((item) => getAge(item.date) <= FORTY_FIVE_DAYS_MS),
     [],
   );
 
-  const visible = useSyncExternalStore(
-    (onStoreChange) => {
-      window.addEventListener("storage", onStoreChange);
-      window.addEventListener("news-popup-dismissed", onStoreChange);
-
-      return () => {
-        window.removeEventListener("storage", onStoreChange);
-        window.removeEventListener("news-popup-dismissed", onStoreChange);
-      };
-    },
-    () => !localStorage.getItem("newsPopupDismissed"),
-    () => false,
-  );
-
   const handleClose = () => {
-    localStorage.setItem("newsPopupDismissed", "true");
+    sessionStorage.setItem("newsPopupDismissed", "true");
     window.dispatchEvent(new Event("news-popup-dismissed"));
   };
 
