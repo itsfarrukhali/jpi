@@ -5,224 +5,103 @@ import ProgramCard from "@/components/shared/ProgramCard";
 import { shortCourses } from "@/data/programs";
 import {
   ChevronDown,
-  Brain,
-  Wrench,
-  Sparkles,
+  Sun,
   Users,
-  Clock,
-  Tag,
-  MessageCircle,
+  Award,
+  Briefcase,
+  CheckCircle2,
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Short Courses",
+  title: "Summer Camp 2026 — Short Courses",
   description:
-    "Short courses and diploma programs at JPI Karachi — Artificial Intelligence, Welding, Electrician, Plumbing, IT Fundamentals. Build practical skills fast.",
+    "JPI Summer Camp 2026 — 2-month skill development short courses. Workshop Machinist, Industrial Automation, Office Automation, Web Development, Digital Marketing, Advanced Welding, AutoCAD, RAC.",
 };
 
-// AI course
-const aiCourse = shortCourses.find((c) => c.id === "sc-ai");
-// Skilled trades
-const tradeCourses = shortCourses.filter((c) => c.id !== "sc-ai");
-
-const specialFeatures = [
-  { icon: Tag, label: "50% Scholarship Available" },
-  { icon: Users, label: "Limited Seats" },
-  { icon: Clock, label: "Flexible Timings (Morning / Afternoon)" },
-  { icon: Sparkles, label: "Practical Assignments" },
-  { icon: MessageCircle, label: "WhatsApp Support" },
+const highlights = [
+  { icon: Award, label: "Practical Training" },
+  { icon: Users, label: "Experienced Instructors" },
+  { icon: Sun, label: "Modern Learning Environment" },
+  { icon: Briefcase, label: "Career-Oriented Courses" },
+  { icon: CheckCircle2, label: "Certificate Awarded" },
 ];
 
 export default function ShortCoursesPage() {
   return (
     <>
       <PageHero
-        title="Short Courses"
-        subtitle="Build practical skills in 2 months to 1 year. Affordable, hands-on, and career-focused."
+        title="Summer Camp 2026"
+        subtitle="Short Courses for Skill Development & Career Growth — Admissions Open"
         breadcrumbs={[{ label: "Programs" }, { label: "Short Courses" }]}
         imageUrl="https://picsum.photos/1600/500?random=52"
       />
 
-      {/* Overview */}
-      <section className="py-14 bg-gray-50">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-600 leading-relaxed text-sm">
-            Our short courses and diploma programs are designed for people who
-            want to enter the workforce quickly or upgrade their skills. With
-            minimum eligibility requirements and affordable fees, these programs
-            open doors to stable, in-demand careers.
-          </p>
+      {/* Hero Banner */}
+      <section className="py-16 bg-linear-to-br from-amber-50 to-white border-b border-amber-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 bg-amber-100 border border-amber-200 px-4 py-1.5 mb-4">
+                <Sun size={14} className="text-amber-600" />
+                <span className="text-xs font-medium text-amber-700 uppercase tracking-wider">
+                  Summer 2026
+                </span>
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 font-serif">
+                Summer Camp — Short Courses
+              </h1>
+              <p className="text-sm text-gray-600 leading-relaxed mb-6">
+                We offer short courses for skill development and career growth.
+                2-month practical training programs designed to make you
+                job‑ready with industry‑relevant skills.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  href="/admissions/apply-now"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 text-white text-sm font-medium hover:bg-amber-600 transition-colors"
+                >
+                  Apply Now
+                </Link>
+                <Link
+                  href="/admissions/how-to-apply"
+                  className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-gray-700 text-sm font-medium hover:bg-gray-50 transition-colors"
+                >
+                  How to Apply
+                </Link>
+              </div>
+            </div>
+            <div className="bg-white border border-gray-200 p-6">
+              <h3 className="font-semibold text-gray-800 text-sm mb-4 pb-2 border-b border-gray-200">
+                Why Choose Summer Camp?
+              </h3>
+              <div className="space-y-3">
+                {highlights.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.label} className="flex items-center gap-3">
+                      <Icon size={16} className="text-amber-600 shrink-0" />
+                      <span className="text-xs text-gray-700">
+                        {item.label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ─── AI Program ─────────────────────────────── */}
-      {aiCourse && (
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-gray-50 border border-gray-200 overflow-hidden">
-              {/* AI Header */}
-              <div className="bg-gray-800 text-white p-6 sm:p-8">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Brain size={20} className="text-amber-400" />
-                      <span className="text-xs font-medium text-amber-400 uppercase tracking-wider">
-                        1 Year Diploma Program
-                      </span>
-                    </div>
-                    <h2 className="text-xl sm:text-2xl font-bold">
-                      {aiCourse.name}
-                    </h2>
-                    <p className="text-sm text-white/70 mt-1">
-                      For Boys &amp; Girls
-                    </p>
-                  </div>
-                  <div className="bg-white/10 border border-white/20 px-5 py-3 text-center">
-                    <div className="text-xs text-white/60 uppercase tracking-wider">
-                      Duration
-                    </div>
-                    <div className="text-lg font-bold">{aiCourse.duration}</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* AI Content */}
-              <div className="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Why Choose */}
-                <div>
-                  <h3 className="font-semibold text-gray-800 text-sm mb-3 flex items-center gap-2">
-                    <Sparkles size={14} className="text-amber-600" />
-                    Why Choose This Program
-                  </h3>
-                  <ul className="space-y-2">
-                    {[
-                      "Industry-Oriented Curriculum",
-                      "Experienced Faculty",
-                      "Internship Opportunities",
-                      "Modern Computer Labs",
-                    ].map((item) => (
-                      <li
-                        key={item}
-                        className="text-xs text-gray-600 flex items-start gap-1.5"
-                      >
-                        <span className="text-amber-600 mt-0.5 shrink-0">
-                          —
-                        </span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Course Modules */}
-                <div>
-                  <h3 className="font-semibold text-gray-800 text-sm mb-3 flex items-center gap-2">
-                    <ChevronDown size={14} className="text-amber-600" />
-                    Course Modules
-                  </h3>
-                  <ul className="space-y-1.5">
-                    {aiCourse.subjects[0].items.map((item) => (
-                      <li
-                        key={item}
-                        className="text-xs text-gray-600 flex items-start gap-1.5"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-1.5" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Who Can Apply + Careers */}
-                <div className="space-y-5">
-                  <div>
-                    <h3 className="font-semibold text-gray-800 text-sm mb-3 flex items-center gap-2">
-                      <Users size={14} className="text-amber-600" />
-                      Who Can Apply
-                    </h3>
-                    <ul className="space-y-1.5">
-                      {[
-                        "Matric / Intermediate Students",
-                        "Diploma Holders",
-                        "Job Seekers & Professionals",
-                      ].map((item) => (
-                        <li
-                          key={item}
-                          className="text-xs text-gray-600 flex items-start gap-1.5"
-                        >
-                          <span className="text-amber-600 mt-0.5 shrink-0">
-                            —
-                          </span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-800 text-sm mb-3">
-                      Career Paths
-                    </h3>
-                    <ul className="space-y-1.5">
-                      {aiCourse.careers.map((career) => (
-                        <li
-                          key={career}
-                          className="text-xs text-gray-600 flex items-start gap-1.5"
-                        >
-                          <span className="text-amber-600 mt-0.5 shrink-0">
-                            —
-                          </span>
-                          {career}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Special Features Bar */}
-              <div className="border-t border-gray-200 px-6 sm:px-8 py-4 bg-amber-50/50">
-                <div className="flex flex-wrap gap-3 justify-center">
-                  {specialFeatures.map((feature) => {
-                    const Icon = feature.icon;
-                    return (
-                      <div
-                        key={feature.label}
-                        className="flex items-center gap-1.5 bg-white border border-gray-200 px-3 py-1.5 text-xs text-gray-700"
-                      >
-                        <Icon size={12} className="text-amber-600" />
-                        {feature.label}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ─── Skilled Trades ─────────────────────────── */}
-      <section className="py-16 bg-gray-50 border-t border-gray-200">
+      {/* Courses Grid */}
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-1.5 mb-3">
-              <Wrench size={14} className="text-amber-600" />
-              <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Skilled Trades
-              </span>
-            </div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">
-              Technical &amp; Vocational Courses
-            </h2>
-            <p className="text-sm text-gray-500 max-w-xl mx-auto">
-              Practical, hands-on training in high-demand trades — no prior
-              experience required
-            </p>
-          </div>
+          <h2 className="text-xl font-bold text-gray-800 mb-8 pb-2 border-b border-gray-200 flex items-center gap-2">
+            <Sun size={18} className="text-amber-600" />
+            Available Courses — 2 Months
+          </h2>
 
-          {/* Trade Course Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-            {tradeCourses.map((program) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+            {shortCourses.map((program) => (
               <ProgramCard
                 key={program.id}
                 program={program}
@@ -231,14 +110,17 @@ export default function ShortCoursesPage() {
             ))}
           </div>
 
-          {/* Trade Course Accordions */}
+          {/* Course Details Accordions */}
+          <h2 className="text-xl font-bold text-gray-800 mb-6 pb-2 border-b border-gray-200">
+            Course Details
+          </h2>
           <div className="space-y-4">
-            {tradeCourses.map((program) => (
+            {shortCourses.map((program) => (
               <details
                 key={program.id}
-                className="group bg-white border border-gray-200"
+                className="group bg-gray-50 border border-gray-200"
               >
-                <summary className="flex items-center justify-between px-5 py-3.5 cursor-pointer font-medium text-gray-800 list-none hover:bg-gray-50 transition-colors">
+                <summary className="flex items-center justify-between px-5 py-3.5 cursor-pointer font-medium text-gray-800 list-none hover:bg-gray-100 transition-colors">
                   <span>
                     {program.shortName}
                     <span className="text-xs text-gray-400 font-normal ml-2">
@@ -292,39 +174,35 @@ export default function ShortCoursesPage() {
         </div>
       </section>
 
-      {/* Who Are These Courses For */}
-      <section className="py-14 bg-white">
+      {/* Info Bar */}
+      <section className="py-12 bg-gray-800 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gray-800 text-white p-8">
-            <h3 className="font-bold text-lg mb-2">
-              Who Are These Courses For?
-            </h3>
-            <p className="text-white/70 text-sm mb-6">
-              Short courses are ideal for school-leavers, homemakers re-entering
-              the workforce, job seekers, or anyone who wants a quick, practical
-              skill without a multi-year commitment.
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {[
-                "School Leavers",
-                "Career Changers",
-                "Unemployed Youth",
-                "Skill Upgraders",
-              ].map((t) => (
-                <div
-                  key={t}
-                  className="bg-white/10 border border-white/20 px-4 py-3 text-sm font-medium text-center"
-                >
-                  {t}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            {[
+              { value: "2 Months", label: "Duration" },
+              { value: "8 Courses", label: "Available" },
+              { value: "Limited", label: "Seats Per Batch" },
+              { value: "2026", label: "Summer Camp" },
+            ].map((item) => (
+              <div key={item.label}>
+                <div className="text-2xl font-bold text-amber-400">
+                  {item.value}
                 </div>
-              ))}
-            </div>
+                <div className="text-xs text-white/60 mt-1">{item.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
       <div className="py-12 bg-white text-center border-t border-gray-200">
+        <h2 className="text-lg font-bold text-gray-800 mb-2">
+          Ready to Start Your Summer Journey?
+        </h2>
+        <p className="text-xs text-gray-500 mb-6">
+          Limited seats available. Enroll now to secure your place.
+        </p>
         <div className="flex flex-wrap gap-3 justify-center">
           <Link
             href="/admissions/how-to-apply"
@@ -334,9 +212,9 @@ export default function ShortCoursesPage() {
           </Link>
           <Link
             href="/admissions/apply-now"
-            className="px-5 py-2.5 border border-amber-600 text-amber-700 text-sm font-medium hover:bg-amber-50 transition-colors"
+            className="px-5 py-2.5 bg-amber-500 text-white text-sm font-medium hover:bg-amber-600 transition-colors"
           >
-            Register for a Course →
+            Register for Summer Camp →
           </Link>
         </div>
       </div>

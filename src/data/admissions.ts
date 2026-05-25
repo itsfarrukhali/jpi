@@ -468,6 +468,44 @@ export const allProgramOptions = [
     ],
   },
   {
+    group: "Summer Camp 2026 — Short Courses (2 Months)",
+    options: [
+      {
+        value: "sc-machinist",
+        label: "Workshop Machinist (02 Months - Summer Camp)",
+      },
+      {
+        value: "sc-automation",
+        label: "Industrial Automation (02 Months - Summer Camp)",
+      },
+      {
+        value: "sc-office-automation",
+        label: "Office Automation (02 Months - Summer Camp)",
+      },
+      {
+        value: "sc-web-dev",
+        label: "Web Development (02 Months - Summer Camp)",
+      },
+      {
+        value: "sc-digital-marketing",
+        label: "Digital Marketing (02 Months - Summer Camp)",
+      },
+      {
+        value: "sc-advanced-welding",
+        label: "Advanced Welding (02 Months - Summer Camp)  ",
+      },
+      {
+        value: "sc-autocad",
+        label: "AutoCAD Professional (02 Months - Summer Camp)",
+      },
+      {
+        value: "sc-rac",
+        label:
+          "Refrigeration Repairing & Air Conditioning Installation (02 Months - Summer Camp)",
+      },
+    ],
+  },
+  {
     group: "Jinnah Excellence Certificates (JEC)",
     options: [
       {
