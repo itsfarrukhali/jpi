@@ -77,7 +77,25 @@ export type NewsItem = {
  */
 export const newsItems: NewsItem[] = [
   {
-    id: "ann-2025-01",
+    id: "ann-2026-01",
+    title:
+      "Summer Vacations Announcement – Academic Activities Suspension (2026)",
+    excerpt:
+      "Institute announces summer vacation schedule. Academic activities will remain suspended from 1 June 2026 to 31 July 2026.",
+    content:
+      "All students are hereby informed that the institute will observe summer vacations.\n\n" +
+      "According to the official schedule, all academic activities will remain suspended from 1 June 2026 to 31 July 2026.\n\n" +
+      "The institute will reopen and regular academic activities will resume from 3 August 2026 as per the normal schedule.\n\n" +
+      "Students are advised to take note of the vacation period and plan accordingly.\n\n" +
+      "Administration\njpikhi.edu.pk",
+    date: "2026-05-25",
+    category: "announcement",
+    image: "/brand/notice-thumb.png",
+    slug: "summer-vacations-announcement-2026",
+    pdfUrl: "/pdfs/summer-vacation-notice.pdf",
+  },
+  {
+    id: "ann-2025-02",
     title: "Admit Card Collection – SBTE Exams (3rd Year Regular 2023–2024)",
     excerpt:
       "3rd Year Morning & Evening students must collect their admit cards from the Registration & Examination Counter. Bring student ID.",
@@ -96,7 +114,7 @@ export const newsItems: NewsItem[] = [
 
   // ─── Notice 2: Date Sheet with PDF ──────────────────
   {
-    id: "ann-2025-02",
+    id: "ann-2025-03",
     title: "SBTE Date Sheet 2025 – 3rd Year Regular",
     excerpt:
       "The SBTE date sheet for 3rd Year (Regular) examinations has been published. Download the PDF.",
@@ -109,7 +127,7 @@ export const newsItems: NewsItem[] = [
     slug: "sbte-date-sheet-3rd-year",
   },
   {
-    id: "ann-2025-03",
+    id: "ann-2025-04",
     title: "Admissions Open – Physiotherapy Technician Diploma",
     excerpt:
       "Start your career in healthcare with a 2-Year Diploma in Physiotherapy Technician program at Jinnah Polytechnic Institute Karachi.",
@@ -122,7 +140,7 @@ export const newsItems: NewsItem[] = [
     pdfUrl: "/pdfs/physio-admission-2026.pdf",
   },
   {
-    id: "ann-2025-04",
+    id: "ann-2025-05",
     title: "Admissions Open – Nursing Assistant Program",
     excerpt:
       "Join the 1-Year Nursing Assistant Program and build a strong foundation in healthcare services and patient care.",
@@ -135,7 +153,7 @@ export const newsItems: NewsItem[] = [
     pdfUrl: "/pdfs/nursing-admission-2026.pdf",
   },
   {
-    id: "ann-2025-05",
+    id: "ann-2025-06",
     title: "Admissions Open – AutoCAD Professional Course",
     excerpt:
       "Learn AutoCAD 2D, 3D, Mechanical & Civil Drawing with a 2-Month professional course in Karachi.",
@@ -148,7 +166,7 @@ export const newsItems: NewsItem[] = [
     pdfUrl: "/pdfs/autocad-admission-2026.pdf",
   },
   {
-    id: "ann-2025-06",
+    id: "ann-2025-07",
     title: "Admissions Open – Artificial Intelligence Diploma",
     excerpt:
       "Start your tech career with a 1-Year Diploma in Artificial Intelligence with Python, Machine Learning, and real-world projects.",
@@ -161,7 +179,7 @@ export const newsItems: NewsItem[] = [
     pdfUrl: "/pdfs/ai-admission-2026.pdf",
   },
   {
-    id: "ann-2025-07",
+    id: "ann-2025-08",
     title: "Admissions Open – Jinnah Healthcare Technology Programs",
     excerpt:
       "Diploma programs in Physiotherapy, Nursing, Laboratory Technician, and Phlebotomy with practical healthcare training.",
@@ -174,7 +192,7 @@ export const newsItems: NewsItem[] = [
     pdfUrl: "/pdfs/healthcare-admission-2026.pdf",
   },
   {
-    id: "ann-2025-08",
+    id: "ann-2025-09",
     title: "Admissions Open – Technical Diploma Programs",
     excerpt:
       "Apply for multiple 2–3 year technical diplomas in Computer, Mechanical, Electrical, Civil, and Software Technology.",

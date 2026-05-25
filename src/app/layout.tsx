@@ -107,7 +107,7 @@ export default function RootLayout({
         interHeading.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">
+      <body suppressHydrationWarning className="min-h-full flex flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Toaster />
