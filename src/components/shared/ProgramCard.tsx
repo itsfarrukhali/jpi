@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Clock, Users, CheckCircle, ArrowRight } from "lucide-react";
-import { type Program } from "@/data/programs";
+import type { ProgramRecord } from "@/types/programs";
 import { cn } from "@/lib/utils";
 
 const tagColors: Record<string, string> = {
@@ -11,7 +11,7 @@ const tagColors: Record<string, string> = {
 };
 
 interface ProgramCardProps {
-  program: Program;
+  program: ProgramRecord;
   href: string;
 }
 
@@ -46,7 +46,7 @@ export default function ProgramCard({ program, href }: ProgramCardProps) {
           </div>
           <div className="flex items-center gap-2 text-xs text-(--color-text-muted)">
             <CheckCircle size={12} className="text-(--color-gold) shrink-0" />
-            <span>{program.eligibility}</span>
+            <span>{program.eligibility.join(" | ")}</span>
           </div>
         </div>
         <Link

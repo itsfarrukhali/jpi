@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
-import { jecPrograms } from "@/data/programs";
+import { notFound } from "next/navigation";
+import { getPublishedPrograms } from "@/lib/program-data";
 import {
   CheckCircle2,
   Clock,
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
   description:
     "Professional AutoCAD 2D & 3D course at JPI — Mechanical and Civil drawing. Master skills, shape your future with Jinnah Excellence Certificates.",
 };
+export const dynamic = "force-dynamic";
 
 const whyEssential = [
   {
@@ -58,8 +60,9 @@ const courseSchedule = [
   { icon: Clock, label: "Class Time", value: "10:00 AM – 1:00 PM" },
 ];
 
-export default function JECPage() {
-  const course = jecPrograms[0];
+export default async function JECPage() {
+  const [course] = await getPublishedPrograms("JEC");
+  if (!course) notFound();
 
   return (
     <>
@@ -176,7 +179,7 @@ export default function JECPage() {
                     <div>
                       <div className="text-xs text-gray-500">Eligibility</div>
                       <div className="text-sm font-medium text-gray-800">
-                        {course.eligibility}
+                        {course.eligibility.join(" | ")}
                       </div>
                     </div>
                   </div>

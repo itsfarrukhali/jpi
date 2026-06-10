@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
-import { newsItems, type NewsItem } from "@/data/news";
+import type { NewsItemRecord } from "@/types/news";
 import {
   Calendar,
   Megaphone,
@@ -16,25 +16,26 @@ import {
 } from "lucide-react";
 import GalleryLightbox from "@/components/shared/GalleryLightbox";
 
-/* ----- Filter & helpers (outside component) ----- */
-const newsAndAnnouncements = newsItems.filter(
-  (item) => item.category === "news" || item.category === "announcement",
-);
-const events = newsItems.filter(
-  (item) => item.category === "event" || item.category === "seminar",
-);
 const categoryStyles: Record<string, string> = {
-  news: "bg-blue-50 text-blue-700 border-blue-100",
-  event: "bg-purple-50 text-purple-700 border-purple-100",
-  announcement: "bg-amber-50 text-amber-700 border-amber-100",
-  seminar: "bg-teal-50 text-teal-700 border-teal-100",
+  NEWS: "bg-blue-50 text-blue-700 border-blue-100",
+  EVENTS: "bg-purple-50 text-purple-700 border-purple-100",
+  ANNOUNCEMENTS: "bg-amber-50 text-amber-700 border-amber-100",
+  SEMINARS: "bg-teal-50 text-teal-700 border-teal-100",
 };
 
 const categoryLabels: Record<string, string> = {
-  news: "News",
-  event: "Event",
-  announcement: "Announcement",
-  seminar: "Seminar",
+  NEWS: "News",
+  EVENTS: "Event",
+  ANNOUNCEMENTS: "Announcement",
+  SEMINARS: "Seminar",
+};
+
+type NewsApiResponse = {
+  data: NewsItemRecord[];
+};
+
+type SingleNewsApiResponse = {
+  data: NewsItemRecord;
 };
 
 function formatDate(dateStr: string): string {
@@ -50,8 +51,28 @@ function NewsContent() {
   const searchParams = useSearchParams();
   const openSlug = searchParams.get("open");
 
+  const [newsItems, setNewsItems] = useState<NewsItemRecord[]>([]);
+  const [loading, setLoading] = useState(true);
   const [galleryOpen, setGalleryOpen] = useState<string[] | null>(null);
-  const [contentItem, setContentItem] = useState<NewsItem | null>(null);
+  const [contentItem, setContentItem] = useState<NewsItemRecord | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch("/api/news?all=true", { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error("Unable to load news");
+        return response.json() as Promise<NewsApiResponse>;
+      })
+      .then((response) => setNewsItems(response.data))
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        console.error(error);
+      })
+      .finally(() => setLoading(false));
+
+    return () => controller.abort();
+  }, []);
 
   const openGallery = useCallback((images: string[] | undefined) => {
     if (images?.length) setGalleryOpen(images);
@@ -60,14 +81,24 @@ function NewsContent() {
   // Auto‑open modal when ?open=slug is present
   useEffect(() => {
     if (openSlug) {
-      const item = newsItems.find((n) => n.slug === openSlug);
-      if (item) {
-        window.setTimeout(() => setContentItem(item), 0);
-      }
+      fetch(`/api/news/${encodeURIComponent(openSlug)}`)
+        .then((response) => {
+          if (!response.ok) throw new Error("Unable to load news item");
+          return response.json() as Promise<SingleNewsApiResponse>;
+        })
+        .then((response) => setContentItem(response.data))
+        .catch(console.error);
       // Clean URL without refresh
       window.history.replaceState(null, "", "/news");
     }
   }, [openSlug]);
+
+  const newsAndAnnouncements = newsItems.filter(
+    (item) => item.category === "NEWS" || item.category === "ANNOUNCEMENTS",
+  );
+  const events = newsItems.filter(
+    (item) => item.category === "EVENTS" || item.category === "SEMINARS",
+  );
 
   const featuredNews =
     newsAndAnnouncements.length > 0 ? newsAndAnnouncements[0]! : null;
@@ -84,6 +115,9 @@ function NewsContent() {
 
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+          {loading && (
+            <p className="text-center text-sm text-gray-500">Loading news...</p>
+          )}
           {/* ─── News & Announcements ────────────────── */}
           <div>
             <h2 className="text-xl font-bold text-gray-800 mb-2 pb-2 border-b border-gray-200 flex items-center gap-2">

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 import ProgramCard from "@/components/shared/ProgramCard";
-import { diplomaCertifications } from "@/data/programs";
+import { getPublishedPrograms } from "@/lib/program-data";
 import {
   ChevronDown,
   Heart,
@@ -18,17 +18,9 @@ export const metadata: Metadata = {
   description:
     "Diploma certification programs at Jinnah Polytechnic Institute — Physiotherapy, Nursing Assistant, Laboratory Technicians, and Artificial Intelligence. Affiliated with SBTE.",
 };
+export const dynamic = "force-dynamic";
 
 // Separate health care from tech diploma
-const healthCareDiplomas = diplomaCertifications.filter(
-  (p) =>
-    p.id === "cert-physiotherapy" ||
-    p.id === "cert-nursing" ||
-    p.id === "cert-lab-technician",
-);
-
-const techDiplomas = diplomaCertifications.filter((p) => p.id === "sc-ai");
-
 const whyChoose = [
   {
     title: "Hands-On Training",
@@ -48,7 +40,12 @@ const whyChoose = [
   },
 ];
 
-export default function DiplomaCertificationsPage() {
+export default async function DiplomaCertificationsPage() {
+  const diplomaCertifications = await getPublishedPrograms("DIPLOMA_CERTIFICATIONS");
+  const healthCareDiplomas = diplomaCertifications.filter((program) =>
+    ["cert-physiotherapy", "cert-nursing", "cert-lab-technician"].includes(program.slug),
+  );
+  const techDiplomas = diplomaCertifications.filter((program) => program.slug === "sc-ai");
   return (
     <>
       <PageHero

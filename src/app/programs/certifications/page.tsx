@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 import ProgramCard from "@/components/shared/ProgramCard";
-import { certificationPrograms } from "@/data/programs";
+import { getPublishedPrograms } from "@/lib/program-data";
 import { ChevronDown, Heart, Phone, Mail, MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -10,14 +10,7 @@ export const metadata: Metadata = {
   description:
     "Industry-recognized certification programs at JPI — AutoCAD, PLC, Web Development, Networking, and Jinnah Health Care Technology programs.",
 };
-
-const healthCarePrograms = certificationPrograms.filter(
-  (p) =>
-    p.id.startsWith("cert-physiotherapy") ||
-    p.id.startsWith("cert-nursing") ||
-    p.id.startsWith("cert-lab-technician") ||
-    p.id.startsWith("cert-phlebotomy"),
-);
+export const dynamic = "force-dynamic";
 
 const whyCertify = [
   {
@@ -37,7 +30,11 @@ const whyCertify = [
   },
 ];
 
-export default function CertificationsPage() {
+export default async function CertificationsPage() {
+  const certificationPrograms = await getPublishedPrograms("CERTIFICATIONS");
+  const healthCarePrograms = certificationPrograms.filter((program) =>
+    ["cert-physiotherapy", "cert-nursing", "cert-lab-technician", "cert-phlebotomy"].includes(program.slug),
+  );
   return (
     <>
       <PageHero

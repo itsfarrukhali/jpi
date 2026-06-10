@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 import {
@@ -17,9 +17,11 @@ import {
   ArrowRight,
   ChevronDown,
   Loader2,
+  FileText,
+  ImageIcon,
 } from "lucide-react";
 import { toast } from "sonner";
-import { currentOpenings } from "@/data/careers";
+import type { JobOpeningRecord } from "@/types/careers";
 
 const whyJoinJPI = [
   {
@@ -66,10 +68,26 @@ const benefits = [
 ];
 
 export default function CareersPage() {
+  const [currentOpenings, setCurrentOpenings] = useState<JobOpeningRecord[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [openJob, setOpenJob] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/careers", { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error("Unable to load job openings");
+        return response.json() as Promise<{ data: JobOpeningRecord[] }>;
+      })
+      .then((response) => setCurrentOpenings(response.data))
+      .catch((fetchError: unknown) => {
+        if (fetchError instanceof DOMException && fetchError.name === "AbortError") return;
+        console.error(fetchError);
+      });
+    return () => controller.abort();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -255,6 +273,30 @@ export default function CareersPage() {
                           {job.qualification}
                         </p>
                       </div>
+                      {job.officialNoticeUrl && (
+                        <div className="mb-4">
+                          <h4 className="mb-2 text-xs font-medium text-gray-700">
+                            Official Notice:
+                          </h4>
+                          {job.officialNoticeType === "IMAGE" ? (
+                            <Link
+                              href={job.officialNoticeUrl}
+                              target="_blank"
+                              className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 hover:underline"
+                            >
+                              <ImageIcon size={12} /> View Official Notice Image
+                            </Link>
+                          ) : (
+                            <Link
+                              href={job.officialNoticeUrl}
+                              target="_blank"
+                              className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 hover:underline"
+                            >
+                              <FileText size={12} /> View Official Notice PDF
+                            </Link>
+                          )}
+                        </div>
+                      )}
                       <div className="mb-4">
                         <h4 className="text-xs font-medium text-gray-700 mb-2">
                           Key Responsibilities:
@@ -289,6 +331,11 @@ export default function CareersPage() {
                   )}
                 </div>
               ))}
+              {currentOpenings.length === 0 && (
+                <div className="border border-gray-200 bg-gray-50 px-5 py-8 text-center text-sm text-gray-500">
+                  There are currently no published job openings.
+                </div>
+              )}
             </div>
 
             <p className="text-xs text-gray-400 mt-4 text-center">

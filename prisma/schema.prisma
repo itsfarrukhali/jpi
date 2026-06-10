@@ -1,0 +1,165 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Admin {
+  id            String        @id @default(cuid())
+  username      String        @unique
+  avatarURL     String?
+  name          String
+  email         String        @unique
+  passwordHash  String
+  designation   Designation   @default(ADMINISTRATOR)
+  role          Role          @default(ADMIN)
+  permission    Permission    @default(READ_ONLY)
+  manageContent ContentType[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model NewsItem {
+  id            String       @id @default(cuid())
+  title         String
+  excerpt       String
+  content       String
+  date          DateTime
+  category      NewsCategory @default(NEWS)
+  image         String
+  pdfUrl        String?
+  slug          String       @unique
+  galleryImages String[] // array of image URLs
+  published     Boolean      @default(true)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Program {
+  id          String             @id @default(cuid())
+  slug        String             @unique
+  name        String
+  shortName   String
+  department  String?
+  duration    String
+  seats       Int
+  eligibility String[]
+  description String
+  icon        String? // icon name (e.g., "building")
+  thumbnail   String? // URL to thumbnail image
+  coverImage  String? // URL to cover image
+  tag         ProgramTag // DAE, CERT, SHORT, JEC
+  category    ProgramCategory
+  listingPage ProgramListingPage
+  subjects    Json // array of { year, items: string[] }
+  curriculum  Json? // detailed DAE curriculum with courses, hours, credits, and marks
+  careers     String[] // array of career titles
+  published   Boolean            @default(true)
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model JobOpening {
+  id                 String              @id @default(cuid())
+  slug               String              @unique
+  title              String
+  department         String
+  type               String
+  qualification      String
+  description        String
+  responsibilities   String[]
+  officialNoticeUrl  String?
+  officialNoticeType OfficialNoticeType?
+  published          Boolean             @default(true)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+}
+
+enum OfficialNoticeType {
+  IMAGE
+  PDF
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+}
+
+enum Permission {
+  READ_ONLY
+  READ_WRITE
+  FULL_ACCESS
+}
+
+enum ContentType {
+  NEWS
+  PROGRAMS
+  CAREERS
+  DEPARTMENTS
+  COURSES // curriculum
+  WEBSITE_SETTINGS // future use
+}
+
+enum ManageContent {
+  NEWS
+  PROGRAMS
+  CAREERS
+  DEPARTMENTS
+  COURSES
+  WEBSITE_SETTINGS
+}
+
+enum Designation {
+  PRINCIPAL
+  VICE_PRINCIPAL
+  HEAD_OF_DEPARTMENT
+  ADMINISTRATOR
+}
+
+enum NewsCategory {
+  NEWS
+  ANNOUNCEMENTS
+  EVENTS
+  SEMINARS
+}
+
+enum ProgramTag {
+  DAE
+  CERT
+  SHORT
+  JEC
+}
+
+enum ProgramCategory {
+  dae
+  certifications
+  short_courses
+  jec
+}
+
+enum ProgramListingPage {
+  DAE
+  CERTIFICATIONS
+  DIPLOMA_CERTIFICATIONS
+  SHORT_COURSES
+  JEC
+}
+
+enum DEPARTMENTS {
+  SOFTWARE_TECHNOLOGY
+  COMPUTER_INFORMATION_TECHNOLOGY
+  MECHANICAL_TECHNOLOGY
+  CIVIL_TECHNOLOGY
+  CHEMICAL_TECHNOLOGY
+  ELECTRICAL_TECHNOLOGY
+  ELECTRONICS_TECHNOLOGY
+  RAC_TECHNOLOGY
+}

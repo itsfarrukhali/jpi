@@ -1,6 +1,6 @@
 // src/app/api/careers/route.ts
 import { NextResponse } from "next/server";
-import { getJobTitle } from "@/data/careers";
+import { prisma } from "@/lib/prisma";
 import { careersSchema } from "@/lib/validations/email";
 import { handleCareerEmail } from "@/lib/emails/send-emails";
 import type { EmailAttachment } from "@/lib/emails/send-emails";
@@ -17,6 +17,14 @@ function isFile(value: FormDataEntryValue): value is File {
     "arrayBuffer" in value &&
     typeof value.arrayBuffer === "function"
   );
+}
+
+export async function GET() {
+  const openings = await prisma.jobOpening.findMany({
+    where: { published: true },
+    orderBy: { createdAt: "desc" },
+  });
+  return NextResponse.json({ data: openings });
 }
 
 /**
@@ -37,8 +45,17 @@ async function processCVAttachment(
       `CV file must be under 5MB (current: ${(cvEntry.size / 1024 / 1024).toFixed(2)}MB)`,
     );
   }
+  if (
+    cvEntry.type !== "application/pdf" ||
+    !cvEntry.name.toLowerCase().endsWith(".pdf")
+  ) {
+    throw new Error("CV must be a PDF file");
+  }
 
   const buffer = Buffer.from(await cvEntry.arrayBuffer());
+  if (buffer.subarray(0, 5).toString("ascii") !== "%PDF-") {
+    throw new Error("CV file content is not a valid PDF");
+  }
   const base64Content = buffer.toString("base64");
 
   const attachment: EmailAttachment = {
@@ -82,7 +99,11 @@ export async function POST(request: Request) {
       `[Careers API] Processing application from ${raw.applicantName} for ${raw.position}`,
     );
 
-    const jobTitle = getJobTitle(raw.position);
+    const opening = await prisma.jobOpening.findFirst({
+      where: { id: raw.position, published: true },
+      select: { title: true },
+    });
+    const jobTitle = opening?.title ?? "General / Open Application";
 
     // Process CV attachment if provided
     let attachment: EmailAttachment | undefined;

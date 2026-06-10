@@ -6,6 +6,8 @@ export const metadata: Metadata = {
     "Latest news, announcements, events, and gallery from Jinnah Polytechnic Institute.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default function NewsLayout({
   children,
 }: {

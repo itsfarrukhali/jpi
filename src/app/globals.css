@@ -221,3 +221,8 @@
 .bg-surface { background-color: var(--surface); }
 .border-gold { border-color: var(--gold); }
 .border-primary { border-color: var(--primary); }
+
+.admin-dashboard button:not(:disabled),
+.admin-dashboard [role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}

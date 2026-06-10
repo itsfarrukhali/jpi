@@ -2,8 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 import ProgramCard from "@/components/shared/ProgramCard";
-import { daePrograms } from "@/data/programs";
-import { departments, type Department, type Year } from "@/data/courses";
+import { getPublishedPrograms } from "@/lib/program-data";
+import type {
+  ProgramCurriculumTotal,
+  ProgramCurriculumYear,
+  ProgramRecord,
+} from "@/types/programs";
 import { ChevronDown, BookOpen, Clock, Award } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -11,8 +15,10 @@ export const metadata: Metadata = {
   description:
     "3-year Diploma of Associate Engineer programs at Jinnah Polytechnic Institute — Civil, Electrical, Mechanical, Electronics, Software, CIT, Refrigeration & AC, and Chemical. Affiliated with SBTE.",
 };
+export const dynamic = "force-dynamic";
 
-export default function DAEPage() {
+export default async function DAEPage() {
+  const daePrograms = await getPublishedPrograms("DAE");
   return (
     <>
       <PageHero
@@ -51,7 +57,7 @@ export default function DAEPage() {
             ))}
           </div>
 
-          {/* Detailed Curriculum from courses.ts */}
+          {/* Detailed Curriculum */}
           <h2 className="text-xl font-bold text-gray-800 mb-2 pb-2 border-b border-gray-200">
             Curriculum
           </h2>
@@ -61,8 +67,8 @@ export default function DAEPage() {
           </p>
 
           <div className="space-y-6">
-            {departments.map((dept) => (
-              <CurriculumSection key={dept.slug} department={dept} />
+            {daePrograms.filter((program) => program.curriculum).map((program) => (
+              <CurriculumSection key={program.id} program={program} />
             ))}
           </div>
 
@@ -112,13 +118,15 @@ export default function DAEPage() {
 
 // ─── Curriculum Section Component ────────────────────
 
-function CurriculumSection({ department }: { department: Department }) {
+function CurriculumSection({ program }: { program: ProgramRecord }) {
+  const years = program.curriculum?.years ?? [];
+  const grandTotal = program.curriculum!.grandTotal;
   return (
     <details className="group bg-gray-50 border border-gray-200">
       <summary className="flex items-center justify-between px-5 py-3.5 cursor-pointer font-medium text-gray-800 list-none hover:bg-gray-100 transition-colors">
         <span className="flex items-center gap-2">
           <BookOpen size={14} className="text-amber-600" />
-          {department.name}
+          {program.shortName}
         </span>
         <ChevronDown
           size={16}
@@ -127,13 +135,13 @@ function CurriculumSection({ department }: { department: Department }) {
       </summary>
 
       <div className="px-5 pb-6 pt-2 space-y-8">
-        {department.years.map((year) => (
+        {years.map((year) => (
           <YearSection key={year.year} year={year} />
         ))}
 
         {/* Grand Total */}
         <div className="border-t border-gray-300 pt-4">
-          <GrandTotal total={department.grandTotal} />
+          <GrandTotal total={grandTotal} />
         </div>
       </div>
     </details>
@@ -142,7 +150,8 @@ function CurriculumSection({ department }: { department: Department }) {
 
 // ─── Year Section Component ──────────────────────────
 
-function YearSection({ year }: { year: Year }) {
+function YearSection({ year }: { year: ProgramCurriculumYear }) {
+  const total = year.total;
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between mb-3">
@@ -153,15 +162,15 @@ function YearSection({ year }: { year: Year }) {
           <span className="flex items-center gap-1">
             <Clock size={11} className="text-amber-600" />
             Contact Hrs:{" "}
-            {year.total.contactHours.theory + year.total.contactHours.practical}
+            {total.contactHours.theory + total.contactHours.practical}
           </span>
           <span className="flex items-center gap-1">
             <Award size={11} className="text-amber-600" />
-            Credit Hrs: {year.total.creditHours}
+            Credit Hrs: {total.creditHours}
           </span>
           <span className="flex items-center gap-1">
             <BookOpen size={11} className="text-amber-600" />
-            Marks: {year.total.marks.total}
+            Marks: {total.marks.total}
           </span>
         </div>
       </div>
@@ -236,22 +245,22 @@ function YearSection({ year }: { year: Year }) {
                 Year {year.year} Total
               </td>
               <td className="px-3 py-2 text-center text-gray-800">
-                {year.total.contactHours.theory}
+                {total.contactHours.theory}
               </td>
               <td className="px-3 py-2 text-center text-gray-800">
-                {year.total.contactHours.practical}
+                {total.contactHours.practical}
               </td>
               <td className="px-3 py-2 text-center text-gray-800">
-                {year.total.creditHours}
+                {total.creditHours}
               </td>
               <td className="px-3 py-2 text-center text-gray-800">
-                {year.total.marks.theory}
+                {total.marks.theory}
               </td>
               <td className="px-3 py-2 text-center text-gray-800">
-                {year.total.marks.practical}
+                {total.marks.practical}
               </td>
               <td className="px-3 py-2 text-center text-gray-800">
-                {year.total.marks.total}
+                {total.marks.total}
               </td>
             </tr>
           </tbody>
@@ -263,19 +272,19 @@ function YearSection({ year }: { year: Year }) {
         <div className="bg-white border border-gray-200 p-3 text-center">
           <div className="text-xs text-gray-500">Contact Hrs</div>
           <div className="text-sm font-medium text-gray-800">
-            {year.total.contactHours.theory + year.total.contactHours.practical}
+            {total.contactHours.theory + total.contactHours.practical}
           </div>
         </div>
         <div className="bg-white border border-gray-200 p-3 text-center">
           <div className="text-xs text-gray-500">Credit Hrs</div>
           <div className="text-sm font-medium text-gray-800">
-            {year.total.creditHours}
+            {total.creditHours}
           </div>
         </div>
         <div className="bg-white border border-gray-200 p-3 text-center">
           <div className="text-xs text-gray-500">Marks</div>
           <div className="text-sm font-medium text-gray-800">
-            {year.total.marks.total}
+            {total.marks.total}
           </div>
         </div>
       </div>
@@ -285,7 +294,7 @@ function YearSection({ year }: { year: Year }) {
 
 // ─── Grand Total Component ───────────────────────────
 
-function GrandTotal({ total }: { total: Department["grandTotal"] }) {
+function GrandTotal({ total }: { total: ProgramCurriculumTotal }) {
   return (
     <div className="bg-gray-800 text-white p-5">
       <div className="flex flex-wrap items-center justify-between">

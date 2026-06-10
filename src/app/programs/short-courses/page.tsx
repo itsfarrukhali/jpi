@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 import ProgramCard from "@/components/shared/ProgramCard";
-import { shortCourses } from "@/data/programs";
+import { getPublishedPrograms } from "@/lib/program-data";
 import {
   ChevronDown,
   Sun,
@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   description:
     "JPI Summer Camp 2026 — 2-month skill development short courses. Workshop Machinist, Industrial Automation, Office Automation, Web Development, Digital Marketing, Advanced Welding, AutoCAD, RAC.",
 };
+export const dynamic = "force-dynamic";
 
 const highlights = [
   { icon: Award, label: "Practical Training" },
@@ -26,7 +27,8 @@ const highlights = [
   { icon: CheckCircle2, label: "Certificate Awarded" },
 ];
 
-export default function ShortCoursesPage() {
+export default async function ShortCoursesPage() {
+  const shortCourses = await getPublishedPrograms("SHORT_COURSES");
   return (
     <>
       <PageHero
