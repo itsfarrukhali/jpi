@@ -1,6 +1,7 @@
 // src/app/api/newsletter/route.ts
 import { NextResponse } from "next/server";
 import { newsletterSchema } from "@/lib/validations/email";
+import { validationErrorResponse } from "@/lib/validations/response";
 import { handleNewsletterSubscription } from "@/lib/emails/send-emails";
 
 export async function POST(request: Request) {
@@ -10,7 +11,7 @@ export async function POST(request: Request) {
 
     if (!result.success) {
       return NextResponse.json(
-        { success: false, error: "Invalid email" },
+        validationErrorResponse(result.error),
         { status: 400 },
       );
     }

@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { careersSchema } from "@/lib/validations/email";
+import { validationErrorResponse } from "@/lib/validations/response";
 import { handleCareerEmail } from "@/lib/emails/send-emails";
 import type { EmailAttachment } from "@/lib/emails/send-emails";
 import type { CareersApplicationData } from "@/lib/emails/types";
@@ -90,7 +91,7 @@ export async function POST(request: Request) {
     if (!result.success) {
       console.error("[Careers API] Validation failed:", result.error.flatten());
       return NextResponse.json(
-        { success: false, error: "Invalid form data" },
+        validationErrorResponse(result.error),
         { status: 400 },
       );
     }

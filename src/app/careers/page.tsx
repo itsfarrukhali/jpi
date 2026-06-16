@@ -22,6 +22,12 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import type { JobOpeningRecord } from "@/types/careers";
+import { getEmailError, getPhoneError, hasErrors } from "@/lib/client-form-validation";
+
+type CareerFieldErrors = {
+  email?: string;
+  phone?: string;
+};
 
 const whyJoinJPI = [
   {
@@ -72,7 +78,12 @@ export default function CareersPage() {
   const [submitted, setSubmitted] = useState(false);
   const [openJob, setOpenJob] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<CareerFieldErrors>({});
   const [isPending, startTransition] = useTransition();
+
+  const updateFieldError = (field: keyof CareerFieldErrors, message: string) => {
+    setFieldErrors((current) => ({ ...current, [field]: message || undefined }));
+  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -110,6 +121,16 @@ export default function CareersPage() {
     }
 
     const formData = new FormData(form);
+    const nextFieldErrors: CareerFieldErrors = {
+      email: getEmailError(String(formData.get("email") ?? "")),
+      phone: getPhoneError(String(formData.get("phone") ?? "")),
+    };
+
+    setFieldErrors(nextFieldErrors);
+    if (hasErrors(nextFieldErrors)) {
+      setError("Please correct the highlighted fields.");
+      return;
+    }
 
     startTransition(async () => {
       try {
@@ -122,6 +143,7 @@ export default function CareersPage() {
 
         if (result.success) {
           setSubmitted(true);
+          setFieldErrors({});
           form.reset();
           window.scrollTo({ top: 0, behavior: "smooth" });
           toast.success("Application submitted successfully!", {
@@ -416,8 +438,18 @@ export default function CareersPage() {
                     name="email"
                     placeholder="you@example.com"
                     required
+                    aria-invalid={Boolean(fieldErrors.email)}
+                    aria-describedby="careers-email-error"
+                    onChange={(event) =>
+                      updateFieldError("email", getEmailError(event.target.value))
+                    }
                     className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
                   />
+                  {fieldErrors.email && (
+                    <p id="careers-email-error" className="mt-1 text-xs text-red-600">
+                      {fieldErrors.email}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label
@@ -432,8 +464,20 @@ export default function CareersPage() {
                     name="phone"
                     placeholder="03XX-XXXXXXX"
                     required
+                    pattern="[+0-9() -]{10,20}"
+                    title="Enter a valid phone number, e.g. 0330-0370660"
+                    aria-invalid={Boolean(fieldErrors.phone)}
+                    aria-describedby="careers-phone-error"
+                    onChange={(event) =>
+                      updateFieldError("phone", getPhoneError(event.target.value))
+                    }
                     className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
                   />
+                  {fieldErrors.phone && (
+                    <p id="careers-phone-error" className="mt-1 text-xs text-red-600">
+                      {fieldErrors.phone}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label

@@ -54,13 +54,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
     },
     {
-      url: `${baseUrl}/programs/short-courses`,
+      url: `${baseUrl}/programs/jce`,
       priority: 0.8,
-      changeFrequency: "monthly",
-    },
-    {
-      url: `${baseUrl}/programs/jec`,
-      priority: 0.7,
       changeFrequency: "monthly",
     },
 

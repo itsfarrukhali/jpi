@@ -468,7 +468,7 @@ export const allProgramOptions = [
     ],
   },
   {
-    group: "Summer Camp 2026 — Short Courses (2 Months)",
+    group: "Jinnah Center of Excellence (JCE) — Short Courses",
     options: [
       {
         value: "sc-machinist",
@@ -506,7 +506,7 @@ export const allProgramOptions = [
     ],
   },
   {
-    group: "Jinnah Excellence Certificates (JEC)",
+    group: "Jinnah Center of Excellence (JCE) — AutoCAD",
     options: [
       {
         value: "jec-autocad",

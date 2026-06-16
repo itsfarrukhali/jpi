@@ -5,10 +5,12 @@ import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2 } from "lucide-react";
 import { useState, useTransition } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { getEmailError } from "@/lib/client-form-validation";
 
 export default function Footer() {
   const [subscribed, setSubscribed] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -17,9 +19,11 @@ export default function Footer() {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const email = formData.get("email") as string;
+    const nextEmailError = getEmailError(email);
 
-    if (!email) {
-      setError("Please enter a valid email address.");
+    setEmailError(nextEmailError || null);
+    if (nextEmailError) {
+      setError(nextEmailError);
       return;
     }
 
@@ -35,6 +39,7 @@ export default function Footer() {
 
         if (result.success) {
           setSubscribed(true);
+          setEmailError(null);
           form.reset();
           toast.success("Thank you for subscribing to our newsletter!", {
             icon: <CheckCircle2 size={18} className="text-green-400" />,
@@ -174,8 +179,7 @@ export default function Footer() {
                 ["DAE — Mechanical Technology", "/programs/dae"],
                 ["DAE — Computer Technology", "/programs/dae"],
                 ["AutoCAD Professional", "/programs/certifications"],
-                ["Short Courses", "/programs/short-courses"],
-                ["JEC Awards", "/programs/jec"],
+                ["JCE Short Courses", "/programs/jce"],
               ].map(([label, href], i) => (
                 <li key={i}>
                   <Link
@@ -238,26 +242,37 @@ export default function Footer() {
                 ✓ Thank you for subscribing!
               </p>
             ) : (
-              <form onSubmit={handleSubmit} className="flex gap-2">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your email"
-                  required
-                  className="flex-1 px-3 py-2 text-rounded-lg bg-white/10 text-black text-sm placeholder-gray-500 border border-white/10 focus:outline-none focus:border-amber-400"
-                />
-                <button
-                  type="submit"
-                  disabled={isPending}
-                  className="p-2 rounded-lg bg-amber-500 hover:bg-amber-600 transition-colors disabled:opacity-70"
-                >
-                  {isPending ? (
-                    <Loader2 size={14} className="animate-spin" />
-                  ) : (
-                    <Send size={14} />
-                  )}
-                </button>
-                {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
+              <form onSubmit={handleSubmit} className="space-y-2">
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Your email"
+                    required
+                    aria-invalid={Boolean(emailError)}
+                    aria-describedby="newsletter-email-error"
+                    onChange={(event) =>
+                      setEmailError(getEmailError(event.target.value) || null)
+                    }
+                    className="flex-1 px-3 py-2 text-rounded-lg bg-white/10 text-black text-sm placeholder-gray-500 border border-white/10 focus:outline-none focus:border-amber-400"
+                  />
+                  <button
+                    type="submit"
+                    disabled={isPending}
+                    className="p-2 rounded-lg bg-amber-500 hover:bg-amber-600 transition-colors disabled:opacity-70"
+                  >
+                    {isPending ? (
+                      <Loader2 size={14} className="animate-spin" />
+                    ) : (
+                      <Send size={14} />
+                    )}
+                  </button>
+                </div>
+                {(emailError || error) && (
+                  <p id="newsletter-email-error" className="text-xs text-red-400">
+                    {emailError ?? error}
+                  </p>
+                )}
               </form>
             )}
           </div>

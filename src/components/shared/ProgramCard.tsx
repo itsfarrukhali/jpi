@@ -10,6 +10,11 @@ const tagColors: Record<string, string> = {
   JEC: "bg-purple-600 text-white",
 };
 
+const tagLabels: Record<string, string> = {
+  JEC: "JCE",
+  SHORT: "JCE",
+};
+
 interface ProgramCardProps {
   program: ProgramRecord;
   href: string;
@@ -26,7 +31,7 @@ export default function ProgramCard({ program, href }: ProgramCardProps) {
               tagColors[program.tag] || "bg-gray-100 text-gray-600",
             )}
           >
-            {program.tag}
+            {tagLabels[program.tag] ?? program.tag}
           </span>
         </div>
         <h3 className="font-bold text-(--color-primary-dark) text-base leading-snug mb-2 group-hover:text-(--color-primary) transition-colors font-serif">

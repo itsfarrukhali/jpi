@@ -24,15 +24,9 @@ const programs = [
   },
   {
     image: "/programs/short-course.jpg",
-    name: "Short Courses",
-    desc: "Hands-on training in Phlebotomy, Electrician, Plumbing, IT Fundamentals & More.",
-    href: "/programs/short-courses",
-  },
-  {
-    image: "/programs/2-months.jpg",
-    name: "JEC Awards",
-    desc: "JPI AutoCAD 2D & 3D — Mechanical & Civil Drawing with Jinnah Excellence Certificates.",
-    href: "/programs/jec",
+    name: "JCE Short Courses",
+    desc: "Jinnah Center of Excellence offers JPI-certified short courses for practical skills and career growth.",
+    href: "/programs/jce",
   },
 ];
 
@@ -82,7 +76,7 @@ export default function ProgramsOverview() {
           variants={container}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {programs.map((prog) => (
             <motion.div

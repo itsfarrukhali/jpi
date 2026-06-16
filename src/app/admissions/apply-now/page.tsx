@@ -18,15 +18,29 @@ import {
 } from "lucide-react";
 import { admissionContact, universalFormFields } from "@/data/admissions";
 import { toast } from "sonner";
+import { getEmailError, getPhoneError, hasErrors } from "@/lib/client-form-validation";
+
+type AdmissionFieldErrors = {
+  email?: string;
+  phone?: string;
+};
 
 export default function ApplyNowPage() {
   const [selectedProgram, setSelectedProgram] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<AdmissionFieldErrors>({});
   const [isPending, startTransition] = useTransition();
 
   // Check if selected program is DAE (for male-only warning + extra fields)
   const isDAE = selectedProgram.startsWith("dae-");
+
+  const updateFieldError = (
+    field: keyof AdmissionFieldErrors,
+    message: string,
+  ) => {
+    setFieldErrors((current) => ({ ...current, [field]: message || undefined }));
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,6 +60,16 @@ export default function ApplyNowPage() {
       shift: isDAE ? String(formData.get("shift") ?? "") : undefined,
       message: String(formData.get("message") ?? "") || undefined,
     };
+    const nextFieldErrors: AdmissionFieldErrors = {
+      email: getEmailError(payload.email),
+      phone: getPhoneError(payload.phone),
+    };
+
+    setFieldErrors(nextFieldErrors);
+    if (hasErrors(nextFieldErrors)) {
+      setError("Please correct the highlighted fields.");
+      return;
+    }
 
     startTransition(async () => {
       try {
@@ -61,6 +85,7 @@ export default function ApplyNowPage() {
           setSubmitted(true);
           form.reset();
           setSelectedProgram("");
+          setFieldErrors({});
           toast.success("Admission inquiry submitted successfully!", {
             icon: <CheckCircle2 size={18} className="text-green-400" />,
             style: {
@@ -226,8 +251,54 @@ export default function ApplyNowPage() {
                         name={field.name}
                         placeholder={field.placeholder}
                         required={field.required}
+                        pattern={
+                          field.type === "tel" ? "[+0-9() -]{10,20}" : undefined
+                        }
+                        title={
+                          field.type === "tel"
+                            ? "Enter a valid phone number, e.g. 0330-0370660"
+                            : undefined
+                        }
+                        aria-invalid={
+                          field.name === "email"
+                            ? Boolean(fieldErrors.email)
+                            : field.name === "phone"
+                              ? Boolean(fieldErrors.phone)
+                              : undefined
+                        }
+                        aria-describedby={
+                          field.name === "email"
+                            ? "admission-email-error"
+                            : field.name === "phone"
+                              ? "admission-phone-error"
+                              : undefined
+                        }
+                        onChange={(event) => {
+                          if (field.name === "email") {
+                            updateFieldError(
+                              "email",
+                              getEmailError(event.target.value),
+                            );
+                          }
+                          if (field.name === "phone") {
+                            updateFieldError(
+                              "phone",
+                              getPhoneError(event.target.value),
+                            );
+                          }
+                        }}
                         className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
                       />
+                    )}
+                    {field.name === "email" && fieldErrors.email && (
+                      <p id="admission-email-error" className="mt-1 text-xs text-red-600">
+                        {fieldErrors.email}
+                      </p>
+                    )}
+                    {field.name === "phone" && fieldErrors.phone && (
+                      <p id="admission-phone-error" className="mt-1 text-xs text-red-600">
+                        {fieldErrors.phone}
+                      </p>
                     )}
                   </div>
                 ))}

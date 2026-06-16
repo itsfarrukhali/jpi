@@ -34,7 +34,7 @@ export function ProgramModal({ open, onOpenChange, program, onSuccess }: {
     useForm<ProgramCreateInput, unknown, ProgramCreateOutput>({ resolver: zodResolver(programCreateSchema), defaultValues: defaults });
   const eligibility = useWatch({ control, name: "eligibility" }) ?? [];
   const careers = useWatch({ control, name: "careers" }) ?? [];
-  const subjects = useWatch({ control, name: "subjects" }) ?? [];
+  const subjects = (useWatch({ control, name: "subjects" }) ?? []) as ProgramSubject[];
   const curriculum = useWatch({ control, name: "curriculum" }) ?? null;
   const listingPage = useWatch({ control, name: "listingPage" });
   const thumbnail = useWatch({ control, name: "thumbnail" });
@@ -75,9 +75,9 @@ export function ProgramModal({ open, onOpenChange, program, onSuccess }: {
         <Field label="Duration" error={errors.duration?.message}><Input {...register("duration")} /></Field>
         <Field label="Seats" error={errors.seats?.message}><Input type="number" {...register("seats", { valueAsNumber: true })} /></Field>
         <Field label="Icon name (optional)"><Input {...register("icon")} placeholder="building" /></Field>
-        <Field label="Tag"><select className="h-9 w-full rounded-md border px-3 text-sm" {...register("tag")}><option>DAE</option><option>CERT</option><option>SHORT</option><option>JEC</option></select></Field>
-        <Field label="Category"><select className="h-9 w-full rounded-md border px-3 text-sm" {...register("category")}><option value="dae">DAE</option><option value="certifications">Certifications</option><option value="short_courses">Short Courses</option><option value="jec">JEC</option></select></Field>
-        <Field label="Public Listing Page"><select className="h-9 w-full rounded-md border px-3 text-sm" {...register("listingPage")}><option value="DAE">DAE</option><option value="CERTIFICATIONS">Certifications</option><option value="DIPLOMA_CERTIFICATIONS">Diploma Certifications</option><option value="SHORT_COURSES">Short Courses</option><option value="JEC">JEC</option></select></Field>
+        <Field label="Tag"><select className="h-9 w-full rounded-md border px-3 text-sm" {...register("tag")}><option>DAE</option><option>CERT</option><option>SHORT</option><option value="JEC">JCE</option></select></Field>
+        <Field label="Category"><select className="h-9 w-full rounded-md border px-3 text-sm" {...register("category")}><option value="dae">DAE</option><option value="certifications">Certifications</option><option value="short_courses">JCE Short Courses</option><option value="jec">JCE AutoCAD</option></select></Field>
+        <Field label="Public Listing Page"><select className="h-9 w-full rounded-md border px-3 text-sm" {...register("listingPage")}><option value="DAE">DAE</option><option value="CERTIFICATIONS">Certifications</option><option value="DIPLOMA_CERTIFICATIONS">Diploma Certifications</option><option value="SHORT_COURSES">JCE Short Courses</option><option value="JEC">JCE AutoCAD</option></select></Field>
       </div>
       <Field label="Description" error={errors.description?.message}><Textarea rows={3} {...register("description")} /></Field>
       <div className="grid gap-4 sm:grid-cols-2">

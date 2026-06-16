@@ -9,14 +9,19 @@ const listingPages = new Set<ProgramListingPage>([
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  const requestedListing = url.searchParams.get("listingPage") as ProgramListingPage | null;
-  const listingPage = requestedListing && listingPages.has(requestedListing)
-    ? requestedListing
-    : undefined;
+  const requestedListing = url.searchParams.get("listingPage");
+  const listingPage = requestedListing as ProgramListingPage | null;
   const page = Math.max(1, Number(url.searchParams.get("page")) || 1);
   const limit = Math.min(100, Math.max(1, Number(url.searchParams.get("limit")) || 20));
   const all = url.searchParams.get("all") === "true";
-  const where: Prisma.ProgramWhereInput = { published: true, listingPage };
+  const where: Prisma.ProgramWhereInput = {
+    published: true,
+    ...(requestedListing === "JCE"
+      ? { listingPage: { in: ["SHORT_COURSES", "JEC"] } }
+      : listingPage && listingPages.has(listingPage)
+        ? { listingPage }
+        : {}),
+  };
   const [data, total] = await prisma.$transaction([
     prisma.program.findMany({
       where,

@@ -57,23 +57,23 @@ const slides = [
 
   {
     id: 4,
-    badge: "3–6 Month Skill Courses",
-    title: "Learn Practical Skills & Start Earning Faster",
+    badge: "Jinnah Center of Excellence",
+    title: "JCE Certified Short Courses",
     subtitle:
-      "Electrician · Plumbing · IT Fundamentals · Technical Skills & More with Practical Training",
-    tag: "SKILLS",
-    cta: "/programs/short-courses",
+      "Short practical courses with JPI certificates for skill development, career growth, and faster employability",
+    tag: "JCE",
+    cta: "/programs/jce",
     image: "/carousel/short-courses.png",
   },
 
   {
     id: 5,
-    badge: "Jinnah Excellence Program",
+    badge: "JCE AutoCAD Course",
     title: "Master AutoCAD with Professional Certification",
     subtitle:
-      "2D & 3D Mechanical and Civil Drafting Training with Jinnah Excellence Certificates",
-    tag: "JEC",
-    cta: "/programs/jec",
+      "2D & 3D Mechanical and Civil Drafting Training under Jinnah Center of Excellence",
+    tag: "JCE",
+    cta: "/programs/jce",
     image: "/carousel/jec.png",
   },
 ];
@@ -83,8 +83,7 @@ const tagColors: Record<string, string> = {
   CERT: "bg-[var(--color-rust)]",
   DIPLOMA: "bg-amber-600",
   PHLEBOTOMY: "bg-red-600",
-  SKILLS: "bg-emerald-600",
-  JEC: "bg-purple-700",
+  JCE: "bg-purple-700",
 };
 
 const contentVariants = {

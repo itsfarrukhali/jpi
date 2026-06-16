@@ -13,11 +13,22 @@ import {
   Loader2,
 } from "lucide-react";
 import Link from "next/link";
+import { getEmailError, getPhoneError, hasErrors } from "@/lib/client-form-validation";
+
+type ContactFieldErrors = {
+  email?: string;
+  phone?: string;
+};
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({});
   const [isPending, startTransition] = useTransition();
+
+  const updateFieldError = (field: keyof ContactFieldErrors, message: string) => {
+    setFieldErrors((current) => ({ ...current, [field]: message || undefined }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,6 +43,16 @@ export default function ContactPage() {
       subject: formData.get("subject") as string,
       message: formData.get("message") as string,
     };
+    const nextFieldErrors: ContactFieldErrors = {
+      email: getEmailError(data.email),
+      phone: getPhoneError(data.phone ?? "", false),
+    };
+
+    setFieldErrors(nextFieldErrors);
+    if (hasErrors(nextFieldErrors)) {
+      setError("Please correct the highlighted fields.");
+      return;
+    }
 
     startTransition(async () => {
       try {
@@ -45,6 +66,7 @@ export default function ContactPage() {
 
         if (result.success) {
           setSent(true);
+          setFieldErrors({});
           form.reset();
           window.scrollTo({ top: 0, behavior: "smooth" });
         } else {
@@ -268,8 +290,18 @@ export default function ContactPage() {
                         name="email"
                         placeholder="you@example.com"
                         required
+                        aria-invalid={Boolean(fieldErrors.email)}
+                        aria-describedby="contact-email-error"
+                        onChange={(event) =>
+                          updateFieldError("email", getEmailError(event.target.value))
+                        }
                         className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
                       />
+                      {fieldErrors.email && (
+                        <p id="contact-email-error" className="mt-1 text-xs text-red-600">
+                          {fieldErrors.email}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label
@@ -283,8 +315,20 @@ export default function ContactPage() {
                         id="phone"
                         name="phone"
                         placeholder="03XX-XXXXXXX"
+                        pattern="[+0-9() -]{10,20}"
+                        title="Enter a valid phone number, e.g. 0330-0370660"
+                        aria-invalid={Boolean(fieldErrors.phone)}
+                        aria-describedby="contact-phone-error"
+                        onChange={(event) =>
+                          updateFieldError("phone", getPhoneError(event.target.value, false))
+                        }
                         className="w-full px-3 py-2 text-sm border border-gray-300 bg-white text-gray-700 placeholder:text-gray-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none"
                       />
+                      {fieldErrors.phone && (
+                        <p id="contact-phone-error" className="mt-1 text-xs text-red-600">
+                          {fieldErrors.phone}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label

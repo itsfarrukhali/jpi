@@ -13,6 +13,14 @@ import { ProgramModal } from "./ProgramModal";
 import { DeleteProgramDialog } from "./DeleteProgramDialog";
 import type { ProgramRecord } from "@/types/programs";
 
+const listingLabels: Record<string, string> = {
+  DAE: "DAE",
+  CERTIFICATIONS: "Certifications",
+  DIPLOMA_CERTIFICATIONS: "Diploma Certifications",
+  SHORT_COURSES: "JCE Short Courses",
+  JEC: "JCE AutoCAD",
+};
+
 export function ProgramsTable({ programs }: { programs: ProgramRecord[] }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -53,8 +61,8 @@ export function ProgramsTable({ programs }: { programs: ProgramRecord[] }) {
             <option value="DAE">DAE</option>
             <option value="CERTIFICATIONS">Certifications</option>
             <option value="DIPLOMA_CERTIFICATIONS">Diploma Certifications</option>
-            <option value="SHORT_COURSES">Short Courses</option>
-            <option value="JEC">JEC</option>
+            <option value="SHORT_COURSES">JCE Short Courses</option>
+            <option value="JEC">JCE AutoCAD</option>
           </select>
           <select className="h-9 rounded-md border bg-white px-3 text-sm" value={status} onChange={(event) => setStatus(event.target.value)}>
             <option value="ALL">All statuses</option>
@@ -77,7 +85,7 @@ export function ProgramsTable({ programs }: { programs: ProgramRecord[] }) {
             {visible.map((program) => (
               <TableRow key={program.id}>
                 <TableCell><div className="font-medium">{program.shortName}</div><div className="text-xs text-gray-500">{program.slug}</div></TableCell>
-                <TableCell>{program.listingPage.replaceAll("_", " ")}</TableCell>
+                <TableCell>{listingLabels[program.listingPage] ?? program.listingPage.replaceAll("_", " ")}</TableCell>
                 <TableCell>{program.duration}</TableCell>
                 <TableCell>{program.seats}</TableCell>
                 <TableCell>{program.published ? "Published" : "Draft"}</TableCell>

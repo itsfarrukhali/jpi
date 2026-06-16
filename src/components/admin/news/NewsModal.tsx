@@ -71,7 +71,7 @@ export function NewsModal({
     resolver: zodResolver(newsCreateSchema),
     defaultValues,
   });
-  const galleryImages = useWatch({ control, name: "galleryImages" }) ?? [];
+  const galleryImages = (useWatch({ control, name: "galleryImages" }) ?? []) as string[];
   const featuredImage = useWatch({ control, name: "image" });
   const pdfUrl = useWatch({ control, name: "pdfUrl" });
 
@@ -167,8 +167,20 @@ export function NewsModal({
               <Controller
                 name="category"
                 control={control}
-                render={({ field }) => (
-                  <Select value={field.value} onValueChange={field.onChange}>
+                render={({
+                  field,
+                }: {
+                  field: {
+                    value: NewsCreateInput["category"];
+                    onChange: (value: NewsCreateInput["category"]) => void;
+                  };
+                }) => (
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => {
+                      if (value) field.onChange(value);
+                    }}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
@@ -291,7 +303,7 @@ export function NewsModal({
               folder="news/gallery"
               accept="image"
               multiple
-              onUpload={(url) => {
+              onUpload={(url: string) => {
                 const currentImages = getValues("galleryImages") ?? [];
                 setValue("galleryImages", [...new Set([...currentImages, url])], {
                   shouldDirty: true,

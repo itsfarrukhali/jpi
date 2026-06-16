@@ -45,8 +45,7 @@ const navLinks = [
         href: "/programs/diploma-certifications",
       },
       { label: "Certifications", href: "/programs/certifications" },
-      { label: "Short Courses", href: "/programs/short-courses" },
-      { label: "Jinnah Excellence Certificates", href: "/programs/jec" },
+      { label: "JCE Short Courses", href: "/programs/jce" },
     ],
   },
   {
