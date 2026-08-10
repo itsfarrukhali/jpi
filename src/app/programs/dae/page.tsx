@@ -13,7 +13,7 @@ import { ChevronDown, BookOpen, Clock, Award } from "lucide-react";
 export const metadata: Metadata = {
   title: "DAE Programs",
   description:
-    "3-year Diploma of Associate Engineer programs at Jinnah Polytechnic Institute — Civil, Electrical, Mechanical, Electronics, Software, CIT, Refrigeration & AC, and Chemical. Affiliated with SBTE.",
+    "3-year Diploma of Associate Engineer programs at Jinnah Polytechnic Institute — Civil, Electrical, Mechanical, Electronics, Software, CIT, Artificial Intelligence, Refrigeration & AC, and Chemical. Affiliated with SBTE.",
 };
 export const dynamic = "force-dynamic";
 

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Clock, Users, CheckCircle, ArrowRight } from "lucide-react";
 import type { ProgramRecord } from "@/types/programs";
 import { cn } from "@/lib/utils";
+import { ProgramFeeDialog } from "@/components/shared/ProgramFeeDialog";
 
 const tagColors: Record<string, string> = {
   DAE: "bg-[var(--color-primary)] text-white",
@@ -54,12 +55,15 @@ export default function ProgramCard({ program, href }: ProgramCardProps) {
             <span>{program.eligibility.join(" | ")}</span>
           </div>
         </div>
-        <Link
-          href={href}
-          className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl bg-(--color-primary) text-white text-sm font-semibold hover:bg-(--color-primary-light) transition-colors"
-        >
-          Apply Now <ArrowRight size={14} />
-        </Link>
+        <div className="space-y-2">
+          <ProgramFeeDialog program={program} />
+          <Link
+            href={href}
+            className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl bg-(--color-primary) text-white text-sm font-semibold hover:bg-(--color-primary-light) transition-colors"
+          >
+            Apply Now <ArrowRight size={14} />
+          </Link>
+        </div>
       </div>
     </div>
   );

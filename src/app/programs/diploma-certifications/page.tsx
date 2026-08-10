@@ -16,11 +16,10 @@ import {
 export const metadata: Metadata = {
   title: "Diploma Certifications",
   description:
-    "Diploma certification programs at Jinnah Polytechnic Institute — Physiotherapy, Nursing Assistant, Laboratory Technicians, and Artificial Intelligence. Affiliated with SBTE.",
+    "Diploma certification programs at Jinnah Polytechnic Institute — Physiotherapy, Nursing Assistant, and Laboratory Technicians. Affiliated with SBTE.",
 };
 export const dynamic = "force-dynamic";
 
-// Separate health care from tech diploma
 const whyChoose = [
   {
     title: "Hands-On Training",
@@ -45,12 +44,11 @@ export default async function DiplomaCertificationsPage() {
   const healthCareDiplomas = diplomaCertifications.filter((program) =>
     ["cert-physiotherapy", "cert-nursing", "cert-lab-technician"].includes(program.slug),
   );
-  const techDiplomas = diplomaCertifications.filter((program) => program.slug === "sc-ai");
   return (
     <>
       <PageHero
         title="Diploma Certifications"
-        subtitle="1–2 Year professional diploma programs in healthcare and technology. Affiliated with SBTE."
+        subtitle="1–2 Year professional diploma programs in healthcare. Affiliated with SBTE."
         breadcrumbs={[
           { label: "Programs" },
           { label: "Diploma Certifications" },
@@ -64,7 +62,7 @@ export default async function DiplomaCertificationsPage() {
           <p className="text-gray-600 leading-relaxed text-sm">
             Our diploma certification programs provide in-depth training over 1
             to 2 years, preparing students for professional careers in the
-            rapidly growing healthcare and technology sectors. Each program
+            rapidly growing healthcare sector. Each program
             combines theoretical knowledge with extensive practical training.
           </p>
         </div>
@@ -76,9 +74,9 @@ export default async function DiplomaCertificationsPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5 text-center">
             {[
               { icon: Clock, label: "Duration", value: "1–2 Years" },
-              { icon: Award, label: "Programs", value: "4 Diplomas" },
+              { icon: Award, label: "Programs", value: "3 Diplomas" },
               { icon: Heart, label: "Healthcare", value: "3 Programs" },
-              { icon: Award, label: "Technology", value: "1 Program" },
+              { icon: Award, label: "Affiliation", value: "SBTE" },
             ].map((item) => {
               const Icon = item.icon;
               return (
@@ -196,102 +194,6 @@ export default async function DiplomaCertificationsPage() {
           </div>
         </div>
       </section>
-
-      {/* Technology Diploma */}
-      {techDiplomas.length > 0 && (
-        <section className="py-16 bg-gray-50 border-y border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-10">
-              <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 px-4 py-1.5 mb-4">
-                <Award size={14} className="text-blue-600" />
-                <span className="text-xs font-medium text-blue-600 uppercase tracking-wider">
-                  Technology Diploma
-                </span>
-              </div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                Build a Future in Technology
-              </h2>
-              <p className="text-sm text-gray-500 max-w-xl mx-auto">
-                Industry-focused technology diploma to prepare you for the
-                digital economy
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
-              {techDiplomas.map((program) => (
-                <ProgramCard
-                  key={program.id}
-                  program={program}
-                  href="/admissions/apply-now"
-                />
-              ))}
-              {/* Spacer cards for centering single card */}
-              <div className="hidden lg:block" />
-              <div className="hidden lg:block" />
-            </div>
-
-            {/* Tech Curriculum Accordion */}
-            <div className="space-y-4">
-              {techDiplomas.map((program) => (
-                <details
-                  key={program.id}
-                  className="group bg-white border border-gray-200"
-                >
-                  <summary className="flex items-center justify-between px-5 py-3.5 cursor-pointer font-medium text-gray-800 list-none hover:bg-gray-50 transition-colors">
-                    <span className="flex items-center gap-2">
-                      <Award size={14} className="text-blue-600" />
-                      {program.shortName}
-                      <span className="text-xs text-gray-400 font-normal ml-1">
-                        — {program.duration}
-                      </span>
-                    </span>
-                    <ChevronDown
-                      size={16}
-                      className="text-gray-500 group-open:rotate-180 transition-transform"
-                    />
-                  </summary>
-                  <div className="px-5 pb-5 pt-2">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <h4 className="font-semibold text-xs text-gray-500 uppercase tracking-wider mb-2">
-                          Course Modules
-                        </h4>
-                        <ul className="space-y-1">
-                          {program.subjects[0].items.map((item) => (
-                            <li
-                              key={item}
-                              className="text-xs text-gray-600 flex items-start gap-1.5"
-                            >
-                              <span className="text-amber-600 mt-0.5">—</span>
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-xs text-gray-500 uppercase tracking-wider mb-2">
-                          Career Opportunities
-                        </h4>
-                        <ul className="space-y-1">
-                          {program.careers.map((career) => (
-                            <li
-                              key={career}
-                              className="text-xs text-gray-600 flex items-start gap-1.5"
-                            >
-                              <span className="text-amber-600 mt-0.5">—</span>
-                              {career}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Why Choose */}
       <section className="py-16 bg-white">

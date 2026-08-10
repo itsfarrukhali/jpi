@@ -518,6 +518,62 @@ const daePrograms: Program[] = [
       "Healthcare Technology Specialist",
     ],
   },
+  {
+    id: "dae-ai",
+    name: "Diploma of Associate Engineer — Artificial Intelligence Technology",
+    shortName: "DAE Artificial Intelligence",
+    duration: "3 Years (6 Semesters)",
+    seats: 25,
+    eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
+    description:
+      "A 3-year DAE program focused on programming, data science, machine learning, automation, and practical AI systems.",
+    icon: "brain",
+    tag: "DAE",
+    category: "dae",
+    subjects: [
+      {
+        year: "1st Year",
+        items: [
+          "Applied Mathematics",
+          "Applied Physics",
+          "Communication Skills",
+          "Computer Fundamentals",
+          "Programming Fundamentals",
+          "Digital Logic",
+        ],
+      },
+      {
+        year: "2nd Year",
+        items: [
+          "Object Oriented Programming",
+          "Database Management Systems",
+          "Data Structures",
+          "Python Programming",
+          "Statistics for AI",
+          "Web Technologies",
+        ],
+      },
+      {
+        year: "3rd Year",
+        items: [
+          "Machine Learning",
+          "Data Science",
+          "Deep Learning Fundamentals",
+          "Computer Vision & NLP",
+          "AI Project Development",
+          "Professional Practices",
+        ],
+      },
+    ],
+    careers: [
+      "AI Technician",
+      "Junior AI Developer",
+      "Python Developer",
+      "Data Analyst",
+      "Machine Learning Assistant",
+      "Automation Support Specialist",
+    ],
+  },
 ];
 
 const certificationPrograms: Program[] = [
@@ -585,42 +641,6 @@ const diplomaCertifications: Program[] = [
       "Sports Therapy Assistant",
       "Hospital Physiotherapy Dept.",
       "Private Clinic Practitioner",
-    ],
-  },
-  {
-    id: "sc-ai",
-    name: "Diploma in Artificial Intelligence",
-    shortName: "Artificial Intelligence",
-    duration: "1 Year",
-    seats: 25,
-    eligibility:
-      "Matric / Intermediate | Diploma Holders, Job Seekers & Professionals",
-    description:
-      "Comprehensive AI training covering machine learning, deep learning, Python programming, and real-world AI projects.",
-    icon: "brain",
-    tag: "CERT",
-    category: "short-courses",
-    subjects: [
-      {
-        year: "Course Modules",
-        items: [
-          "Introduction to AI",
-          "Machine Learning Basics",
-          "Python Programming",
-          "Data Science Fundamentals",
-          "Deep Learning",
-          "Computer Vision & NLP",
-          "AI Projects & Case Studies",
-        ],
-      },
-    ],
-    careers: [
-      "AI/ML Engineer",
-      "Data Scientist",
-      "Python Developer",
-      "Computer Vision Engineer",
-      "NLP Specialist",
-      "AI Research Assistant",
     ],
   },
   {

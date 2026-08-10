@@ -87,6 +87,7 @@ export const daeTechnologies: string[] = [
   "Electronics Technology",
   "Software Technology",
   "Computer Information Technology",
+  "Artificial Intelligence Technology",
   "Refrigeration & Air Conditioning Technology",
   "Chemical Technology",
 ];
@@ -177,21 +178,21 @@ export const disqualificationRules: DisqualificationRule[] = [
 export const feeStructure: FeeStructure[] = [
   {
     year: "1st Year",
-    admissionFee: "Rs. 14,000",
-    tuitionFee: "Rs. 30,000",
-    totalFee: "Rs. 44,000",
+    admissionFee: "Rs. 20,000",
+    tuitionFee: "Rs. 40,000",
+    totalFee: "Rs. 60,000",
   },
   {
     year: "2nd Year",
     admissionFee: "—",
-    tuitionFee: "Rs. 30,000",
-    totalFee: "Rs. 30,000",
+    tuitionFee: "Rs. 40,000",
+    totalFee: "Rs. 40,000",
   },
   {
     year: "3rd Year",
     admissionFee: "—",
-    tuitionFee: "Rs. 30,000",
-    totalFee: "Rs. 30,000",
+    tuitionFee: "Rs. 40,000",
+    totalFee: "Rs. 40,000",
   },
 ];
 
@@ -440,6 +441,10 @@ export const allProgramOptions = [
         value: "dae-cit",
         label:
           "Diploma of Associate Engineer — Computer Information Technology",
+      },
+      {
+        value: "dae-ai",
+        label: "Diploma of Associate Engineer — Artificial Intelligence Technology",
       },
       {
         value: "dae-refrigeration",
