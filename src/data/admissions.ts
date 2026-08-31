@@ -218,128 +218,53 @@ export const feeRefundPolicy: FeeRefundPolicy[] = [
 
 // ─── Other Charges ───────────────────────────────────
 
-export const otherCharges: OtherCharge[] = [
-  {
-    item: "SBTE Registration Card",
-    normal: "150",
-    urgent: "—",
-    duplicate: "200",
-  },
-  {
-    item: "Student Identity Card",
-    normal: "—",
-    urgent: "—",
-    duplicate: "200",
-  },
-  {
-    item: "Provisional Certificate",
-    normal: "—",
-    urgent: "1,000",
-    duplicate: "1,500",
-  },
-  {
-    item: "Practical Scrutiny (Per Subject)",
-    normal: "300",
-    urgent: "600",
-    duplicate: "—",
-  },
-  {
-    item: "Change of Technology/Shift (before SBTE Reg.)",
-    normal: "3,000",
-    urgent: "—",
-    duplicate: "—",
-  },
-  {
-    item: "Bonafide Certificate",
-    normal: "300",
-    urgent: "600",
-    duplicate: "—",
-  },
-  {
-    item: "English Proficiency Certificate",
-    normal: "300",
-    urgent: "600",
-    duplicate: "—",
-  },
-  {
-    item: "Recommendation Letter",
-    normal: "750",
-    urgent: "1,000",
-    duplicate: "—",
-  },
-  {
-    item: "Internship Letter",
-    normal: "300",
-    urgent: "600",
-    duplicate: "—",
-  },
-  {
-    item: "Mark Sheet",
-    normal: "—",
-    urgent: "—",
-    duplicate: "100",
-  },
-  {
-    item: "SBTE Registration Form",
-    normal: "150",
-    urgent: "—",
-    duplicate: "200",
-  },
-  {
-    item: "Theory Scrutiny (Per Subject)",
-    normal: "200",
-    urgent: "500",
-    duplicate: "—",
-  },
-  {
-    item: "Other Certificate",
-    normal: "500",
-    urgent: "1,000",
-    duplicate: "—",
-  },
-  {
-    item: "Prospectus Fee",
-    normal: "1,000",
-    urgent: "—",
-    duplicate: "—",
-  },
-  {
-    item: "Uniform",
-    normal: "1,000",
-    urgent: "—",
-    duplicate: "—",
-  },
-  {
-    item: "Appearance Certificate",
-    normal: "300",
-    urgent: "600",
-    duplicate: "—",
-  },
-  {
-    item: "Hope Certificate",
-    normal: "300",
-    urgent: "600",
-    duplicate: "—",
-  },
-  {
-    item: "Verification of Documents (JPI/SBTE)",
-    normal: "2,000",
-    urgent: "3,000",
-    duplicate: "—",
-  },
-  {
-    item: "Admit Card",
-    normal: "—",
-    urgent: "100",
-    duplicate: "—",
-  },
-  {
-    item: "Attestation (Original Documents)",
-    normal: "200",
-    urgent: "500",
-    duplicate: "—",
-  },
+export interface OtherFeeItem {
+  item: string;
+  fee: string;
+}
+
+export const otherFees2026: OtherFeeItem[] = [
+  { item: "Change of Technology after Registration SBTE", fee: "10,000" },
+  { item: "Change of Programme after Registration SBTE", fee: "10,000" },
+  { item: "Change of Technology before Registration SBTE", fee: "3,000" },
+  { item: "Change of Programme before Registration SBTE", fee: "3,000" },
+  { item: "Urgent PC", fee: "5,000" },
+  { item: "Duplicate PC", fee: "6,000" },
+  { item: "ID Card Duplicate", fee: "500" },
+  { item: "SBTE Registration Card Duplicate / Photocopy", fee: "500" },
+  { item: "SBTE Registration Form Duplicate / Photocopy", fee: "500" },
+  { item: "Admit Card (Photocopy)", fee: "500" },
+  { item: "Marksheet (Photocopy)", fee: "500" },
+  { item: "Bonafied Certificate (Normal)", fee: "500" },
+  { item: "Bonafied Certificate (Urgent)", fee: "1,000" },
+  { item: "English Proficiency Certificate (Normal)", fee: "500" },
+  { item: "English Proficiency Certificate (Urgent)", fee: "1,000" },
+  { item: "Appearance Certificate (Normal)", fee: "500" },
+  { item: "Appearance Certificate (Urgent)", fee: "1,000" },
+  { item: "Hope Certificate (Normal)", fee: "500" },
+  { item: "Hope Certificate (Urgent)", fee: "1,000" },
+  { item: "Other Certificate (Normal)", fee: "1,000" },
+  { item: "Other Certificate (Urgent)", fee: "2,000" },
+  { item: "Recommendation Letter (Normal)", fee: "1,000" },
+  { item: "Recommendation Letter (Urgent)", fee: "1,500" },
+  { item: "Internship Letter (Normal)", fee: "500" },
+  { item: "Internship Letter (Urgent)", fee: "1,000" },
+  { item: "Practical Scrutiny (Per Subject) (Normal)", fee: "500" },
+  { item: "Practical Scrutiny (Per Subject) (Urgent)", fee: "1,000" },
+  { item: "Theory Scrutiny (Per Subject) (Normal)", fee: "500" },
+  { item: "Theory Scrutiny (Per Subject) (Urgent)", fee: "1,000" },
+  { item: "Verification of Document (Normal)", fee: "2,500" },
+  { item: "Verification of Document (Urgent)", fee: "4,000" },
+  { item: "Diploma Processing Fee (Normal)", fee: "500" },
+  { item: "Diploma Processing Fee (Urgent)", fee: "1,000" },
 ];
+
+export const otherCharges: OtherCharge[] = otherFees2026.map((f) => ({
+  item: f.item,
+  normal: f.fee,
+  urgent: "—",
+  duplicate: "—",
+}));
 
 // ─── Key Dates ───────────────────────────────────────
 

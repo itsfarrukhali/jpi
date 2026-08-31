@@ -5,6 +5,7 @@ import { Banknote, ShieldCheck, FileText, Landmark, GraduationCap, Award, Sparkl
 import {
   feeRefundPolicy,
   otherCharges,
+  otherFees2026,
   paymentNotes,
 } from "@/data/admissions";
 import {
@@ -446,39 +447,39 @@ export default function FeeStructurePage() {
 
           {/* Other Charges */}
           <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs space-y-4">
-            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-              <FileText size={20} className="text-blue-600" />
-              Other Official Charges
-            </h2>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <FileText size={20} className="text-blue-600" />
+                Fee Structure of Other Fees (2026-2027 Session)
+              </h2>
+              <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-blue-100 text-blue-800">
+                Session 2026-2027
+              </span>
+            </div>
             <p className="text-xs text-gray-500">
-              All amounts in Pakistani Rupees (Rs.)
+              Official fees for certificates, documentation, scrutiny, and administrative services. All amounts in Pakistani Rupees (Rs.)
             </p>
             <div className="overflow-x-auto rounded-xl border border-gray-200">
-              <table className="w-full text-xs">
+              <table className="w-full text-xs sm:text-sm">
                 <thead className="bg-gray-800 text-white">
                   <tr>
-                    {["Item Description", "Normal Fee", "Urgent Fee", "Duplicate Fee"].map((h) => (
-                      <th key={h} className="px-4 py-3 text-left font-medium uppercase tracking-wider text-[11px]">
-                        {h}
-                      </th>
-                    ))}
+                    <th className="px-4 py-3 text-left font-medium uppercase tracking-wider text-[11px]">
+                      Service / Particular
+                    </th>
+                    <th className="px-4 py-3 text-right font-medium uppercase tracking-wider text-[11px]">
+                      Fee (2026-2027 Session)
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {otherCharges.map((row, i) => (
+                  {otherFees2026.map((row, i) => (
                     <tr
                       key={i}
                       className={i % 2 === 0 ? "bg-white" : "bg-gray-50/50"}
                     >
                       <td className="px-4 py-2.5 font-medium text-gray-800">{row.item}</td>
-                      <td className="px-4 py-2.5 text-gray-600">
-                        {row.normal === "—" ? "—" : `Rs. ${row.normal}`}
-                      </td>
-                      <td className="px-4 py-2.5 text-gray-600">
-                        {row.urgent === "—" ? "—" : `Rs. ${row.urgent}`}
-                      </td>
-                      <td className="px-4 py-2.5 text-gray-600">
-                        {row.duplicate === "—" ? "—" : `Rs. ${row.duplicate}`}
+                      <td className="px-4 py-2.5 text-right font-bold text-gray-900">
+                        Rs. {row.fee}
                       </td>
                     </tr>
                   ))}
