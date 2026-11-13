@@ -27,17 +27,17 @@ export default function DepartmentCard({ department }: DepartmentCardProps) {
         {/* Badge */}
         <div className="absolute bottom-3 left-3">
           <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-gold text-white">
-            {department.courses.length} Courses
+            {department.slug === "csit" ? "4 DAE Programs" : `${department.courses.length} Courses`}
           </span>
         </div>
       </div>
 
       {/* Card body – fills remaining space */}
       <div className="flex flex-col flex-1 p-5">
-        <h3 className="font-bold text-primary-dark text-base mb-1 group-hover:text-primary transition-colors font-serif line-clamp-1">
+        <h3 className="font-bold text-primary-dark text-base mb-1 group-hover:text-primary transition-colors font-serif">
           {department.name}
         </h3>
-        <p className="text-xs text-text-muted mb-1">HOD: {department.hod}</p>
+        <p className="text-xs text-text-muted mb-1">{department.hodDesignation}: {department.hod}</p>
         <p className="text-sm text-text-muted line-clamp-1 mb-3">
           {department.fullName}
         </p>

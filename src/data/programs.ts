@@ -32,11 +32,13 @@
  * - subjects: Array of curriculum by year. Each year has items array with subject names
  * - careers: Possible job positions graduates can pursue
  */
+import { aiCurriculum, cyberCurriculum } from "./new-dae-curricula";
+
 export type Program = {
   id: string; // Unique identifier: "dae-civil"
   name: string; // Full program name
   shortName: string; // Short name for display
-  duration: string; // e.g., "3 Years (6 Semesters)"
+  duration: string; // e.g., "3 Years"
   seats: number; // Total seats available
   eligibility: string; // Eligibility requirement
   description: string; // 1-2 sentence overview
@@ -62,7 +64,7 @@ export type Program = {
 /**
  * ALL DAE PROGRAMS
  *
- * DAE (Diploma of Associate Engineer) - 3 year, 6 semester programs
+ * DAE (Diploma of Associate Engineer) - 3 year programs with annual SBTE examinations
  *
  * HOW TO ADD DAE PROGRAM:
  * 1. Create new Program object with unique id (e.g., "dae-chemical")
@@ -79,10 +81,24 @@ export type Program = {
  */
 const daePrograms: Program[] = [
   {
+    id: "dae-cyber-security",
+    name: "Diploma of Associate Engineer — Cyber Security and Networks Technology",
+    shortName: "DAE Cyber Security and Networks Technology",
+    duration: "3 Years",
+    seats: 0,
+    eligibility: "Matriculation (Science/TSC), as prescribed by SBTE/STEVTA",
+    description: "A three-year DAE with annual SBTE examinations covering network security, digital forensics, incident response, application security, and practical projects. Admissions for boys and girls.",
+    icon: "shield",
+    tag: "DAE",
+    category: "dae",
+    subjects: cyberCurriculum.years.map((year) => ({ year: `Year ${year.year}`, items: year.courses.map((course) => course.name) })),
+    careers: ["Network Support Technician", "Cyber Security Support Technician", "Security Operations Assistant", "IT Support Specialist"],
+  },
+  {
     id: "dae-civil",
     name: "Diploma of Associate Engineer — Civil Technology",
     shortName: "DAE Civil Technology",
-    duration: "3 Years (6 Semesters)",
+    duration: "3 Years",
     seats: 60,
     eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
@@ -137,7 +153,7 @@ const daePrograms: Program[] = [
     id: "dae-electrical",
     name: "Diploma of Associate Engineer — Electrical Technology",
     shortName: "DAE Electrical Technology",
-    duration: "3 Years (6 Semesters)",
+    duration: "3 Years",
     seats: 60,
     eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
@@ -192,7 +208,7 @@ const daePrograms: Program[] = [
     id: "dae-mechanical",
     name: "Diploma of Associate Engineer — Mechanical Technology",
     shortName: "DAE Mechanical Technology",
-    duration: "3 Years (6 Semesters)",
+    duration: "3 Years",
     seats: 60,
     eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
@@ -247,7 +263,7 @@ const daePrograms: Program[] = [
     id: "dae-electronics",
     name: "Diploma of Associate Engineer — Electronics Technology",
     shortName: "DAE Electronics Technology",
-    duration: "3 Years (6 Semesters)",
+    duration: "3 Years",
     seats: 60,
     eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
@@ -302,7 +318,7 @@ const daePrograms: Program[] = [
     id: "dae-software",
     name: "Diploma of Associate Engineer — Software Technology",
     shortName: "DAE Software Technology",
-    duration: "3 Years (6 Semesters)",
+    duration: "3 Years",
     seats: 60,
     eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
@@ -357,7 +373,7 @@ const daePrograms: Program[] = [
     id: "dae-cit",
     name: "Diploma of Associate Engineer — Computer Information Technology",
     shortName: "DAE Computer Information Technology",
-    duration: "3 Years (6 Semesters)",
+    duration: "3 Years",
     seats: 60,
     eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
@@ -412,7 +428,7 @@ const daePrograms: Program[] = [
     id: "dae-refrigeration",
     name: "Diploma of Associate Engineer — Refrigeration & Air Conditioning Technology",
     shortName: "DAE Refrigeration & AC Technology",
-    duration: "3 Years (6 Semesters)",
+    duration: "3 Years",
     seats: 45,
     eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
@@ -467,7 +483,7 @@ const daePrograms: Program[] = [
     id: "dae-chemical",
     name: "Diploma of Associate Engineer — Chemical Technology",
     shortName: "DAE Chemical Technology",
-    duration: "3 Years (6 Semesters)",
+    duration: "3 Years",
     seats: 45,
     eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
@@ -521,8 +537,8 @@ const daePrograms: Program[] = [
   {
     id: "dae-ai",
     name: "Diploma of Associate Engineer — Artificial Intelligence Technology",
-    shortName: "DAE Artificial Intelligence",
-    duration: "3 Years (6 Semesters)",
+    shortName: "DAE Artificial Intelligence Technology",
+    duration: "3 Years",
     seats: 25,
     eligibility: "Matriculation (Science/TSC) with minimum 45% marks",
     description:
@@ -530,41 +546,7 @@ const daePrograms: Program[] = [
     icon: "brain",
     tag: "DAE",
     category: "dae",
-    subjects: [
-      {
-        year: "1st Year",
-        items: [
-          "Applied Mathematics",
-          "Applied Physics",
-          "Communication Skills",
-          "Computer Fundamentals",
-          "Programming Fundamentals",
-          "Digital Logic",
-        ],
-      },
-      {
-        year: "2nd Year",
-        items: [
-          "Object Oriented Programming",
-          "Database Management Systems",
-          "Data Structures",
-          "Python Programming",
-          "Statistics for AI",
-          "Web Technologies",
-        ],
-      },
-      {
-        year: "3rd Year",
-        items: [
-          "Machine Learning",
-          "Data Science",
-          "Deep Learning Fundamentals",
-          "Computer Vision & NLP",
-          "AI Project Development",
-          "Professional Practices",
-        ],
-      },
-    ],
+    subjects: aiCurriculum.years.map((year) => ({ year: `Year ${year.year}`, items: year.courses.map((course) => course.name) })),
     careers: [
       "AI Technician",
       "Junior AI Developer",

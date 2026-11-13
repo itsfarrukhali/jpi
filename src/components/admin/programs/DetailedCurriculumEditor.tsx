@@ -34,11 +34,13 @@ export function DetailedCurriculumEditor({
   onChange: (curriculum: ProgramCurriculum) => void;
 }) {
   const years = curriculum?.years ?? [];
+  const annualHours = curriculum?.marksAvailable === false;
   const [selectedYearIndex, setSelectedYearIndex] = useState(0);
   const activeYearIndex = Math.min(selectedYearIndex, Math.max(0, years.length - 1));
   const activeYear = years[activeYearIndex];
   const updateYear = (index: number, year: ProgramCurriculumYear) =>
     onChange({
+      ...curriculum,
       grandTotal: curriculum?.grandTotal ?? emptyTotal(),
       years: years.map((item, itemIndex) => itemIndex === index ? year : item),
     });
@@ -50,12 +52,14 @@ export function DetailedCurriculumEditor({
           <Label>Detailed DAE Curriculum</Label>
           <p className="text-xs text-gray-500">
             Edit one year at a time. Published totals can differ from the row calculation.
+            {annualHours && " Annual hours and credits only: marks were not supplied."}
           </p>
         </div>
         <Button
           type="button"
           variant="outline"
           onClick={() => onChange({
+            ...curriculum,
             grandTotal: curriculum?.grandTotal ?? emptyTotal(),
             years: [...years, { year: years.length + 1, total: emptyTotal(), courses: [emptyCourse()] }],
           })}
@@ -99,7 +103,7 @@ export function DetailedCurriculumEditor({
               </div>
               <div className="text-xs text-gray-500">
                 Row calculation: Contact {calculated.contactHours.theory + calculated.contactHours.practical} |
-                Credits {calculated.creditHours} | Marks {calculated.marks.total}
+                Credits {calculated.creditHours}{!annualHours && ` | Marks ${calculated.marks.total}`}
               </div>
               <Button
                 type="button"
@@ -107,6 +111,7 @@ export function DetailedCurriculumEditor({
                 size="icon"
                 disabled={years.length === 1}
                 onClick={() => onChange({
+                  ...curriculum,
                   grandTotal: curriculum?.grandTotal ?? emptyTotal(),
                   years: years.filter((_, index) => index !== yearIndex),
                 })}
@@ -114,16 +119,17 @@ export function DetailedCurriculumEditor({
                 <Trash2 className="text-red-500" />
               </Button>
             </div>
-            <TotalEditor label={`Published Year ${year.year} Total`} total={year.total} onChange={(total) => updateYear(yearIndex, { ...year, total })} />
+            <TotalEditor annualHours={annualHours} label={`Published Year ${year.year} Total`} total={year.total} onChange={(total) => updateYear(yearIndex, { ...year, total })} />
 
             <div className="overflow-x-auto">
               <table className="min-w-250 text-xs">
                 <thead>
                   <tr className="border-b text-left text-gray-500">
                     <th className="p-1">Code</th><th className="p-1">Course Name</th>
+                    {annualHours && <th className="p-1">Annual Hrs</th>}
                     <th className="p-1">Contact T</th><th className="p-1">Contact P</th>
-                    <th className="p-1">Credits</th><th className="p-1">Marks T</th>
-                    <th className="p-1">Marks P</th><th className="p-1">Total</th><th />
+                    <th className="p-1">Credits</th>{!annualHours && <><th className="p-1">Marks T</th>
+                    <th className="p-1">Marks P</th><th className="p-1">Total</th></>}<th />
                   </tr>
                 </thead>
                 <tbody>
@@ -131,6 +137,7 @@ export function DetailedCurriculumEditor({
                     <CourseRow
                       key={courseIndex}
                       course={course}
+                      annualHours={annualHours}
                       canRemove={year.courses.length > 1}
                       onChange={(next) => updateYear(yearIndex, {
                         ...year,
@@ -164,6 +171,7 @@ export function DetailedCurriculumEditor({
       )}
       {curriculum && (
         <TotalEditor
+          annualHours={annualHours}
           label="Published Grand Total"
           total={curriculum.grandTotal}
           onChange={(grandTotal) => onChange({ ...curriculum, grandTotal })}
@@ -173,7 +181,8 @@ export function DetailedCurriculumEditor({
   );
 }
 
-function TotalEditor({ label, total, onChange }: {
+function TotalEditor({ label, total, onChange, annualHours = false }: {
+  annualHours?: boolean;
   label: string;
   total: ProgramCurriculumTotal;
   onChange: (total: ProgramCurriculumTotal) => void;
@@ -189,7 +198,8 @@ function TotalEditor({ label, total, onChange }: {
   ] as const;
   return <div className="rounded-md border bg-gray-50 p-3"><Label>{label}</Label>
     <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
-      {fields.map(([fieldLabel, value, update]) => <label className="text-xs text-gray-500" key={fieldLabel}>
+      {annualHours && <label className="text-xs text-gray-500">Annual Hours<Input type="number" min={0} value={total.totalHours ?? 0} onChange={(event) => onChange({ ...total, totalHours: setNumber(event.target.value) })} /></label>}
+      {fields.filter(([fieldLabel]) => !annualHours || !fieldLabel.startsWith("Marks")).map(([fieldLabel, value, update]) => <label className="text-xs text-gray-500" key={fieldLabel}>
         {fieldLabel}<Input type="number" min={0} value={value} onChange={(event) => update(setNumber(event.target.value))} />
       </label>)}
     </div>
@@ -198,11 +208,13 @@ function TotalEditor({ label, total, onChange }: {
 
 function CourseRow({
   course,
+  annualHours = false,
   canRemove,
   onChange,
   onRemove,
 }: {
   course: ProgramCourse;
+  annualHours?: boolean;
   canRemove: boolean;
   onChange: (course: ProgramCourse) => void;
   onRemove: () => void;
@@ -212,12 +224,13 @@ function CourseRow({
     <tr className="border-b last:border-0">
       <td className="p-1"><Input className="w-20" value={course.code ?? ""} onChange={(event) => onChange({ ...course, code: event.target.value })} /></td>
       <td className="p-1"><Input className="w-64" value={course.name} onChange={(event) => onChange({ ...course, name: event.target.value })} /></td>
+      {annualHours && <td className="p-1"><NumberInput value={course.totalHours ?? 0} onChange={(value) => onChange({ ...course, totalHours: value })} /></td>}
       <td className="p-1"><NumberInput value={course.contactHours.theory} onChange={(value) => onChange({ ...course, contactHours: { ...course.contactHours, theory: value } })} /></td>
       <td className="p-1"><NumberInput value={course.contactHours.practical} onChange={(value) => onChange({ ...course, contactHours: { ...course.contactHours, practical: value } })} /></td>
       <td className="p-1"><NumberInput value={course.creditHours} onChange={(value) => onChange({ ...course, creditHours: value })} /></td>
-      <td className="p-1"><NumberInput value={course.marks.theory} onChange={(value) => onChange({ ...course, marks: { ...course.marks, theory: value } })} /></td>
+      {!annualHours && <><td className="p-1"><NumberInput value={course.marks.theory} onChange={(value) => onChange({ ...course, marks: { ...course.marks, theory: value } })} /></td>
       <td className="p-1"><NumberInput value={course.marks.practical} onChange={(value) => onChange({ ...course, marks: { ...course.marks, practical: value } })} /></td>
-      <td className="p-1"><NumberInput value={course.marks.total} onChange={(value) => onChange({ ...course, marks: { ...course.marks, total: value } })} /></td>
+      <td className="p-1"><NumberInput value={course.marks.total} onChange={(value) => onChange({ ...course, marks: { ...course.marks, total: value } })} /></td></>}
       <td className="p-1"><Button type="button" variant="ghost" size="icon-sm" disabled={!canRemove} onClick={onRemove}><Trash2 className="text-red-500" /></Button></td>
     </tr>
   );

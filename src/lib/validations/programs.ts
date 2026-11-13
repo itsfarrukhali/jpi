@@ -13,6 +13,7 @@ export const programSubjectSchema = z.object({
 const nonNegativeInt = z.number().int().min(0);
 
 export const programCourseSchema = z.object({
+  totalHours: nonNegativeInt.optional(),
   code: z.string().optional().or(z.literal("")),
   name: z.string().min(1, "Course name is required"),
   contactHours: z.object({ theory: nonNegativeInt, practical: nonNegativeInt }),
@@ -25,6 +26,7 @@ export const programCourseSchema = z.object({
 });
 
 export const programCurriculumTotalSchema = z.object({
+  totalHours: nonNegativeInt.optional(),
   contactHours: z.object({ theory: nonNegativeInt, practical: nonNegativeInt }),
   creditHours: nonNegativeInt,
   marks: z.object({
@@ -35,6 +37,8 @@ export const programCurriculumTotalSchema = z.object({
 });
 
 export const programCurriculumSchema = z.object({
+  marksAvailable: z.boolean().optional(),
+  notes: z.array(z.string()).optional(),
   years: z.array(z.object({
     year: z.number().int().min(1),
     total: programCurriculumTotalSchema,
@@ -52,7 +56,7 @@ const programBaseSchema = z.object({
   shortName: z.string().min(2, "Short name is required"),
   department: z.string().optional().nullable().or(z.literal("")),
   duration: z.string().min(2, "Duration is required"),
-  seats: z.coerce.number().int().min(1, "Seats must be at least 1"),
+  seats: z.coerce.number().int().min(0, "Seats cannot be negative"),
   eligibility: z.array(z.string().min(2)).min(1, "Add at least one requirement"),
   description: z.string().min(20, "Description must be at least 20 characters"),
   icon: z.string().optional().nullable().or(z.literal("")),

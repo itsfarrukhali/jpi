@@ -11,8 +11,13 @@ import {
   type Program,
 } from "@/data/programs";
 import type { ProgramRecord } from "@/types/programs";
+import { aiCurriculum, cyberCurriculum } from "@/data/new-dae-curricula";
+import { departments as courseDepartments } from "@/data/courses";
+import { completeDaeCatalog } from "@/lib/dae-catalog";
 
 function formatStaticProgram(program: Program): ProgramRecord {
+  const departmentSlug = program.id === "dae-refrigeration" ? "rac" : program.id.replace(/^dae-/, "");
+  const courseDepartment = courseDepartments.find((department) => department.slug === departmentSlug);
   let listingPage: ProgramRecord["listingPage"] = "DAE";
   if (program.category === "short-courses") listingPage = "SHORT_COURSES";
   else if (program.category === "certifications") listingPage = "CERTIFICATIONS";
@@ -44,7 +49,7 @@ function formatStaticProgram(program: Program): ProgramRecord {
     category,
     listingPage,
     subjects: program.subjects,
-    curriculum: null,
+    curriculum: program.id === "dae-ai" ? aiCurriculum : program.id === "dae-cyber-security" ? cyberCurriculum : courseDepartment ? { years: courseDepartment.years, grandTotal: courseDepartment.grandTotal } : null,
     careers: program.careers,
     published: true,
   };
@@ -53,10 +58,11 @@ function formatStaticProgram(program: Program): ProgramRecord {
 export async function getPublishedPrograms(listingPage: ProgramListingPage): Promise<ProgramRecord[]> {
   try {
     const programs = await prisma.program.findMany({
-      where: { listingPage, published: true },
+      where: { listingPage, ...(listingPage === "DAE" ? {} : { published: true }) },
       orderBy: { createdAt: "asc" },
     });
     if (programs && programs.length > 0) {
+      if (listingPage === "DAE") return completeDaeCatalog(programs.map(serializeProgram), daePrograms.map(formatStaticProgram));
       return programs.map(serializeProgram);
     }
   } catch (error) {
@@ -65,7 +71,7 @@ export async function getPublishedPrograms(listingPage: ProgramListingPage): Pro
 
   // Fallback to static data
   if (listingPage === "DAE") {
-    return daePrograms.map(formatStaticProgram);
+    return completeDaeCatalog([], daePrograms.map(formatStaticProgram));
   }
   if (listingPage === "DIPLOMA_CERTIFICATIONS") {
     return diplomaCertifications.map(formatStaticProgram);

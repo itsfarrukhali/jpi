@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
 import ProgramCard from "@/components/shared/ProgramCard";
+import AnnualScheme from "@/components/shared/AnnualScheme";
 import { getPublishedPrograms } from "@/lib/program-data";
 import type {
   ProgramCurriculumTotal,
@@ -13,7 +14,7 @@ import { ChevronDown, BookOpen, Clock, Award } from "lucide-react";
 export const metadata: Metadata = {
   title: "DAE Programs",
   description:
-    "3-year Diploma of Associate Engineer programs at Jinnah Polytechnic Institute — Civil, Electrical, Mechanical, Electronics, Software, CIT, Artificial Intelligence, Refrigeration & AC, and Chemical. Affiliated with SBTE.",
+    "Three-year DAE programs with annual SBTE examinations: including Artificial Intelligence Technology and Cyber Security and Networks Technology at JPI Karachi.",
 };
 export const dynamic = "force-dynamic";
 
@@ -36,7 +37,8 @@ export default async function DAEPage() {
             qualification recognized across Pakistan. Graduates can work as
             Junior Engineers, Technicians, and Supervisors — or pursue B.Tech /
             BE degrees for further advancement. All programs are affiliated with{" "}
-            <strong>SBTE</strong>.
+            <strong>SBTE</strong>. These programs follow an annual system, not semesters;
+            SBTE conducts examinations for each of the three years.
           </p>
         </div>
       </section>
@@ -62,8 +64,8 @@ export default async function DAEPage() {
             Curriculum
           </h2>
           <p className="text-xs text-gray-500 mb-8">
-            Complete course breakdown with contact hours, credit hours, and
-            marks distribution as per SBTE revised syllabus
+            Year-by-year schemes of studies. AI and Cyber Security and Networks
+            show the supplied hours and credits; marks are shown only where available.
           </p>
 
           <div className="space-y-6">
@@ -119,6 +121,7 @@ export default async function DAEPage() {
 // ─── Curriculum Section Component ────────────────────
 
 function CurriculumSection({ program }: { program: ProgramRecord }) {
+  if (program.curriculum?.marksAvailable === false) return <AnnualScheme program={program} />;
   const years = program.curriculum?.years ?? [];
   const grandTotal = program.curriculum!.grandTotal;
   return (

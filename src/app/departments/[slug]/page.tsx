@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/shared/PageHero";
@@ -10,12 +10,12 @@ import { Clock, BookOpen, FlaskConical, Briefcase, MapPin } from "lucide-react";
 type Params = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return departments.map((d) => ({ slug: d.slug }));
+  return departments.filter((department) => department.slug !== "csit").map((d) => ({ slug: d.slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const dept = departments.find((d) => d.slug === slug);
+  const dept = departments.find((d) => d.slug === (slug === "cit" || slug === "software" ? "csit" : slug));
   if (!dept) return { title: "Department Not Found" };
   return {
     title: `${dept.name} — JPI`,
@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function DepartmentPage({ params }: Params) {
   const { slug } = await params;
+  if (slug === "cit" || slug === "software") permanentRedirect("/departments/csit");
   const dept = departments.find((d) => d.slug === slug);
   if (!dept) notFound();
 
@@ -43,7 +44,7 @@ export default async function DepartmentPage({ params }: Params) {
           courseDept.years.flatMap((y) => y.courses.map((c) => c.name)),
         ),
       )
-    : [];
+    : dept.courses;
 
   return (
     <>
@@ -93,7 +94,7 @@ export default async function DepartmentPage({ params }: Params) {
       </section>
 
       {/* HOD Message */}
-      <section className="py-14 bg-gray-50">
+      {dept.hodMessage && <section className="py-14 bg-gray-50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white border border-gray-200 p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row items-start gap-6">
@@ -126,6 +127,7 @@ export default async function DepartmentPage({ params }: Params) {
         </div>
       </section>
 
+      }
       {/* Courses & Labs */}
       <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -206,12 +208,12 @@ export default async function DepartmentPage({ params }: Params) {
                   className="bg-gray-50 border border-gray-200 p-4 flex items-center gap-4"
                 >
                   <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 bg-gray-200">
-                    <Image
+                    {member.photo ? <Image
                       src={member.photo}
                       alt={member.name}
                       fill
                       className="object-cover"
-                    />
+                    /> : <span className="flex h-full items-center justify-center text-xs font-semibold text-slate-600" aria-hidden="true">{member.name.split(" ").slice(1).map((part) => part[0]).join("")}</span>}
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-800 text-xs">
@@ -229,7 +231,7 @@ export default async function DepartmentPage({ params }: Params) {
       )}
 
       {/* Gallery */}
-      <section className="py-14 bg-gray-50">
+      {dept.galleryImages.length > 0 && <section className="py-14 bg-gray-50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg font-bold text-gray-800 mb-6 pb-2 border-b border-gray-200">
             Gallery
@@ -256,6 +258,7 @@ export default async function DepartmentPage({ params }: Params) {
         </div>
       </section>
 
+      }
       {/* CTA */}
       <div className="py-12 bg-white text-center border-t border-gray-200">
         <div className="flex flex-wrap gap-3 justify-center">

@@ -10,6 +10,7 @@ export type ProgramSubject = {
 };
 
 export type ProgramCourse = {
+  totalHours?: number;
   code?: string;
   name: string;
   contactHours: { theory: number; practical: number };
@@ -24,12 +25,15 @@ export type ProgramCurriculumYear = {
 };
 
 export type ProgramCurriculumTotal = {
+  totalHours?: number;
   contactHours: { theory: number; practical: number };
   creditHours: number;
   marks: { theory: number; practical: number; total: number };
 };
 
 export type ProgramCurriculum = {
+  marksAvailable?: boolean;
+  notes?: string[];
   years: ProgramCurriculumYear[];
   grandTotal: ProgramCurriculumTotal;
 };

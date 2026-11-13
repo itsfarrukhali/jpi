@@ -17,6 +17,7 @@ import {
   Globe,
 } from "lucide-react";
 import { admissionContact, universalFormFields } from "@/data/admissions";
+import { coeducationSlugs } from "@/data/csit";
 import { toast } from "sonner";
 import { getEmailError, getPhoneError, hasErrors } from "@/lib/client-form-validation";
 
@@ -32,7 +33,7 @@ export default function ApplyNowPage() {
   const [fieldErrors, setFieldErrors] = useState<AdmissionFieldErrors>({});
   const [isPending, startTransition] = useTransition();
 
-  // Check if selected program is DAE (for male-only warning + extra fields)
+  // DAE pathways have technology-specific admissions information.
   const isDAE = selectedProgram.startsWith("dae-");
 
   const updateFieldError = (
@@ -366,7 +367,7 @@ export default function ApplyNowPage() {
                 </select>
               </div>
 
-              {/* DAE Warning — Male Only */}
+              {/* DAE admissions information */}
               {isDAE && (
                 <div className="bg-amber-50 border border-amber-200 p-4 flex items-start gap-3">
                   <AlertTriangle
@@ -375,7 +376,9 @@ export default function ApplyNowPage() {
                   />
                   <div>
                     <p className="text-xs font-medium text-amber-800 mb-0.5">
-                      DAE Programs — Male Students Only
+                      {coeducationSlugs.has(selectedProgram)
+                        ? "Admissions open to boys and girls"
+                        : "DAE Program Admissions"}
                     </p>
                     <p className="text-xs text-amber-700">
                       Maximum age: Morning 35 years | Evening 45 years. Matric

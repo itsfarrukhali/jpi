@@ -17,12 +17,12 @@ import { getFeeStructureForProgram, getMedicalFeeSchedule } from "@/data/fees";
 export function ProgramFeeDialog({ program }: { program: ProgramRecord }) {
   const [open, setOpen] = useState(false);
   const feeStructure = getFeeStructureForProgram(
-    program.id,
+    program.slug,
     program.category,
     program.tag
   );
 
-  const medicalSchedule = getMedicalFeeSchedule(program.id);
+  const medicalSchedule = getMedicalFeeSchedule(program.slug);
 
   const hasDuration = feeStructure.headers.includes("Duration");
   const hasAdmission = feeStructure.headers.some(

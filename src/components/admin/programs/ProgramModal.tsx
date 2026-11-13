@@ -73,7 +73,7 @@ export function ProgramModal({ open, onOpenChange, program, onSuccess }: {
         <Field label="Slug" error={errors.slug?.message}><Input {...register("slug")} placeholder="dae-civil" /></Field>
         <Field label="Department (optional)"><Input {...register("department")} /></Field>
         <Field label="Duration" error={errors.duration?.message}><Input {...register("duration")} /></Field>
-        <Field label="Seats" error={errors.seats?.message}><Input type="number" {...register("seats", { valueAsNumber: true })} /></Field>
+        <Field label="Seats (0 if not announced)" error={errors.seats?.message}><Input type="number" min={0} {...register("seats", { valueAsNumber: true })} /></Field>
         <Field label="Icon name (optional)"><Input {...register("icon")} placeholder="building" /></Field>
         <Field label="Tag"><select className="h-9 w-full rounded-md border px-3 text-sm" {...register("tag")}><option>DAE</option><option>CERT</option><option>SHORT</option><option value="JEC">JCE</option></select></Field>
         <Field label="Category"><select className="h-9 w-full rounded-md border px-3 text-sm" {...register("category")}><option value="dae">DAE</option><option value="certifications">Certifications</option><option value="short_courses">JCE Short Courses</option><option value="jec">JCE AutoCAD</option></select></Field>

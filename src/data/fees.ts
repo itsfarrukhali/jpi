@@ -40,7 +40,7 @@ export interface MedicalFeeSchedule {
 
 export interface CategoryFeeStructure {
   id: string;
-  categoryKey: "dae" | "dae-ai" | "diploma-certifications" | "certifications" | "short-courses" | "jce" | "jec";
+  categoryKey: "dae" | "dae-ai" | "dae-cyber-security" | "diploma-certifications" | "certifications" | "short-courses" | "jce" | "jec";
   title: string;
   subtitle: string;
   badge: string;
@@ -120,6 +120,25 @@ export const daeAiFeeStructure: CategoryFeeStructure = {
     "Includes specialized AI lab access, GPU compute environment, Python, Machine Learning & Computer Vision toolkits.",
     "Admission Fee is a one-time non-refundable charge paid at initial enrollment.",
     "Tuition fee is payable in easy monthly or semester-wise installments.",
+  ],
+};
+
+export const daeCyberFeeStructure: CategoryFeeStructure = {
+  id: "dae-cyber-security-fees",
+  categoryKey: "dae-cyber-security",
+  title: "DAE Cyber Security and Networks Fee Structure",
+  subtitle: "3-Year Diploma of Associate Engineer in Cyber Security and Networks Technology",
+  badge: "DAE Cyber Security (3 Years)",
+  badgeColor: "bg-blue-700 text-white",
+  headers: ["Year", "Admission Fee", "Tuition Fee", "Total Fee"],
+  rows: [
+    { label: "1st Year", admissionFee: "Rs. 25,000", tuitionFee: "Rs. 48,000", totalFee: "Rs. 73,000" },
+    { label: "2nd Year", admissionFee: "—", tuitionFee: "Rs. 48,000", totalFee: "Rs. 48,000" },
+    { label: "3rd Year", admissionFee: "—", tuitionFee: "Rs. 48,000", totalFee: "Rs. 48,000" },
+  ],
+  notes: [
+    "The first-year total of Rs. 73,000 includes the one-time admission fee of Rs. 25,000 and tuition fee of Rs. 48,000.",
+    "Second- and third-year tuition fees are Rs. 48,000 per year.",
   ],
 };
 
@@ -362,6 +381,7 @@ export const jceFeeStructure: CategoryFeeStructure = {
 export const allCategoryFeeStructures: CategoryFeeStructure[] = [
   daeFeeStructure,
   daeAiFeeStructure,
+  daeCyberFeeStructure,
   diplomaCertificationsFeeStructure,
   certificationsFeeStructure,
   jceFeeStructure,
@@ -375,6 +395,7 @@ export function getMedicalFeeSchedule(programId: string): MedicalFeeSchedule | n
 }
 
 export function getFeeStructureForProgram(programId: string, category: string, tag: string): CategoryFeeStructure {
+  if (programId === "dae-cyber-security") return daeCyberFeeStructure;
   // If Artificial Intelligence program
   if (programId === "dae-ai" || programId === "sc-ai" || programId.includes("ai")) {
     return daeAiFeeStructure;

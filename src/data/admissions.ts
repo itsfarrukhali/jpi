@@ -88,6 +88,7 @@ export const daeTechnologies: string[] = [
   "Software Technology",
   "Computer Information Technology",
   "Artificial Intelligence Technology",
+  "Cyber Security and Networks Technology",
   "Refrigeration & Air Conditioning Technology",
   "Chemical Technology",
 ];
@@ -220,7 +221,9 @@ export const feeRefundPolicy: FeeRefundPolicy[] = [
 
 export interface OtherFeeItem {
   item: string;
-  fee: string;
+  fee?: string;
+  normal?: string;
+  urgent?: string;
 }
 
 export const otherFees2026: OtherFeeItem[] = [
@@ -228,41 +231,30 @@ export const otherFees2026: OtherFeeItem[] = [
   { item: "Change of Programme after Registration SBTE", fee: "10,000" },
   { item: "Change of Technology before Registration SBTE", fee: "3,000" },
   { item: "Change of Programme before Registration SBTE", fee: "3,000" },
-  { item: "Urgent PC", fee: "5,000" },
+  { item: "PC", urgent: "5,000" },
   { item: "Duplicate PC", fee: "6,000" },
   { item: "ID Card Duplicate", fee: "500" },
   { item: "SBTE Registration Card Duplicate / Photocopy", fee: "500" },
   { item: "SBTE Registration Form Duplicate / Photocopy", fee: "500" },
   { item: "Admit Card (Photocopy)", fee: "500" },
   { item: "Marksheet (Photocopy)", fee: "500" },
-  { item: "Bonafied Certificate (Normal)", fee: "500" },
-  { item: "Bonafied Certificate (Urgent)", fee: "1,000" },
-  { item: "English Proficiency Certificate (Normal)", fee: "500" },
-  { item: "English Proficiency Certificate (Urgent)", fee: "1,000" },
-  { item: "Appearance Certificate (Normal)", fee: "500" },
-  { item: "Appearance Certificate (Urgent)", fee: "1,000" },
-  { item: "Hope Certificate (Normal)", fee: "500" },
-  { item: "Hope Certificate (Urgent)", fee: "1,000" },
-  { item: "Other Certificate (Normal)", fee: "1,000" },
-  { item: "Other Certificate (Urgent)", fee: "2,000" },
-  { item: "Recommendation Letter (Normal)", fee: "1,000" },
-  { item: "Recommendation Letter (Urgent)", fee: "1,500" },
-  { item: "Internship Letter (Normal)", fee: "500" },
-  { item: "Internship Letter (Urgent)", fee: "1,000" },
-  { item: "Practical Scrutiny (Per Subject) (Normal)", fee: "500" },
-  { item: "Practical Scrutiny (Per Subject) (Urgent)", fee: "1,000" },
-  { item: "Theory Scrutiny (Per Subject) (Normal)", fee: "500" },
-  { item: "Theory Scrutiny (Per Subject) (Urgent)", fee: "1,000" },
-  { item: "Verification of Document (Normal)", fee: "2,500" },
-  { item: "Verification of Document (Urgent)", fee: "4,000" },
-  { item: "Diploma Processing Fee (Normal)", fee: "500" },
-  { item: "Diploma Processing Fee (Urgent)", fee: "1,000" },
+  { item: "Bonafied Certificate", normal: "500", urgent: "1,000" },
+  { item: "English Proficiency Certificate", normal: "500", urgent: "1,000" },
+  { item: "Appearance Certificate", normal: "500", urgent: "1,000" },
+  { item: "Hope Certificate", normal: "500", urgent: "1,000" },
+  { item: "Other Certificate", normal: "1,000", urgent: "2,000" },
+  { item: "Recommendation Letter", normal: "1,000", urgent: "1,500" },
+  { item: "Internship Letter", normal: "500", urgent: "1,000" },
+  { item: "Practical Scrutiny (Per Subject)", normal: "500", urgent: "1,000" },
+  { item: "Theory Scrutiny (Per Subject)", normal: "500", urgent: "1,000" },
+  { item: "Verification of Document", normal: "2,500", urgent: "4,000" },
+  { item: "Diploma Processing Fee", normal: "500", urgent: "1,000" },
 ];
 
 export const otherCharges: OtherCharge[] = otherFees2026.map((f) => ({
   item: f.item,
-  normal: f.fee,
-  urgent: "—",
+  normal: f.normal ?? f.fee ?? "—",
+  urgent: f.urgent ?? "—",
   duplicate: "—",
 }));
 
@@ -370,6 +362,10 @@ export const allProgramOptions = [
       {
         value: "dae-ai",
         label: "Diploma of Associate Engineer — Artificial Intelligence Technology",
+      },
+      {
+        value: "dae-cyber-security",
+        label: "Diploma of Associate Engineer — Cyber Security and Networks Technology",
       },
       {
         value: "dae-refrigeration",

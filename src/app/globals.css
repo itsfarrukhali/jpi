@@ -226,3 +226,26 @@
 .admin-dashboard [role="button"]:not([aria-disabled="true"]) {
   cursor: pointer;
 }
+
+.home-announcement-track {
+  display: flex;
+  width: max-content;
+  animation: home-announcement-scroll 44s linear infinite;
+}
+
+.home-announcement-copy {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@keyframes home-announcement-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-announcement-track { animation: none; width: auto; }
+  .home-announcement-copy { flex-shrink: 1; min-width: 0; white-space: normal; }
+  .home-announcement-copy > span { display: inline; }
+  .home-announcement-clone { display: none; }
+}

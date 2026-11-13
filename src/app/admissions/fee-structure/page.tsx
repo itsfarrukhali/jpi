@@ -4,13 +4,13 @@ import PageHero from "@/components/shared/PageHero";
 import { Banknote, ShieldCheck, FileText, Landmark, GraduationCap, Award, Sparkles, Brain, Heart, ChevronDown } from "lucide-react";
 import {
   feeRefundPolicy,
-  otherCharges,
   otherFees2026,
   paymentNotes,
 } from "@/data/admissions";
 import {
   daeFeeStructure,
   daeAiFeeStructure,
+  daeCyberFeeStructure,
   diplomaCertificationsFeeStructure,
   certificationsFeeStructure,
   jceFeeStructure,
@@ -21,7 +21,7 @@ import {
 export const metadata: Metadata = {
   title: "Fee Structure — All Programs",
   description:
-    "Complete fee structure for all academic programs at Jinnah Polytechnic Institute — DAE, DAE AI, Health Care Diplomas (Physiotherapy, Nursing, Lab Tech, Phlebotomy), Certifications, and JCE Short Courses.",
+    "Complete fee structure for all academic programs at Jinnah Polytechnic Institute — DAE, Artificial Intelligence, Cyber Security and Networks, Health Care Diplomas, Certifications, and JCE Short Courses.",
 };
 
 function RenderFeeTable({ structure }: { structure: CategoryFeeStructure }) {
@@ -125,6 +125,9 @@ export default function FeeStructurePage() {
             >
               <Brain size={14} /> DAE Artificial Intelligence
             </a>
+            <a href="#dae-cyber-security-fees" className="px-4 py-2 rounded-xl bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs font-bold transition-colors flex items-center gap-1.5">
+              <ShieldCheck size={14} /> DAE Cyber Security
+            </a>
             <a
               href="#diploma-certifications-fees"
               className="px-4 py-2 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-xs font-bold transition-colors flex items-center gap-1.5"
@@ -219,7 +222,27 @@ export default function FeeStructurePage() {
             )}
           </div>
 
-          {/* 3. Diploma Certifications (Health Care Technology & Medical Courses) */}
+          {/* DAE Cyber Security and Networks */}
+          <div id="dae-cyber-security-fees" className="scroll-mt-24 bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <span className={`text-[10px] font-bold uppercase px-3 py-1 rounded-full ${daeCyberFeeStructure.badgeColor}`}>{daeCyberFeeStructure.badge}</span>
+                <h2 className="text-xl font-bold text-gray-900 mt-2 flex items-center gap-2">
+                  <ShieldCheck size={20} className="text-blue-700" />{daeCyberFeeStructure.title}
+                </h2>
+              </div>
+              <Link href="/admissions/apply-now" className="px-4 py-2 rounded-xl bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold transition-colors">Apply for DAE Cyber Security →</Link>
+            </div>
+            <p className="text-xs text-gray-600 leading-relaxed">{daeCyberFeeStructure.subtitle}</p>
+            <RenderFeeTable structure={daeCyberFeeStructure} />
+            <div className="bg-blue-50/60 border border-blue-100 rounded-xl p-4 mt-4 text-xs text-blue-900 space-y-1">
+              <p className="font-semibold mb-1">Cyber Security Program Fee Notes:</p>
+              <ul className="list-disc list-inside space-y-0.5 text-blue-800">
+                {daeCyberFeeStructure.notes.map((note) => <li key={note}>{note}</li>)}
+              </ul>
+            </div>
+          </div>
+
           <div id="diploma-certifications-fees" className="scroll-mt-24 bg-white p-6 sm:p-8 rounded-2xl border border-emerald-200 shadow-xs space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
@@ -446,7 +469,7 @@ export default function FeeStructurePage() {
           </div>
 
           {/* Other Charges */}
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs space-y-4">
+          <div id="other-fees" className="scroll-mt-24 bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
                 <FileText size={20} className="text-blue-600" />
@@ -457,30 +480,33 @@ export default function FeeStructurePage() {
               </span>
             </div>
             <p className="text-xs text-gray-500">
-              Official fees for certificates, documentation, scrutiny, and administrative services. All amounts in Pakistani Rupees (Rs.)
+              Compare normal and urgent processing in the same row. All amounts are in Pakistani Rupees (Rs.). A dash means no fee is quoted for that option.
             </p>
             <div className="overflow-x-auto rounded-xl border border-gray-200">
-              <table className="w-full text-xs sm:text-sm">
+              <table className="w-full min-w-140 text-xs sm:text-sm">
+                <caption className="sr-only">Other fees for the 2026-2027 session: fixed, normal and urgent charges by service</caption>
                 <thead className="bg-gray-800 text-white">
                   <tr>
-                    <th className="px-4 py-3 text-left font-medium uppercase tracking-wider text-[11px]">
+                    <th scope="col" className="px-4 py-3 text-left font-medium uppercase tracking-wider text-[11px]">
                       Service / Particular
                     </th>
-                    <th className="px-4 py-3 text-right font-medium uppercase tracking-wider text-[11px]">
-                      Fee (2026-2027 Session)
+                    <th scope="col" className="px-4 py-3 text-right font-medium uppercase tracking-wider text-[11px]">
+                      Fixed Fee (Rs.)
                     </th>
+                    <th scope="col" className="px-4 py-3 text-right font-medium uppercase tracking-wider text-[11px]">Normal (Rs.)</th>
+                    <th scope="col" className="px-4 py-3 text-right font-medium uppercase tracking-wider text-[11px]">Urgent (Rs.)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {otherFees2026.map((row, i) => (
                     <tr
-                      key={i}
+                      key={row.item}
                       className={i % 2 === 0 ? "bg-white" : "bg-gray-50/50"}
                     >
-                      <td className="px-4 py-2.5 font-medium text-gray-800">{row.item}</td>
-                      <td className="px-4 py-2.5 text-right font-bold text-gray-900">
-                        Rs. {row.fee}
-                      </td>
+                      <th scope="row" className="px-4 py-2.5 text-left font-medium text-gray-800">{row.item}</th>
+                      <td className="px-4 py-2.5 text-right tabular-nums font-semibold text-gray-900">{row.fee ?? "—"}</td>
+                      <td className="px-4 py-2.5 text-right tabular-nums font-semibold text-gray-900">{row.normal ?? "—"}</td>
+                      <td className="px-4 py-2.5 text-right tabular-nums font-semibold text-gray-900">{row.urgent ?? "—"}</td>
                     </tr>
                   ))}
                 </tbody>

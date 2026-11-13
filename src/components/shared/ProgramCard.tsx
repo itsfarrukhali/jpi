@@ -3,6 +3,7 @@ import { Clock, Users, CheckCircle, ArrowRight } from "lucide-react";
 import type { ProgramRecord } from "@/types/programs";
 import { cn } from "@/lib/utils";
 import { ProgramFeeDialog } from "@/components/shared/ProgramFeeDialog";
+import { coeducationSlugs } from "@/data/csit";
 
 const tagColors: Record<string, string> = {
   DAE: "bg-[var(--color-primary)] text-white",
@@ -23,7 +24,7 @@ interface ProgramCardProps {
 
 export default function ProgramCard({ program, href }: ProgramCardProps) {
   return (
-    <div className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col">
+    <div id={program.slug === "sc-ai" ? "dae-ai" : program.slug} className="group scroll-mt-28 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col">
       <div className="p-6 flex flex-col flex-1">
         <div className="flex items-start justify-between mb-3">
           <span
@@ -44,7 +45,7 @@ export default function ProgramCard({ program, href }: ProgramCardProps) {
         <div className="space-y-1.5 mb-5">
           <div className="flex items-center gap-2 text-xs text-(--color-text-muted)">
             <Clock size={12} className="text-(--color-gold) shrink-0" />
-            <span>{program.duration}</span>
+            <span>{program.listingPage === "DAE" ? "3 Years / Annual SBTE Examinations" : program.duration}</span>
           </div>
           <div className="flex items-center gap-2 text-xs text-(--color-text-muted)">
             <Users size={12} className="text-(--color-gold) shrink-0" />
@@ -56,6 +57,7 @@ export default function ProgramCard({ program, href }: ProgramCardProps) {
           </div>
         </div>
         <div className="space-y-2">
+          {coeducationSlugs.has(program.slug) && <p className="rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-xs font-medium text-gray-600">Admissions for boys and girls</p>}
           <ProgramFeeDialog program={program} />
           <Link
             href={href}

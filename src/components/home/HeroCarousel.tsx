@@ -21,13 +21,33 @@ const slides = [
     cta: "/programs/dae",
     image: "/carousel/dae-final.png",
   },
+  {
+    id: 6,
+    badge: "New DAE Technology / 3 Years",
+    title: "DAE in Artificial Intelligence Technology",
+    subtitle:
+      "Python, Machine Learning & Intelligent Applications. Annual SBTE Examinations. Admissions Open to Boys and Girls.",
+    tag: "DAE",
+    cta: "/programs/dae#dae-ai",
+    image: "/carousel/ai-learning.png",
+  },
+  {
+    id: 7,
+    badge: "New DAE Technology / 3 Years",
+    title: "DAE in Cyber Security and Networks Technology",
+    subtitle:
+      "Network Security, Digital Forensics & Secure Systems. Annual SBTE Examinations. Admissions Open to Boys and Girls.",
+    tag: "DAE",
+    cta: "/programs/dae#dae-cyber-security",
+    image: "/carousel/csn-learning.png",
+  },
 
   {
     id: 1,
     badge: "Professional Diploma Certifications",
     title: "Start a Career in Technology",
     subtitle:
-      "AI Certifications & More — SBTE Affiliated. Industry-Focused Diploma Programs with Practical Learning, Professional Labs & Experienced Faculty",
+      "Industry-Focused Diploma Programs with Practical Learning, Professional Labs & Experienced Faculty",
     tag: "CERT",
     cta: "/programs/diploma-certifications",
     image: "/carousel/certifications.png",
